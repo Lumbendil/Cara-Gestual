@@ -14,6 +14,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+
 // Needed structures
 
 struct Vector3D
@@ -59,6 +60,17 @@ struct Material
   float fShininess;			 // Specular exponent
 };
 
+struct ModelOBJ
+{
+	OBJFileInfo		*		info;
+	Vector3D		*		pVertices;
+	Vector3D		*		pNormals;
+	Vector2D		*		pTexCoords;
+	Face			*		pFaces;
+	Material		*		pMaterials;
+};
+
+
 class OBJLOADER_CLASS_DECL COBJModel  
 {
   public:
@@ -67,6 +79,18 @@ class OBJLOADER_CLASS_DECL COBJModel
 	  _stdcall COBJModel();
 	  virtual _stdcall ~COBJModel();
 	  void _stdcall COBJModel::EliminaLlista(unsigned int iDisplayList);
+
+	  // Mètodes nous
+	  void				COBJModel::FreeMemory				( void );
+	  ModelOBJ			COBJModel::GetModel					( void );
+	  unsigned int		COBJModel::GetNumVertices			( void );
+	  unsigned int		COBJModel::GetNumFaces				( void );
+	  unsigned int		COBJModel::GetNumTexCoords			( void );
+	  unsigned int		COBJModel::GetNumNormals			( void );
+	  unsigned int		COBJModel::GetNumMaterials			( void );
+	  bool				COBJModel::ExistModelInMemory		( void );
+
+
   private:
 	  void _stdcall ReadNextString(char szString[], FILE *hStream);
 	  int _stdcall LoadTexture(const char szFileName[_MAX_PATH]);
@@ -83,7 +107,10 @@ class OBJLOADER_CLASS_DECL COBJModel
 		  const Vector3D *pNormals, const Vector2D *pTexCoords, const unsigned int iMaterialIndex);
 	  void _stdcall GetFileInfo(FILE *hStream, OBJFileInfo *Stat, const char szConstBasePath[]);
  	  void _stdcall GenTexCoords();
+
 	  unsigned int m_iDisplayList;
+
+	  ModelOBJ	  Model;		  // General informations about the model
 };
 
 

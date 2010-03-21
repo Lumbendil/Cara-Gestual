@@ -1,3 +1,6 @@
+#define TIPUS_OBJ 1
+#define TIPUS_3DS 2
+
 typedef struct Point {
 	float x,y,z;
 };

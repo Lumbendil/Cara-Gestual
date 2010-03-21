@@ -46,11 +46,18 @@ const short unsigned int z = 2;
 _stdcall COBJModel::COBJModel()
 {
 	//m_iDisplayList = OBJECTEOBJ;
+	Model.info = NULL;
+	Model.pFaces = NULL;
+	Model.pMaterials = NULL;
+	Model.pNormals = NULL;
+	Model.pTexCoords = NULL;
+	Model.pVertices = NULL;
 }
 
 _stdcall COBJModel::~COBJModel()
 {
 	glDeleteLists(m_iDisplayList, 1);
+	FreeMemory();
 }
 
 bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplayList)
@@ -59,7 +66,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	// Load a OBJ file and render its data into a display list
 	////////////////////////////////////////////////////////////////////////
 
-	OBJFileInfo OBJInfo;		  // General informations about the model
+	//OBJFileInfo OBJInfo;		  // General informations about the model
 	OBJFileInfo CurrentIndex;	  // Current array index
 	char szString[MAX_STR_SIZE];  // Buffer string for reading the file 
 	char szBasePath[_MAX_PATH];	  // Path were all paths in the OBJ start
@@ -67,6 +74,8 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	float fCoord = 0;			  // Buffer float for reading the file
 	int i;						  // Loop variable
 	unsigned int iCurMaterial = 0;// Current material
+
+	Model.info = new OBJFileInfo;
 
 	// Get base path
 	strcpy(szBasePath, szFileName);
@@ -87,22 +96,23 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	////////////////////////////////////////////////////////////////////////
  
 	// Which data types are stored in the file ? How many of each type ?
-	GetFileInfo(hFile, &OBJInfo, szBasePath);
+	GetFileInfo(hFile, Model.info, szBasePath);
 
 	// Vertices and faces
-	Vector3D	*pVertices	= new Vector3D[OBJInfo.iVertexCount];
-	Face		*pFaces		= new Face[OBJInfo.iFaceCount];
+	//Vector3D	*pVertices	= new Vector3D[OBJInfo.iVertexCount];
+	Model.pVertices = new Vector3D[Model.info->iVertexCount];
+	Model.pFaces	= new Face[Model.info->iFaceCount];
 	
 	// Allocate space for optional model data only if present.
-	Vector3D	*pNormals	= 0;
-	Vector2D	*pTexCoords = 0;
-	Material	*pMaterials	= 0;
-	if (OBJInfo.iNormalCount)
-		pNormals = new Vector3D[OBJInfo.iNormalCount];
-	if (OBJInfo.iTexCoordCount)
-		pTexCoords = new Vector2D[OBJInfo.iTexCoordCount];
-	if (OBJInfo.iMaterialCount)
-		pMaterials = new Material[OBJInfo.iMaterialCount];
+	Model.pNormals	= NULL;
+	Model.pTexCoords = NULL;
+	Model.pMaterials = NULL;
+	if (Model.info->iNormalCount)
+		Model.pNormals = new Vector3D[Model.info->iNormalCount];
+	if (Model.info->iTexCoordCount)
+		Model.pTexCoords = new Vector2D[Model.info->iTexCoordCount];
+	if (Model.info->iMaterialCount)
+		Model.pMaterials = new Material[Model.info->iMaterialCount];
 
 	// Init structure that holds the current array index
 	memset(&CurrentIndex, 0, sizeof(OBJFileInfo));
@@ -125,9 +135,9 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		{
 			// Read three floats out of the file
 			nScanReturn = fscanf(hFile, "%f %f %f",
-				&pVertices[CurrentIndex.iVertexCount].fX,
-				&pVertices[CurrentIndex.iVertexCount].fY,
-				&pVertices[CurrentIndex.iVertexCount].fZ);
+				&Model.pVertices[CurrentIndex.iVertexCount].fX,
+				&Model.pVertices[CurrentIndex.iVertexCount].fY,
+				&Model.pVertices[CurrentIndex.iVertexCount].fZ);
 			// Next vertex
 			CurrentIndex.iVertexCount++;
 		}
@@ -137,8 +147,8 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		{
 			// Read two floats out of the file
 			nScanReturn = fscanf(hFile, "%f %f %f",
-				&pTexCoords[CurrentIndex.iTexCoordCount].fX,
-				&pTexCoords[CurrentIndex.iTexCoordCount].fY);
+				&Model.pTexCoords[CurrentIndex.iTexCoordCount].fX,
+				&Model.pTexCoords[CurrentIndex.iTexCoordCount].fY);
 			// Next texture coordinate
 			CurrentIndex.iTexCoordCount++;
 		}
@@ -148,9 +158,9 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		{
 			// Read three floats out of the file
 			nScanReturn = fscanf(hFile, "%f %f %f",
-				&pNormals[CurrentIndex.iNormalCount].fX,
-				&pNormals[CurrentIndex.iNormalCount].fY,
-				&pNormals[CurrentIndex.iNormalCount].fZ);
+				&Model.pNormals[CurrentIndex.iNormalCount].fX,
+				&Model.pNormals[CurrentIndex.iNormalCount].fY,
+				&Model.pNormals[CurrentIndex.iNormalCount].fZ);
 			// Next normal
 			CurrentIndex.iNormalCount++;
 		}
@@ -161,14 +171,14 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 			// Read the rest of the line (the complete face)
 			GetTokenParameter(szString, sizeof(szString) ,hFile);
 			// Convert string into a face structure
-			ParseFaceString(szString, &pFaces[CurrentIndex.iFaceCount],
-				pVertices, pNormals, pTexCoords, iCurMaterial);
+			ParseFaceString(szString, &Model.pFaces[CurrentIndex.iFaceCount],
+				Model.pVertices, Model.pNormals, Model.pTexCoords, iCurMaterial);
 			// Next face
 			CurrentIndex.iFaceCount++;
 		}
 
 		// Process material information only if needed
-		if (pMaterials)
+		if (Model.pMaterials)
 		{
 			// Rest of the line contains the name of a material
 			if (!strncmp(szString, USE_MTL_ID, sizeof(USE_MTL_ID)))
@@ -176,10 +186,10 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 				// Read the rest of the line (the complete material name)
 				GetTokenParameter(szString, sizeof(szString), hFile);
 				// Are any materials loaded ?
-				if (pMaterials)
+				if (Model.pMaterials)
 					// Find material array index for the material name
-					for (i=0; i<(int) OBJInfo.iMaterialCount; i++)
-						if (!strncmp(pMaterials[i].szName, szString, sizeof(szString)))
+					for (i=0; i<(int) Model.info->iMaterialCount; i++)
+						if (!strncmp(Model.pMaterials[i].szName, szString, sizeof(szString)))
 						{
 							iCurMaterial = i;
 							break;
@@ -196,7 +206,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 				strcpy(szLibraryFile, szBasePath);
 				strcat(szLibraryFile, szString);
 				// Load the material library
-				LoadMaterialLib(szLibraryFile, pMaterials, 
+				LoadMaterialLib(szLibraryFile, Model.pMaterials, 
 					&CurrentIndex.iMaterialCount, szBasePath);
 			}
 		}
@@ -210,37 +220,16 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	////////////////////////////////////////////////////////////////////////
 
 	// Sort the faces by material to minimize state changes
-	if (pMaterials)
-		qsort(pFaces, OBJInfo.iFaceCount, sizeof(Face), CompareFaceByMaterial);
+	if (Model.pMaterials)
+		qsort(Model.pFaces, Model.info->iFaceCount, sizeof(Face), CompareFaceByMaterial);
 	
 	// Identificar el número de llista donat com a paràmetre a la variable local m_iDisplayList
 	m_iDisplayList = iDisplayList;
 	if (m_iDisplayList>0) glDeleteLists(m_iDisplayList, 1);
 
 	// Render all faces into a display list
-	RenderToDisplayList(pFaces, OBJInfo.iFaceCount, pMaterials);
+	RenderToDisplayList(Model.pFaces, Model.info->iFaceCount, Model.pMaterials);
 
-	////////////////////////////////////////////////////////////////////////
-	// Free structures that hold the model data
-	////////////////////////////////////////////////////////////////////////
-
-	// Remove vertices, normals, materials and texture coordinates
-	delete [] pVertices;	pVertices = 0;
-	delete [] pNormals;		pNormals = 0;
-	delete [] pTexCoords;	pTexCoords = 0;
-	delete [] pMaterials;	pMaterials = 0;
-
-	// Remove face array
-	for (i=0; i<(int) OBJInfo.iFaceCount; i++)
-	{
-		// Delete every pointer in the face structure
-		delete [] pFaces[i].pNormals;	pFaces[i].pNormals = 0;
-		delete [] pFaces[i].pTexCoords;	pFaces[i].pTexCoords = 0;
-		delete [] pFaces[i].pVertices;  pFaces[i].pVertices = 0;
-	}
-	delete [] pFaces;
-	pFaces = 0;
-	
 	////////////////////////////////////////////////////////////////////////
 	// Success
 	////////////////////////////////////////////////////////////////////////
@@ -937,4 +926,68 @@ OBJLOADER_CLASS_DECL void _stdcall UnInitObject(COBJModel * obj)
 void _stdcall COBJModel::EliminaLlista(unsigned int iDisplayList)
 {
 	glDeleteLists(iDisplayList, 1);
+}
+
+void COBJModel::FreeMemory ( void )
+{
+	if ( COBJModel::ExistModelInMemory() )
+	{
+		// Alliberem la memòria de l'estructura
+		delete [] Model.pVertices;	
+		delete [] Model.pNormals;
+		delete [] Model.pTexCoords;
+		delete [] Model.pMaterials;
+
+		Model.pVertices = NULL;
+		Model.pNormals = NULL;
+		Model.pTexCoords = NULL;
+		Model.pMaterials = NULL;
+
+		for ( int i = 0; i < Model.info->iFaceCount; i++ )
+		{
+			delete [] Model.pFaces[i].pNormals;
+			delete [] Model.pFaces[i].pTexCoords;
+			delete [] Model.pFaces[i].pVertices;
+
+			Model.pFaces[i].pNormals = NULL;
+			Model.pFaces[i].pTexCoords = NULL;
+			Model.pFaces[i].pVertices = NULL;
+		}
+		delete [] Model.pFaces;
+
+		delete Model.info;
+		Model.info = NULL;
+	}
+}
+
+ModelOBJ  COBJModel::GetModel ( void )
+{
+	return Model;
+}
+unsigned int COBJModel::GetNumVertices ( void )
+{
+	return Model.info->iVertexCount;
+}
+unsigned int COBJModel::GetNumFaces ( void )
+{
+	return Model.info->iFaceCount;
+}
+unsigned int COBJModel::GetNumTexCoords	( void )
+{
+	return Model.info->iTexCoordCount;
+}
+unsigned int COBJModel::GetNumNormals ( void )
+{
+	return Model.info->iNormalCount;
+}
+unsigned int COBJModel::GetNumMaterials ( void )
+{
+	return Model.info->iMaterialCount;
+}
+bool COBJModel::ExistModelInMemory( void )
+{
+	if ( Model.info != NULL && Model.pVertices != NULL && Model.pFaces != NULL )
+		return true;
+	else
+		return false;
 }
