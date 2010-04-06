@@ -228,7 +228,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	if (m_iDisplayList>0) glDeleteLists(m_iDisplayList, 1);
 
 	// Render all faces into a display list
-	RenderToDisplayList(Model.pFaces, Model.info->iFaceCount, Model.pMaterials);
+	//RenderToDisplayList(Model.pFaces, Model.info->iFaceCount, Model.pMaterials);
 
 	////////////////////////////////////////////////////////////////////////
 	// Success

@@ -199,7 +199,7 @@ CPracticaView::~CPracticaView()
 {
 	// Eliminar estructures dinàmiques
 	if (Ob3DS!=NULL) delete Ob3DS;
-	if (ObOBJ!=NULL) {	ObOBJ->EliminaLlista(OBJECTEOBJ);
+	if (ObOBJ!=NULL) {	//ObOBJ->EliminaLlista(OBJECTEOBJ);
 						delete ObOBJ;
 					 }
 }
@@ -1572,9 +1572,8 @@ void CPracticaView::OnFileOpenObj()
 
 	/* i carreguem */	
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
-	ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx,OBJECTEOBJ);
-
+	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
+	ObOBJ.Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
 // Crida a OnPaint() per redibuixar l'escena

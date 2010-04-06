@@ -17,7 +17,8 @@
 #include "Obj3DS.h"	
 
 // OBJECTE OBJ: Include per la definició de l'objecte Obj_OBJ
-#include "objLoader.h"	
+#include "objLoader.h"
+#include "Objecte3D.h"
 
 class CPracticaView : public CView
 {
@@ -117,7 +118,8 @@ public:
 	Obj_3DS* Ob3DS;			// Variable d'objecte 3D Studio (*.3DS)
 
 // GC2: Objecte OBJ:
-	COBJModel* ObOBJ;		// Variable d'objecte format OBJ (*.OBJ)
+	//TODO: Canviar nom i demes
+	Objecte3D ObOBJ;		// Variable d'objecte format OBJ (*.OBJ)
 
 // GC2: Variables del Timer
 	float t;		// Paràmetre t pel Timer.
