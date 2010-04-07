@@ -51,8 +51,8 @@ bool CLoad3DS::Import3DS(t3DModel *pModel, CString strFileName)
 	int errno;
 
 	// Open the 3DS file
-//	m_FilePointer = fopen(strFileName, "rb");		   // Funció Visual Studio 6.0
-	errno = fopen_s(&m_FilePointer,strFileName, "rb"); // Funció Visual 2005
+//	m_FilePointer = fopen(strFileName, "rb");		   // Funciï¿½ Visual Studio 6.0
+	errno = fopen_s(&m_FilePointer,strFileName, "rb"); // Funciï¿½ Visual 2005
 
 	// Make sure we have a valid file pointer (we found the file)
 //	if(!m_FilePointer)
@@ -117,7 +117,7 @@ void CLoad3DS::ProcessNextChunk(t3DModel *pModel, tChunk *pPreviousChunk)
 {
 	t3DObject newObject = {0};					// This is used to add to our object list
 	tMaterialInfo newTexture = {0};				// This is used to add to our material list
-	unsigned short version = 0;					// This will hold the file version
+	unsigned int version = 0;					// This will hold the file version
 	int buffer[50000] = {0};					// This is used to read past unwanted data
 
 	m_CurrentChunk = new tChunk;				// Allocate a new chunk				
