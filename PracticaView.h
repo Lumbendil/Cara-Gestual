@@ -20,11 +20,18 @@
 #include "objLoader.h"
 #include "Objecte3D.h"
 
+// MUSCLES I EXPRESSIONS
+#include "MuscleManager.h"
+#include "ExpressionManager.h"
+
 class CPracticaView : public CView
 {
 protected: // create from serialization only
 	CPracticaView();
 	DECLARE_DYNCREATE(CPracticaView)
+
+	void ChangeMuscleState ( TypeMuscle muscle );
+	void ChangeExpressionState ( TypeExpression expression );
 
 // Attributes
 public:
@@ -119,7 +126,7 @@ public:
 
 // GC2: Objecte OBJ:
 	//TODO: Canviar nom i demes
-	Objecte3D ObOBJ;		// Variable d'objecte format OBJ (*.OBJ)
+	Objecte3D* ObOBJ;		// Variable d'objecte format OBJ (*.OBJ)
 
 // GC2: Variables del Timer
 	float t;		// Paràmetre t pel Timer.
@@ -129,6 +136,13 @@ public:
 // GC2: Altres variables
 	CString nom;	// Nom de fitxer.
 
+// GC2: Variables de control de Muscles
+	bool editMuscle;	// Booleana que indica si s'està editant els muscles.
+	TypeMuscle selectedMuscle;
+
+// GC2: Variables de control d'Expressions
+	bool editExpression;	// Booleana que indica si s'està editant les expressions.
+	TypeExpression selectedExpression;
 
 	virtual ~CPracticaView();
 #ifdef _DEBUG
@@ -152,20 +166,20 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnCub();
-	afx_msg void OnUpdateCub(CCmdUI* pCmdUI);
-	afx_msg void OnPerspectiva();
-	afx_msg void OnUpdatePerspectiva(CCmdUI* pCmdUI);
+	//afx_msg void OnCub();
+	//afx_msg void OnUpdateCub(CCmdUI* pCmdUI);
+	//afx_msg void OnPerspectiva();
+	//afx_msg void OnUpdatePerspectiva(CCmdUI* pCmdUI);
 	afx_msg void OnZoom();
 	afx_msg void OnUpdateZoom(CCmdUI* pCmdUI);
 	afx_msg void OnMobil();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnEsfera();
-	afx_msg void OnUpdateEsfera(CCmdUI* pCmdUI);
+	//afx_msg void OnEsfera();
+	//afx_msg void OnUpdateEsfera(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateIcosahedron(CCmdUI* pCmdUI);
-	afx_msg void OnTeapot();
-	afx_msg void OnUpdateTeapot(CCmdUI* pCmdUI);
+	//afx_msg void OnTeapot();
+	//afx_msg void OnUpdateTeapot(CCmdUI* pCmdUI);
 	afx_msg void OnSemafor();
 	afx_msg void OnUpdateSemafor(CCmdUI* pCmdUI);
 	afx_msg void OnEixos();
@@ -183,8 +197,8 @@ protected:
 	afx_msg void OnUpdatePan(CCmdUI* pCmdUI);
 	afx_msg void OnTest();
 	afx_msg void OnUpdateTest(CCmdUI* pCmdUI);
-	afx_msg void OnFileSaveAs();
-	afx_msg void OnFileOpen();
+	//afx_msg void OnFileSaveAs();
+	//afx_msg void OnFileOpen();
 	afx_msg void OnTraslacio();
 	afx_msg void OnUpdateTraslacio(CCmdUI* pCmdUI);
 	afx_msg void OnInitras();
@@ -207,17 +221,47 @@ protected:
 	afx_msg void OnInipan();
 	afx_msg void OnIniescal();
 	afx_msg void OnUpdatePlana(CCmdUI* pCmdUI);
-	afx_msg void OnTruck();
-	afx_msg void OnUpdateTruck(CCmdUI* pCmdUI);
+	//afx_msg void OnTruck();
+	//afx_msg void OnUpdateTruck(CCmdUI* pCmdUI);
 	afx_msg void OnNavega();
 	afx_msg void OnUpdateNavega(CCmdUI* pCmdUI);
 	afx_msg void OnIninav();
-	afx_msg void OnObj3ds();
-	afx_msg void OnUpdateObj3ds(CCmdUI* pCmdUI);
-	afx_msg void OnFullscreen();
+	//afx_msg void OnObj3ds();
+	//afx_msg void OnUpdateObj3ds(CCmdUI* pCmdUI);
+	//afx_msg void OnFullscreen();
 	afx_msg void OnUpdateFullscreen(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateMobil(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateIFixe(CCmdUI* pCmdUI);
+
+	// Creació de funcions sobre Muscles i Expressions
+	afx_msg void OnImportMuscles();
+	afx_msg void OnExportMuscles();
+	afx_msg void OnImportExpressions();
+	afx_msg void OnExportExpressions();
+	afx_msg void OnMuscleEdit();
+	afx_msg void OnUpdateMuscleEdit(CCmdUI *pCmdUI);
+	afx_msg void OnExpressionEdit();
+	afx_msg void OnUpdateExpressionEdit(CCmdUI *pCmdUI);
+	afx_msg void OnMCellesDreta();
+	afx_msg void OnUpdateMCellesDreta(CCmdUI *pCmdUI);
+	afx_msg void OnMCellesEsquerra();
+	afx_msg void OnUpdateMCellesEsquerra(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaDreta();
+	afx_msg void OnUpdateMBocaDreta(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaEsquerre();
+	afx_msg void OnUpdateMBocaEsquerre(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaInferior();
+	afx_msg void OnUpdateMBocaInferior(CCmdUI *pCmdUI);
+	afx_msg void OnExpTrist();
+	afx_msg void OnUpdateExpTrist(CCmdUI *pCmdUI);
+	afx_msg void OnExpAlegre();
+	afx_msg void OnUpdateExpAlegre(CCmdUI *pCmdUI);
+	afx_msg void OnExpEnfadat();
+	afx_msg void OnUpdateExpEnfadat(CCmdUI *pCmdUI);
+	afx_msg void OnExpSerios();
+	afx_msg void OnUpdateExpSerios(CCmdUI *pCmdUI);
+	afx_msg void OnExpSorpres();
+	afx_msg void OnUpdateExpSorpres(CCmdUI *pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:
@@ -225,9 +269,9 @@ public:
 public:
 	afx_msg void OnFileOpen3ds();
 public:
-	afx_msg void OnObjobj();
+	//afx_msg void OnObjobj();
 public:
-	afx_msg void OnUpdateObjobj(CCmdUI *pCmdUI);
+	//afx_msg void OnUpdateObjobj(CCmdUI *pCmdUI);
 public:
 	afx_msg void OnPolarZ();
 public:

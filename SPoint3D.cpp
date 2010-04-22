@@ -1,21 +1,21 @@
 #include "stdafx.h"
 #include "SPoint3D.h"
 
-Point3D::Point3D( Point& p )
+SPoint3D::SPoint3D( Point& p )
 {
 	x = p.x;
 	y = p.y;
 	z = p.z;
 }
 
-Point3D::Point3D(float *p)
+SPoint3D::SPoint3D(float *p)
 {
 	x = p[0];
 	y = p[1];
 	z = p[2];
 }
 
-Point3D::Point3D(float fx, float fy, float fz)
+SPoint3D::SPoint3D(float fx, float fy, float fz)
 {
 	x = fx;
 	y = fy;
@@ -23,18 +23,18 @@ Point3D::Point3D(float fx, float fy, float fz)
 }
 
 //Casting
-Point3D::operator float* ()
+SPoint3D::operator float* ()
 {
 	return (float *) &x;
 }
 
-Point3D::operator const float* () const
+SPoint3D::operator const float* () const
 {
 	return (const float *) &x;
 }
 
 //Assignment Operators
-Point3D& Point3D::operator += (const Point3D& v)
+SPoint3D& SPoint3D::operator += (const SPoint3D& v)
 {
 	x += v.x;
 	y += v.y;
@@ -42,7 +42,7 @@ Point3D& Point3D::operator += (const Point3D& v)
 	return *this;
 }
 
-Point3D& Point3D::operator -= (const Point3D& v)
+SPoint3D& SPoint3D::operator -= (const SPoint3D& v)
 {
 	x -= v.x;
 	y -= v.y;
@@ -50,7 +50,7 @@ Point3D& Point3D::operator -= (const Point3D& v)
 	return *this;
 }
 
-Point3D& Point3D::operator *= (float v)
+SPoint3D& SPoint3D::operator *= (float v)
 {
 	x *= v;
 	y *= v;
@@ -58,7 +58,7 @@ Point3D& Point3D::operator *= (float v)
 	return *this;
 }
 
-Point3D& Point3D::operator /= (float v)
+SPoint3D& SPoint3D::operator /= (float v)
 {
 	x /= v;
 	y /= v;
@@ -67,45 +67,56 @@ Point3D& Point3D::operator /= (float v)
 }
 
 //Unary Operators
-Point3D Point3D::operator + () const
+SPoint3D SPoint3D::operator + () const
 {
 	return *this;
 }
 
-Point3D Point3D::operator - () const
+SPoint3D SPoint3D::operator - () const
 {
-	return Point3D(-x, -y, -z);
+	return SPoint3D(-x, -y, -z);
 }
 
 //Binary Operators
-Point3D Point3D::operator +(const Point3D& v) const
+SPoint3D SPoint3D::operator +(const SPoint3D& v) const
 {
-	return Point3D(x + v.x, y + v.y, z + v.z);
+	return SPoint3D(x + v.x, y + v.y, z + v.z);
 }
 
-Point3D Point3D::operator -(const Point3D& v) const
+SPoint3D SPoint3D::operator -(const SPoint3D& v) const
 {
-	return Point3D(x - v.x, y - v.y, z - v.z);
+	return SPoint3D(x - v.x, y - v.y, z - v.z);
 }
 
-Point3D Point3D::operator *(float v) const
+SPoint3D SPoint3D::operator *(float v) const
 {
-	return Point3D(x * v, y * v, z * v);
+	return SPoint3D(x * v, y * v, z * v);
 }
 
-Point3D Point3D::operator /(float v) const
+SPoint3D SPoint3D::operator /(float v) const
 {
 	float vInv = 1.0f / v;
-	return Point3D(x * vInv , y * vInv, z * vInv);
+	return SPoint3D(x * vInv , y * vInv, z * vInv);
 }
 
 //Bool Operators
-bool Point3D::operator ==( const Point3D& v ) const
+bool SPoint3D::operator ==( const SPoint3D& v ) const
 {
 	return (x == v.x) && (y == v.y) && (z == v.z);
 }
 
-bool Point3D::operator !=( const Point3D& v ) const
+bool SPoint3D::operator !=( const SPoint3D& v ) const
 {
 	return (x != v.x) || (y != v.y) || (z != v.z);
+}
+void SPoint3D::normalizeVector(void)
+{
+	float modul = sqrt(pow(x,2) + pow(y,2) + pow(z,2));
+	x/=modul;
+	y/=modul;
+	z/=modul;
+}
+double SPoint3D::calcularDistancia(const SPoint3D& v) const
+{
+	return sqrt(pow(x - v.x,2) + pow(y - v.y,2) + pow(z - v.z,2));
 }

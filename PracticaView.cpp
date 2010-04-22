@@ -17,7 +17,8 @@
 #include "Practica.h"
 #include "PracticaDoc.h"
 #include "PracticaView.h"
-
+#include "MuscleManager.h"
+#include "ExpressionManager.h"
 #include "visualitzacio.h"
 
 
@@ -43,19 +44,19 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_WM_SIZE()
-	ON_COMMAND(ID_CUB, OnCub)
-	ON_UPDATE_COMMAND_UI(ID_CUB, OnUpdateCub)
-	ON_COMMAND(ID_PERSPECTIVA, OnPerspectiva)
-	ON_UPDATE_COMMAND_UI(ID_PERSPECTIVA, OnUpdatePerspectiva)
+	//ON_COMMAND(ID_CUB, OnCub)
+	//ON_UPDATE_COMMAND_UI(ID_CUB, OnUpdateCub)
+	//ON_COMMAND(ID_PERSPECTIVA, OnPerspectiva)
+	//ON_UPDATE_COMMAND_UI(ID_PERSPECTIVA, OnUpdatePerspectiva)
 	ON_COMMAND(ID_ZOOM, OnZoom)
 	ON_UPDATE_COMMAND_UI(ID_ZOOM, OnUpdateZoom)
 	ON_COMMAND(ID_MOBIL, OnMobil)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_RBUTTONUP()
-	ON_COMMAND(ID_ESFERA, OnEsfera)
-	ON_UPDATE_COMMAND_UI(ID_ESFERA, OnUpdateEsfera)
-	ON_COMMAND(ID_TEAPOT, OnTeapot)
-	ON_UPDATE_COMMAND_UI(ID_TEAPOT, OnUpdateTeapot)
+	//ON_COMMAND(ID_ESFERA, OnEsfera)
+	//ON_UPDATE_COMMAND_UI(ID_ESFERA, OnUpdateEsfera)
+	//ON_COMMAND(ID_TEAPOT, OnTeapot)
+	//ON_UPDATE_COMMAND_UI(ID_TEAPOT, OnUpdateTeapot)
 	ON_COMMAND(ID_EIXOS, OnEixos)
 	ON_UPDATE_COMMAND_UI(ID_EIXOS, OnUpdateEixos)
 	ON_COMMAND(ID_FILFERROS, OnFilferros)
@@ -70,8 +71,8 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_PAN, OnUpdatePan)
 	ON_COMMAND(ID_TEST, OnTest)
 	ON_UPDATE_COMMAND_UI(ID_TEST, OnUpdateTest)
-	ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
-	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
+	//ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
+	//ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
 	ON_COMMAND(ID_TRASLACIO, OnTraslacio)
 	ON_UPDATE_COMMAND_UI(ID_TRASLACIO, OnUpdateTraslacio)
 	ON_COMMAND(ID_INITRAS, OnInitras)
@@ -94,32 +95,63 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_COMMAND(ID_INIPAN, OnInipan)
 	ON_COMMAND(ID_INIESCAL, OnIniescal)
 	ON_UPDATE_COMMAND_UI(ID_PLANA, OnUpdatePlana)
-	ON_COMMAND(ID_TRUCK, OnTruck)
-	ON_UPDATE_COMMAND_UI(ID_TRUCK, OnUpdateTruck)
+	//ON_COMMAND(ID_TRUCK, OnTruck)
+	//ON_UPDATE_COMMAND_UI(ID_TRUCK, OnUpdateTruck)
 	ON_COMMAND(ID_NAVEGA, OnNavega)
 	ON_UPDATE_COMMAND_UI(ID_NAVEGA, OnUpdateNavega)
 	ON_COMMAND(ID_ININAV, OnIninav)
-	ON_COMMAND(ID_OBJ3DS, OnObj3ds)
-	ON_UPDATE_COMMAND_UI(ID_OBJ3DS, OnUpdateObj3ds)
-	ON_COMMAND(ID_FULLSCREEN, OnFullscreen)
-	ON_UPDATE_COMMAND_UI(ID_FULLSCREEN, OnUpdateFullscreen)
+	//ON_COMMAND(ID_OBJ3DS, OnObj3ds)
+	//ON_UPDATE_COMMAND_UI(ID_OBJ3DS, OnUpdateObj3ds)
+	//ON_COMMAND(ID_FULLSCREEN, OnFullscreen)
+	//ON_UPDATE_COMMAND_UI(ID_FULLSCREEN, OnUpdateFullscreen)
 	ON_UPDATE_COMMAND_UI(ID_MOBIL, OnUpdateMobil)
 	ON_UPDATE_COMMAND_UI(ID_I_FIXE, OnUpdateIFixe)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+	//ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
+	//ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_OPEN_OBJ, &CPracticaView::OnFileOpenObj)
 	ON_COMMAND(ID_FILE_OPEN_3DS, &CPracticaView::OnFileOpen3ds)
-	ON_COMMAND(ID_OBJOBJ, &CPracticaView::OnObjobj)
-	ON_UPDATE_COMMAND_UI(ID_OBJOBJ, &CPracticaView::OnUpdateObjobj)
+	//ON_COMMAND(ID_OBJOBJ, &CPracticaView::OnObjobj)
+	//ON_UPDATE_COMMAND_UI(ID_OBJOBJ, &CPracticaView::OnUpdateObjobj)
 	ON_COMMAND(ID_POLAR_Z, &CPracticaView::OnPolarZ)
 	ON_UPDATE_COMMAND_UI(ID_POLAR_Z, &CPracticaView::OnUpdatePolarZ)
 	ON_COMMAND(ID_POLAR_Y, &CPracticaView::OnPolarY)
 	ON_UPDATE_COMMAND_UI(ID_POLAR_Y, &CPracticaView::OnUpdatePolarY)
 	ON_COMMAND(ID_POLAR_X, &CPracticaView::OnPolarX)
 	ON_UPDATE_COMMAND_UI(ID_POLAR_X, &CPracticaView::OnUpdatePolarX)
+
+	//Vinculació de funcions de Muscles i Expressions amb el menú gràfic de l'aplicació.
+	ON_COMMAND(ID_IMPORT_MUSCLES, &CPracticaView::OnImportMuscles)
+	ON_COMMAND(ID_EXPORT_MUSCLES, &CPracticaView::OnExportMuscles)
+	ON_COMMAND(ID_IMPORT_EXPRESSIONS, &CPracticaView::OnImportExpressions)
+	ON_COMMAND(ID_EXPORT_EXPRESSIONS, &CPracticaView::OnExportExpressions)
+	ON_COMMAND(ID_MUSCLE_EDIT, &CPracticaView::OnMuscleEdit)
+	ON_UPDATE_COMMAND_UI(ID_MUSCLE_EDIT, &CPracticaView::OnUpdateMuscleEdit)
+	ON_COMMAND(ID_EXPRESSION_EDIT, &CPracticaView::OnExpressionEdit)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSION_EDIT, &CPracticaView::OnUpdateExpressionEdit)
+	ON_COMMAND(ID_MCELLES_DRETA, &CPracticaView::OnMCellesDreta)
+	ON_UPDATE_COMMAND_UI(ID_MCELLES_DRETA, &CPracticaView::OnUpdateMCellesDreta)
+	ON_COMMAND(ID_MCELLES_ESQUERRE, &CPracticaView::OnMCellesEsquerra)
+	ON_UPDATE_COMMAND_UI(ID_MCELLES_ESQUERRE, &CPracticaView::OnUpdateMCellesEsquerra)
+	ON_COMMAND(ID_MBOCA_DRETA, &CPracticaView::OnMBocaDreta)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_DRETA, &CPracticaView::OnUpdateMBocaDreta)
+	ON_COMMAND(ID_MBOCA_ESQUERRE, &CPracticaView::OnMBocaEsquerre)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_ESQUERRE, &CPracticaView::OnUpdateMBocaEsquerre)
+	ON_COMMAND(ID_MBOCA_INFERIOR, &CPracticaView::OnMBocaInferior)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_INFERIOR, &CPracticaView::OnUpdateMBocaInferior)
+	ON_COMMAND(ID_EXPRESSIONS_TRIST, &CPracticaView::OnExpTrist)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_TRIST, &CPracticaView::OnUpdateExpTrist)
+	ON_COMMAND(ID_EXPRESSIONS_ALEGRE, &CPracticaView::OnExpAlegre)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_ALEGRE, &CPracticaView::OnUpdateExpAlegre)
+	ON_COMMAND(ID_EXPRESSIONS_ENFADAT, &CPracticaView::OnExpEnfadat)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_ENFADAT, &CPracticaView::OnUpdateExpEnfadat)
+	ON_COMMAND(ID_EXPRESSIONS_SERIOS, &CPracticaView::OnExpSerios)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_SERIOS, &CPracticaView::OnUpdateExpSerios)
+	ON_COMMAND(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnExpSorpres)
+	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnUpdateExpSorpres)
+
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,7 +179,7 @@ CPracticaView::CPracticaView()
 	angleZ=0.0;
 
 // GC2: Variables de control per les opcions de menú Projecció, Objecte
-	projeccio=CAP;			objecte=CAP;
+	projeccio=PERSPECT;			objecte=CAP;
 
 // GC2: Variables de control del menú Transforma
 	transf=false;	trasl=false;	rota=false;		escal=false;
@@ -158,10 +190,10 @@ CPracticaView::CPracticaView()
 	transX=false;	transY=false;	transZ=false;
 
 // GC2: Variables de control per les opcions de menú Ocultacions
-	oculta=false;			test_vis=false;			back_line=false;
+	oculta=true;			test_vis=false;			back_line=false;
 
 // GC2: Variables de control del menú Iluminació		
-	ilumina=FILFERROS;		ifixe=false;	textura=false;	t_textura=CAP;
+	ilumina=SUAU;		ifixe=true;	textura=false;	t_textura=CAP;
 
 // GC2: Variables de control dels botons de mouse
 	m_PosEAvall=(0,0);		m_PosDAvall=(0,0);
@@ -184,6 +216,14 @@ CPracticaView::CPracticaView()
 
 // GC2: Variables del Timer
 	t=0;			anima=false;
+
+// GC2: Variables dels Muscles
+	editMuscle = false;
+	selectedMuscle = NONE_MUSCLE;
+
+// GC2: Variables de les Expressions
+	editExpression = false;
+	selectedExpression = NONE_EXPRESSION;
 
 // GC2: Altres variables
 	nom="";			// Nom del fitxer
@@ -1489,6 +1529,8 @@ GLfloat vdir[3]={0,0,0};
 /*					7. OCULTACIONS											 */
 /*					8. IL.LUMINACIÓ											 */
 /*					9. TIMER (ANIMACIÓ)									     */
+/*					10. MUSCLES												 */
+/*					11. EXPRESSIONS											 */
 /* ------------------------------------------------------------------------- */
 
 /* ------------------------------------------------------------------------- */
@@ -1496,24 +1538,24 @@ GLfloat vdir[3]={0,0,0};
 /* ------------------------------------------------------------------------- */
 
 // Obrir fitxer
-void CPracticaView::OnFileOpen() 
-{
-
-//  Obrir diàleg de lectura de fitxer (fitxers (*.MNT)
-	CFileDialog openMunt (TRUE, NULL, NULL,
-		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-		_T("MNT Files(*.mnt)|*.mnt|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
-
-	if (openMunt.DoModal() != IDOK)
-		return;                 // stay with old data file
-    else
-	   {nom=openMunt.GetPathName();}
-
-// Variable de tipus CString 'nom' conté el nom del fitxer seleccionat
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();		
-}
+//void CPracticaView::OnFileOpen() 
+//{
+//
+////  Obrir diàleg de lectura de fitxer (fitxers (*.MNT)
+//	CFileDialog openMunt (TRUE, NULL, NULL,
+//		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+//		_T("MNT Files(*.mnt)|*.mnt|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+//
+//	if (openMunt.DoModal() != IDOK)
+//		return;                 // stay with old data file
+//    else
+//	   {nom=openMunt.GetPathName();}
+//
+//// Variable de tipus CString 'nom' conté el nom del fitxer seleccionat
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();		
+//}
 
 // Obrir fitxer en format gràfic 3DS
 void CPracticaView::OnFileOpen3ds()
@@ -1526,7 +1568,7 @@ void CPracticaView::OnFileOpen3ds()
 // Obrir diàleg de lectura de fitxer
 		CFileDialog open3DS (TRUE, NULL, NULL,
 			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-			_T("3DS Files(*.3ds)|*.3ds|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+			_T("3DS Files(*.3ds)|*.3ds|All Files (*.*)|*.*||"));;
 
 			if (open3DS.DoModal() != IDOK)	return;  // stay with old data file
 			else nom=open3DS.GetPathName();
@@ -1562,7 +1604,7 @@ void CPracticaView::OnFileOpenObj()
 // Obrir diàleg de lectura de fitxer
 		CFileDialog openOBJ (TRUE, NULL, NULL,
 			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-			_T("OBJ Files(*.obj)|*.obj|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+			_T("OBJ Files(*.obj)|*.obj|All Files (*.*)|*.*||"));;
 
 			if (openOBJ.DoModal() != IDOK)	return;  // stay with old data file
 			else nom=openOBJ.GetPathName();
@@ -1573,7 +1615,7 @@ void CPracticaView::OnFileOpenObj()
 	/* i carreguem */	
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
 	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
-	ObOBJ.Dibuixar(OBJECTEOBJ);
+	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
 // Crida a OnPaint() per redibuixar l'escena
@@ -1582,36 +1624,36 @@ void CPracticaView::OnFileOpenObj()
 
 
 // Escriure fitxer
-void CPracticaView::OnFileSaveAs() 
-{
-
-//  Obrir diàleg d'escriptura de fitxer (fitxers *.MNT)
-	CFileDialog openMunt (FALSE, NULL, NULL,
-		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-		_T("MNT Files(*.mnt)|*.mnt|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
-
-	if (openMunt.DoModal() != IDOK)
-		return;                 // stay with old data file
-    else
-	   {nom=openMunt.GetPathName();}
-
-// Variable de tipus CString 'nom' conté el nom del fitxer seleccionat
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
+//void CPracticaView::OnFileSaveAs() 
+//{
+//
+////  Obrir diàleg d'escriptura de fitxer (fitxers *.MNT)
+//	CFileDialog openMunt (FALSE, NULL, NULL,
+//		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+//		_T("MNT Files(*.mnt)|*.mnt|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+//
+//	if (openMunt.DoModal() != IDOK)
+//		return;                 // stay with old data file
+//    else
+//	   {nom=openMunt.GetPathName();}
+//
+//// Variable de tipus CString 'nom' conté el nom del fitxer seleccionat
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
 
 /* ------------------------------------------------------------------------- */
 /*					2. VEURE: ToolBar), StatusBar, Pantalla Completa         */
 /* ------------------------------------------------------------------------- */
 
 // PANTALLA COMPLETA: opció booleana
-void CPracticaView::OnFullscreen() 
-{
-// TODO: Add your command handler code here
-	fullscreen=!fullscreen;
-
-}
+//void CPracticaView::OnFullscreen() 
+//{
+//// TODO: Add your command handler code here
+//	fullscreen=!fullscreen;
+//
+//}
 
 void CPracticaView::OnUpdateFullscreen(CCmdUI* pCmdUI) 
 {
@@ -1841,206 +1883,205 @@ void CPracticaView::OnUpdateEixos(CCmdUI* pCmdUI)
 /* ------------------------------------------------------------------------- */
 
 // PROJECCIÓ: Perspectiva
-void CPracticaView::OnPerspectiva() 
-{
-// TODO: Add your command handler code here
-	projeccio=PERSPECT;
-	mobil=true;			zzoom=true;
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();	
-}
-
-void CPracticaView::OnUpdatePerspectiva(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if (projeccio==PERSPECT)
-		pCmdUI->SetCheck(1);
-	else
-        pCmdUI->SetCheck(0);	
-}
-
+//void CPracticaView::OnPerspectiva() 
+//{
+//	//Fixat en OnPaint() que dibuixi en Perspectiva
+//// TODO: Add your command handler code here
+//	projeccio=PERSPECT;
+//	mobil=true;			zzoom=true;
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();	
+//}
+//
+//void CPracticaView::OnUpdatePerspectiva(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if (projeccio==PERSPECT)
+//		pCmdUI->SetCheck(1);
+//	else
+//        pCmdUI->SetCheck(0);	
+//}
 /* ------------------------------------------------------------------------- */
 /*					5. OBJECTE					                             */
 /* ------------------------------------------------------------------------- */
 
 // OBJECTE Cub
-void CPracticaView::OnCub() 
-{
-// TODO: Add your command handler code here
-	objecte=CUB;
+//void CPracticaView::OnCub() 
+//{
+//// TODO: Add your command handler code here
+//	objecte=CUB;
+//
+//// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();	
+//}
 
-// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();	
-}
-
-void CPracticaView::OnUpdateCub(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(objecte==CUB)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//void CPracticaView::OnUpdateCub(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(objecte==CUB)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 // OBJECTE Esfera
-void CPracticaView::OnEsfera() 
-{
-// TODO: Add your command handler code here
-	objecte=ESFERA;
+//void CPracticaView::OnEsfera() 
+//{
+//// TODO: Add your command handler code here
+//	objecte=ESFERA;
+//
+//// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();	
+//}
 
-// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();	
-}
-
-void CPracticaView::OnUpdateEsfera(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(objecte==ESFERA)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//void CPracticaView::OnUpdateEsfera(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(objecte==ESFERA)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 // OBJECTE Tetera
-void CPracticaView::OnTeapot() 
-{
-// TODO: Add your command handler code here
-	objecte=TETERA;
+//void CPracticaView::OnTeapot() 
+//{
+//// TODO: Add your command handler code here
+//	objecte=TETERA;
+//
+//// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
 
-// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateTeapot(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(objecte==TETERA)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//void CPracticaView::OnUpdateTeapot(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(objecte==TETERA)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 // OBJECTE Truck
-void CPracticaView::OnTruck() 
-{
-// TODO: Add your command handler code here
-	objecte=TRUCK;
+//void CPracticaView::OnTruck() 
+//{
+//// TODO: Add your command handler code here
+//	objecte=TRUCK;
+//
+//// Activació el contexte OpenGL
+//    wglMakeCurrent(m_hDC,m_hRC);
+//// Inicialitza vector imatges textura pel Truck.
+//	Init_Textures();
+//// Desactivació contexte OpenGL
+//	wglMakeCurrent(m_hDC,NULL);
+//
+//// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
 
-// Activació el contexte OpenGL
-    wglMakeCurrent(m_hDC,m_hRC);
-// Inicialitza vector imatges textura pel Truck.
-	Init_Textures();
-// Desactivació contexte OpenGL
-	wglMakeCurrent(m_hDC,NULL);
-
-// 	----GC2: Modificar R per centrar Vista amb mida de l'objecte
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateTruck(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(objecte==TRUCK)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//void CPracticaView::OnUpdateTruck(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(objecte==TRUCK)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 // OBJECTE 3DS
-void CPracticaView::OnObj3ds() 
-{
-// TODO: Add your command handler code here
-	if(Ob3DS!=NULL) delete Ob3DS;
+//void CPracticaView::OnObj3ds() 
+//{
+//// TODO: Add your command handler code here
+//	if(Ob3DS!=NULL) delete Ob3DS;
+//
+//	objecte=OBJ3DS;
+//
+//// Obrir diàleg de lectura de fitxer
+//		CFileDialog open3DS (TRUE, NULL, NULL,
+//			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+//			_T("3DS Files(*.3ds)|*.3ds|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+//
+//			if (open3DS.DoModal() != IDOK)	return;  // stay with old data file
+//			else nom=open3DS.GetPathName();
+//	
+//// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+//	char * nomfitx = (char *)(LPCTSTR)nom;
+//
+//	/* i carreguem */	
+//	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
+//	Ob3DS = new Obj_3DS;
+//	Ob3DS->EliminarMemoria();
+//	Ob3DS->Inicialitzar();
+//	Ob3DS->Carregar3DS(nomfitx);
+//
+//// objecte nou;index DisplayList nº2; amb textures
+//	Ob3DS->Dibuixa3DS(false,OBJECTE3DS);
+//	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
 
-	objecte=OBJ3DS;
 
-// Obrir diàleg de lectura de fitxer
-		CFileDialog open3DS (TRUE, NULL, NULL,
-			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-			_T("3DS Files(*.3ds)|*.3ds|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
-
-			if (open3DS.DoModal() != IDOK)	return;  // stay with old data file
-			else nom=open3DS.GetPathName();
-	
-// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
-	char * nomfitx = (char *)(LPCTSTR)nom;
-
-	/* i carreguem */	
-	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
-	Ob3DS = new Obj_3DS;
-	Ob3DS->EliminarMemoria();
-	Ob3DS->Inicialitzar();
-	Ob3DS->Carregar3DS(nomfitx);
-
-// objecte nou;index DisplayList nº2; amb textures
-	Ob3DS->Dibuixa3DS(false,OBJECTE3DS);
-	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-
-void CPracticaView::OnUpdateObj3ds(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if (objecte==OBJ3DS)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// OBJECTE OBJ
-void CPracticaView::OnObjobj()
-{
-// TODO: Add your command handler code here
-	if(ObOBJ!=NULL) delete ObOBJ;
-
-	objecte=OBJOBJ;
-
-// Obrir diàleg de lectura de fitxer
-		CFileDialog openOBJ (TRUE, NULL, NULL,
-			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-			_T("OBJ Files(*.obj)|*.obj|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
-
-			if (openOBJ.DoModal() != IDOK)	return;  // stay with old data file
-			else nom=openOBJ.GetPathName();
-	
-// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
-	char * nomfitx = (char *)(LPCTSTR)nom;
-
-	/* i carreguem */	
-	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
-	ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx,OBJECTEOBJ);
-
-	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateObjobj(CCmdUI *pCmdUI)
-{
-// TODO: Add your command update UI handler code here
-	if (objecte==OBJOBJ)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//void CPracticaView::OnUpdateObj3ds(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if (objecte==OBJ3DS)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// OBJECTE OBJ
+//void CPracticaView::OnObjobj()
+//{
+//// TODO: Add your command handler code here
+//	if(ObOBJ!=NULL) delete ObOBJ;
+//
+//	objecte=OBJOBJ;
+//
+//// Obrir diàleg de lectura de fitxer
+//		CFileDialog openOBJ (TRUE, NULL, NULL,
+//			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+//			_T("OBJ Files(*.obj)|*.obj|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
+//
+//			if (openOBJ.DoModal() != IDOK)	return;  // stay with old data file
+//			else nom=openOBJ.GetPathName();
+//	
+//// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+//	char * nomfitx = (char *)(LPCTSTR)nom;
+//
+//	/* i carreguem */	
+//	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
+//	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
+//	ObOBJ->Dibuixar(OBJECTEOBJ);
+//	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateObjobj(CCmdUI *pCmdUI)
+//{
+//// TODO: Add your command update UI handler code here
+//	if (objecte==OBJOBJ)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 /* ------------------------------------------------------------------------- */
@@ -2416,4 +2457,473 @@ int CPracticaView::Log2(int num)
 	else tlog=0;
 
 	return tlog;
+}
+/* ------------------------------------------------------------------------- */
+/*					10. MUSCLES												 */
+/* ------------------------------------------------------------------------- */
+void CPracticaView::OnImportMuscles()
+{
+	// Obrir diàleg de lectura de fitxer
+	CFileDialog openXML (TRUE, NULL, NULL,
+		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+		_T("XML Files(*.xml)|*.xml|All Files (*.*)|*.*||"));;
+
+	if (openXML.DoModal() != IDOK)	return;  // stay with old data file
+	else nom=openXML.GetPathName();
+
+	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+	char * nomfitx = (char *)(LPCTSTR)nom;
+
+	//TODO Cridar al parsejador de fitxers XML per carregar els muscles.
+	// La variable nomfitx conté tot el path del fitxer.
+
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnExportMuscles()
+{
+		//  Obrir diàleg d'escriptura de fitxer (fitxers *.MNT)
+	CFileDialog openExportXML (FALSE, NULL, NULL,
+		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+		_T("XML Files(*.xml)|*.xml|All Files (*.*)|*.*||"));;
+
+	if (openExportXML.DoModal() != IDOK)
+		return;                 // stay with old data file
+    else
+	   {nom=openExportXML.GetPathName();}
+
+	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+	char * nomfitx = (char *)(LPCTSTR)nom;
+
+	//TODO Cridar al parsejador de fitxers XML per guardar els muscles.
+	// La variable nomfitx conté tot el path del fitxer.
+
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnMuscleEdit()
+{
+	editMuscle = !editMuscle;
+	if (!editMuscle)
+		ChangeMuscleState(NONE_MUSCLE);
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMuscleEdit(CCmdUI *pCmdUI)
+{
+	if(editMuscle)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+void CPracticaView::OnMCellesDreta()
+{
+	if (selectedMuscle != DCELLA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(DCELLA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(DCELLA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMCellesDreta(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DCELLA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMCellesEsquerra()
+{
+	if (selectedMuscle != ECELLA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(ECELLA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(ECELLA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMCellesEsquerra(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == ECELLA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaDreta()
+{
+	if (selectedMuscle != DBOCA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(DBOCA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(DBOCA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMBocaDreta(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaEsquerre()
+{
+	if (selectedMuscle != EBOCA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(EBOCA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(EBOCA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMBocaEsquerre(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == EBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaInferior()
+{
+	if (selectedMuscle != INFBOCA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(INFBOCA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(INFBOCA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMBocaInferior(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == INFBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
+{
+	switch(selectedMuscle)
+	{
+	case DCELLA:
+		{
+			this->OnMCellesDreta();
+			selectedMuscle = muscle;
+			break;
+		}
+	case ECELLA:
+		{
+			this->OnMCellesEsquerra();
+			selectedMuscle = muscle;
+			break;
+		}
+	case DBOCA:
+		{
+			this->OnMBocaDreta();
+			selectedMuscle = muscle;
+			break;
+		}
+	case EBOCA:
+		{
+			this->OnMBocaEsquerre();
+			selectedMuscle = muscle;
+			break;
+		}
+	case INFBOCA:
+		{
+			this->OnMBocaInferior();
+			selectedMuscle = muscle;
+			break;
+		}
+	case NONE_MUSCLE:
+		{
+			selectedMuscle = muscle;
+			break;
+		}
+	}
+}
+/* ------------------------------------------------------------------------- */
+/*					11. EXPRESSIONS											 */
+/* ------------------------------------------------------------------------- */
+void CPracticaView::OnImportExpressions()
+{
+	// Obrir diàleg de lectura de fitxer
+	CFileDialog openXML (TRUE, NULL, NULL,
+		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+		_T("XML Files(*.xml)|*.xml|All Files (*.*)|*.*||"));;
+
+	if (openXML.DoModal() != IDOK)	return;  // stay with old data file
+	else nom=openXML.GetPathName();
+
+	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+	char * nomfitx = (char *)(LPCTSTR)nom;
+
+	//TODO Cridar al parsejador de fitxers XML per carregar les expressions.
+	// La variable nomfitx conté tot el path del fitxer.
+
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnExportExpressions()
+{
+	//  Obrir diàleg d'escriptura de fitxer (fitxers *.MNT)
+	CFileDialog openExportXML (FALSE, NULL, NULL,
+		OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
+		_T("XML Files(*.xml)|*.xml|All Files (*.*)|*.*||"));;
+
+	if (openExportXML.DoModal() != IDOK)
+		return;                 // stay with old data file
+    else
+	   {nom=openExportXML.GetPathName();}
+
+	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
+	char * nomfitx = (char *)(LPCTSTR)nom;
+
+	//TODO Cridar al parsejador de fitxers XML per guardar les expressions.
+	// La variable nomfitx conté tot el path del fitxer.
+
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnExpressionEdit()
+{
+	editExpression = !editExpression;
+	if (!editExpression)
+		ChangeExpressionState(NONE_EXPRESSION);
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateExpressionEdit(CCmdUI *pCmdUI)
+{
+	if(editExpression)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+void CPracticaView::OnExpTrist()
+{
+	if (selectedExpression != TRIST)
+	{
+		if (editExpression)
+			ChangeExpressionState(TRIST);
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+void CPracticaView::OnUpdateExpTrist(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == TRIST)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnExpAlegre()
+{
+	if (selectedExpression != ALEGRE)
+	{
+		if (editExpression)
+			ChangeExpressionState(ALEGRE);
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateExpAlegre(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == ALEGRE)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnExpEnfadat()
+{
+	if (selectedExpression != ENFADAT)
+	{
+		if (editExpression)
+			ChangeExpressionState(ENFADAT);
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateExpEnfadat(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == ENFADAT)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnExpSerios()
+{
+	if (selectedExpression != SERIOS)
+	{
+		if (editExpression)
+			ChangeExpressionState(SERIOS);
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateExpSerios(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == SERIOS)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnExpSorpres()
+{
+	if (selectedExpression != SORPRES)
+	{
+		if (editExpression)
+			ChangeExpressionState(SORPRES);
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateExpSorpres(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == SORPRES)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::ChangeExpressionState ( TypeExpression expression )
+{
+	switch (selectedExpression)
+	{
+	case TRIST:
+		{
+			this->OnExpTrist();
+			selectedExpression = expression;
+			break;
+		}
+	case ALEGRE:
+		{
+			this->OnExpAlegre();
+			selectedExpression = expression;
+			break;
+		}
+	case ENFADAT:
+		{
+			this->OnExpEnfadat();
+			selectedExpression = expression;
+			break;
+		}
+	case SERIOS:
+		{
+			this->OnExpSerios();
+			selectedExpression = expression;
+			break;
+		}
+	case SORPRES:
+		{
+			this->OnExpSorpres();
+			selectedExpression = expression;
+			break;
+		}
+	case NONE_EXPRESSION:
+		{
+			selectedExpression = expression;
+			break;
+		}
+	}
 }

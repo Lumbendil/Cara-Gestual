@@ -31,7 +31,7 @@ struct Point2D {
 };
 
 struct Punt {
-	Point3D cordenades,normal;
+	SPoint3D cordenades,normal;
 	Point2D cordTex;
 };
 
@@ -40,6 +40,7 @@ struct Punt {
 struct Cara {
 	Punt *punts[3];
 	int materialTextura;
+	Point2D cordTex[3];
 };
 
 class Objecte3D {
@@ -58,23 +59,16 @@ class Objecte3D {
 		Retorna l'identificador del punt de l'objecte mes proxim al
 		punt p.
 		*/
-		int PuntMesProxim(Punt p);
+		int PuntMesProxim(SPoint3D);
 		/*
 		Dibuixa la funció
 		*/
 		void Dibuixar(int list); 
 		/*
-		Retorna la cara amb index n 
-		*/
-		Cara getCara(int n); 
-		/*
-		Retorna el punt amb index n
-		*/
-		Punt getPunt(int n);
-		/*
 		Canvia el punt n per el nouPunt
 		*/
-		void editarPunt(int n, Punt nouPunt);
+		void mourePunt(int, SPoint3D);
+		int buscarPunt(SPoint3D);
 	private:
 		Cara *cares;
 		Punt *punts;
@@ -82,7 +76,7 @@ class Objecte3D {
 		int nombreCares, nombrePunts,nombreMaterials;
 		void Objecte3DDeOBJ(char* filename);
 		void Objecte3DDe3DS(char* filename);
-		Punt* buscarPunt(Punt p);
+		void UseMaterial(O3DMaterial pMaterial);
 };
 
 #endif

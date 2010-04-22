@@ -11,36 +11,42 @@ typedef struct _Point
 #define Point_DEF
 #endif
 
-struct Point3D : public Point
+struct SPoint3D : public Point
 {
 public:
-	Point3D	() {};
-	Point3D (Point& );
-	Point3D ( float * );
-	Point3D	( float fx, float fy, float fz );
+	SPoint3D	() {};
+	SPoint3D (Point& );
+	SPoint3D ( float * );
+	SPoint3D	( float fx, float fy, float fz );
 
 	//Casting
 	operator float* ();
 	operator const float* () const;
 
 	//Assignment Operators
-	Point3D& operator += ( const Point3D& );
-	Point3D& operator -= ( const Point3D& );
-	Point3D& operator *= ( float );
-	Point3D& operator /= ( float );
+	SPoint3D& operator += ( const SPoint3D& );
+	SPoint3D& operator -= ( const SPoint3D& );
+	SPoint3D& operator *= ( float );
+	SPoint3D& operator /= ( float );
 
 	//Unary Operators
-	Point3D operator + () const;
-	Point3D operator - () const;
+	SPoint3D operator + () const;
+	SPoint3D operator - () const;
 
 	//Binary Operators
-	Point3D operator + ( const Point3D& ) const;
-	Point3D operator - ( const Point3D& ) const;
-	Point3D operator * ( float ) const;
-	Point3D operator / ( float ) const;
+	SPoint3D operator + ( const SPoint3D& ) const;
+	SPoint3D operator - ( const SPoint3D& ) const;
+	SPoint3D operator * ( float ) const;
+	SPoint3D operator / ( float ) const;
 
 	//Bool Operators
-	bool operator == (const Point3D& ) const;
-	bool operator != (const Point3D& ) const;
+	bool operator == (const SPoint3D& ) const;
+	bool operator != (const SPoint3D& ) const;
+
+	//Functions
+	void		SPoint3D::normalizeVector	( void );
+	double		SPoint3D::calcularDistancia	(const SPoint3D& ) const;
 };
+
+
 #endif

@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Objecte3D.h"
-//#include <stdio.h>
 #include "objLoader.h"
-#include "constants.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
 	switch (tipus) {
@@ -26,8 +24,8 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->nombrePunts = numpunts;
 
 	for (i = 0; i < numpunts; i++) {
-		this->punts[i].cordenades = Point3D(ob.pVertices[i].fX,ob.pVertices[i].fY,ob.pVertices[i].fZ);
-		this->punts[i].normal = Point3D(ob.pNormals[i].fX,ob.pNormals[i].fY,ob.pNormals[i].fZ);
+		this->punts[i].cordenades = SPoint3D(ob.pVertices[i].fX,ob.pVertices[i].fY,ob.pVertices[i].fZ);
+		this->punts[i].normal = SPoint3D(ob.pNormals[i].fX,ob.pNormals[i].fY,ob.pNormals[i].fZ);
 
 		this->punts[i].cordTex.x = ob.pTexCoords[i].fX;
 		this->punts[i].cordTex.y = ob.pTexCoords[i].fY;
@@ -38,16 +36,17 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->nombreCares = numcares;
 
 	for (i = 0; i < numcares; i++) {
-		if (ob.pFaces[i].iNumVertices == 3) {
+		//if (ob.pFaces[i].iNumVertices == 3) {
 			for (j = 0; j < 3; j++) {
-				p.cordenades = Point3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ);
-				this->cares[i].punts[j] = this->buscarPunt(p);
+				this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
 				this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
-				// TODO: Cordenades de textura de cada vertex ¿?
+				// TODO: Cordenades de textura de cada vertex
+				this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
+				this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
 			}
-		} else {
+		/*} else {
 			// Error
-		}
+		}*/
 	}
 	this->nombreMaterials = o->GetNumMaterials();
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
@@ -55,29 +54,36 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
 }
 
-Punt* Objecte3D::buscarPunt(Punt p) {
-	int i;
-	for (i = 0;(this->punts[i].cordenades.x != p.cordenades.x || this->punts[i].cordenades.y != p.cordenades.y || this->punts[i].cordenades.z != p.cordenades.z) && i < this->nombrePunts; i++);
-	return &(this->punts[i]);
-}
+// TODO: Fer funció
 void Objecte3D::Objecte3DDe3DS(char* filename)
 {
+}
+int Objecte3D::buscarPunt(SPoint3D p) {
+	int i;
+	for (i = 0;this->punts[i].cordenades != p && i < this->nombrePunts; i++);
+	return i;
 }
 Objecte3D::~Objecte3D()
 {
 }
-int Objecte3D::PuntMesProxim(Punt p)
+int Objecte3D::PuntMesProxim(SPoint3D p)
 {
-	return 0;
+	int millorPunt = 0;
+	double distMin = this->punts[0].cordenades.calcularDistancia(p),distancia;
+	for (int i = 1; i < this->nombrePunts; i++) {
+		distancia = this->punts[i].cordenades.calcularDistancia(p);
+		if (distancia < distMin) {
+			millorPunt = i;
+			distMin = distancia;
+		}
+	}
+	return millorPunt;
 }
-	/*
-	Dibuixa la funció
-	*/
 void Objecte3D::Dibuixar(int list)
 {
 	int iPreviousMaterial = -1,i,j;
 
-	glNewList(m_iDisplayList, GL_COMPILE);
+	glNewList(list, GL_COMPILE);
 	// Save texture bit to recover from the various texture state changes
 	glPushAttrib(GL_TEXTURE_BIT);
 
@@ -90,51 +96,55 @@ void Objecte3D::Dibuixar(int list)
 		}
 		glBegin(GL_TRIANGLES);
 		// Calculate and set face normal if no vertex normals are specified
-		if (!pFaces[i].pNormals)
+	/*	if (!pFaces[i].pNormals)
 		{
 			GetFaceNormal(fNormal, &pFaces[i]);
 			glNormal3fv(fNormal);
-		}
+		}*/
 		// Process all vertices
 		for (j=0; j < 3; j++)
 		{
 			// Set vertex normal (if vertex normals are specified)
-			if (this->cares[i].punts[j]->normal)
-				glNormal3f(this->cares[i].punts[j]->normal);
-
+			//Sif (this->cares[i].punts[j]->normal)
+				glNormal3fv(this->cares[i].punts[j]->normal);
 			// Set texture coordinates (if any specified)
-			if (this->cares[i].punts[j]->cordTex)
-				glTexCoord2f(this->cares[i].punts[j]->cordTex);
-
+			//if (this->cares[i].punts[j]->cordTex)
+				glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);
 			// Set vertex
-			glVertex3f(this->cares[i].punts[j]->cordenades);
+			glVertex3fv(this->cares[i].punts[j]->cordenades);
 		}
-
 		glEnd();	
 	}
-
 	glPopAttrib();
 	glEndList();
 }
-/*
-Retorna la cara amb index n 
-*/
-Cara Objecte3D::getCara(int n)
+// TODO: Recalcular les normals
+void Objecte3D::mourePunt(int n, SPoint3D vectorMoviment)
 {
-	Cara caraC;
-	return caraC;
+	this->punts[n].cordenades += vectorMoviment;
 }
-/*
-Retorna el punt amb index n
-*/
-Punt Objecte3D::getPunt(int n)
+
+
+// Funcions Privades
+void Objecte3D::UseMaterial(const O3DMaterial pMaterial)
 {
-	Punt point;
-	return point;
-}
-/*
-Canvia el punt n per el nouPunt
-*/
-void Objecte3D::editarPunt(int n, Punt nouPunt)
-{
+	////////////////////////////////////////////////////////////////////////
+	// Make a given material the current one
+	////////////////////////////////////////////////////////////////////////
+
+	glColor3f(1.0,1.0,1.0);
+	// Look for the presence of a texture and activate texturing if succeed
+	//if (pMaterial!=NULL)
+	//{
+		if (pMaterial.iTextureID)
+		{
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, pMaterial.iTextureID);
+		}
+		else
+			glDisable(GL_TEXTURE_2D);
+		
+	//}
+	//else
+	//	glDisable(GL_TEXTURE_2D);
 }
