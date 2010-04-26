@@ -2536,6 +2536,11 @@ void CPracticaView::OnMCellesDreta()
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 		}
+		else
+		{
+			ChangeMuscleState(DCELLA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
 	}
 	else
 		selectedMuscle = NONE_MUSCLE;
@@ -2565,6 +2570,11 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(ECELLA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
 		}
 	}
 	else
@@ -2596,6 +2606,11 @@ void CPracticaView::OnMBocaDreta()
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 		}
+		else
+		{
+			ChangeMuscleState(DBOCA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
 	}
 	else
 		selectedMuscle = NONE_MUSCLE;
@@ -2626,6 +2641,11 @@ void CPracticaView::OnMBocaEsquerre()
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 		}
+		else
+		{
+			ChangeMuscleState(EBOCA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
 	}
 	else
 		selectedMuscle = NONE_MUSCLE;;
@@ -2655,6 +2675,11 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(INFBOCA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
 		}
 	}
 	else
@@ -2783,6 +2808,11 @@ void CPracticaView::OnExpTrist()
 	{
 		if (editExpression)
 			ChangeExpressionState(TRIST);
+		else
+		{
+			ChangeExpressionState(TRIST);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+		}
 	}
 	else
 		selectedExpression = NONE_EXPRESSION;
@@ -2804,6 +2834,11 @@ void CPracticaView::OnExpAlegre()
 	{
 		if (editExpression)
 			ChangeExpressionState(ALEGRE);
+		else
+		{
+			ChangeExpressionState(ALEGRE);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+		}
 	}
 	else
 		selectedExpression = NONE_EXPRESSION;
@@ -2826,6 +2861,11 @@ void CPracticaView::OnExpEnfadat()
 	{
 		if (editExpression)
 			ChangeExpressionState(ENFADAT);
+		else
+		{
+			ChangeExpressionState(ENFADAT);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+		}
 	}
 	else
 		selectedExpression = NONE_EXPRESSION;
@@ -2848,6 +2888,11 @@ void CPracticaView::OnExpSerios()
 	{
 		if (editExpression)
 			ChangeExpressionState(SERIOS);
+		else
+		{
+			ChangeExpressionState(SERIOS);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+		}
 	}
 	else
 		selectedExpression = NONE_EXPRESSION;
@@ -2870,6 +2915,11 @@ void CPracticaView::OnExpSorpres()
 	{
 		if (editExpression)
 			ChangeExpressionState(SORPRES);
+		else
+		{
+			ChangeExpressionState(SORPRES);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+		}
 	}
 	else
 		selectedExpression = NONE_EXPRESSION;

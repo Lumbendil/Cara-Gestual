@@ -52,6 +52,41 @@
 #define ID_POLAR_Z                      32850
 #define ID_POLAR_Y                      32851
 #define ID_POLAR_X                      32852
+#define ID_ARXIUS_IMPORTARMUSCLES       32853
+#define ID_ARXIUS_IMPORTAREXPRESSIONS   32854
+#define ID_ARXIUS_EXPORTARMUSCLES       32855
+#define ID_ARXIUS_EXPORTAREXPRESSIONS   32856
+#define ID_ORTO                         32857
+#define ID_ORTHO                        32858
+#define ID_MUSCLES_EDICI32859           32859
+#define ID_EXPRESSIONS_EDICI32860       32860
+#define ID_IMPORT_MUSCLES               32861
+#define ID_IMPORT_EXPRESSIONS           32862
+#define ID_EXPORT_MUSCLES               32863
+#define ID_EXPORT_EXPRESSIONS           32864
+#define ID_MUSCLES_EDIT                 32865
+#define ID_MUSCLE_EDIT                  32866
+#define ID_EXPRESSION_EDIT              32867
+#define ID_MUSCLES_CELLES               32868
+#define ID_CELLES_DRETA                 32869
+#define ID_CELLES_ESQUERRE              32870
+#define ID_MUSCLES_BOCA                 32871
+#define ID_BOCA_DRETA                   32872
+#define ID_BOCA_ESQUERRE                32873
+#define ID_MBOCA_INF                    32874
+#define ID_MBOCA_ESQ                    32875
+#define ID_MBOCA_DRETA                  32876
+#define ID_MCELLES_ESQUERRE             32877
+#define ID_MBOCA_INFERIOR               32878
+#define ID_MBOCA_ESQUERRE               32879
+#define ID_MCELLES_DRETA                32880
+#define ID_EXPRESSIONS_TRIST            32881
+#define ID_EXPRESSIONS_ALEGRE           32882
+#define ID_EXPRESSIONS_ENFADAT          32883
+#define ID_EXPRESSIONS_SERI32884        32884
+#define ID_EXPRESSIONS_SORPR32885       32885
+#define ID_EXPRESSIONS_SERIOS           32886
+#define ID_EXPRESSIONS_SORPRES          32887
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -67,8 +102,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32853
+#define _APS_NEXT_RESOURCE_VALUE        129
+#define _APS_NEXT_COMMAND_VALUE         32888
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

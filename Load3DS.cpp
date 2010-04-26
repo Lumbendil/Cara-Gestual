@@ -51,8 +51,8 @@ bool CLoad3DS::Import3DS(t3DModel *pModel, CString strFileName)
 	int errno;
 
 	// Open the 3DS file
-//	m_FilePointer = fopen(strFileName, "rb");		   // Funciï¿½ Visual Studio 6.0
-	errno = fopen_s(&m_FilePointer,strFileName, "rb"); // Funciï¿½ Visual 2005
+//	m_FilePointer = fopen(strFileName, "rb");		   // Funció Visual Studio 6.0
+	errno = fopen_s(&m_FilePointer,strFileName, "rb"); // Funció Visual 2005
 
 	// Make sure we have a valid file pointer (we found the file)
 //	if(!m_FilePointer)
