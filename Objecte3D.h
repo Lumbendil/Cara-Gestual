@@ -73,10 +73,12 @@ class Objecte3D {
 		Cara *cares;
 		Punt *punts;
 		O3DMaterial *materials;
+		bool teNormals;
 		int nombreCares, nombrePunts,nombreMaterials;
 		void Objecte3DDeOBJ(char* filename);
 		void Objecte3DDe3DS(char* filename);
 		void UseMaterial(O3DMaterial pMaterial);
+		SPoint3D Objecte3D::GetFaceNormal(const Cara*);
 };
 
 #endif

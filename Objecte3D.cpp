@@ -25,7 +25,12 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 
 	for (i = 0; i < numpunts; i++) {
 		this->punts[i].cordenades = SPoint3D(ob.pVertices[i].fX,ob.pVertices[i].fY,ob.pVertices[i].fZ);
-		this->punts[i].normal = SPoint3D(ob.pNormals[i].fX,ob.pNormals[i].fY,ob.pNormals[i].fZ);
+		if (ob.pNormals) {
+			this->punts[i].normal = SPoint3D(ob.pNormals[i].fX,ob.pNormals[i].fY,ob.pNormals[i].fZ);
+			this->teNormals = true;
+		} else {
+			this->teNormals = false;
+		}
 
 		this->punts[i].cordTex.x = ob.pTexCoords[i].fX;
 		this->punts[i].cordTex.y = ob.pTexCoords[i].fY;
@@ -96,11 +101,11 @@ void Objecte3D::Dibuixar(int list)
 		}
 		glBegin(GL_TRIANGLES);
 		// Calculate and set face normal if no vertex normals are specified
-	/*	if (!pFaces[i].pNormals)
+		if (!this->teNormals)
 		{
-			GetFaceNormal(fNormal, &pFaces[i]);
+			SPoint3D fNormal = GetFaceNormal(&this->cares[i]);
 			glNormal3fv(fNormal);
-		}*/
+		}
 		// Process all vertices
 		for (j=0; j < 3; j++)
 		{
@@ -147,4 +152,24 @@ void Objecte3D::UseMaterial(const O3DMaterial pMaterial)
 	//}
 	//else
 	//	glDisable(GL_TEXTURE_2D);
+}
+
+SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
+{
+	////////////////////////////////////////////////////////////////////////
+	// Calculate normal for a given face
+	////////////////////////////////////////////////////////////////////////
+
+	// Only faces with at least 3 vertices can have a normal
+	// Two vectors
+	SPoint3D p1,p2,normal;
+
+	// Calculate two vectors from the three points
+	p1 = cara->punts[0]->cordenades - cara->punts[1]->cordenades;
+	p2 = cara->punts[1]->cordenades - cara->punts[2]->cordenades;
+	
+	// Take the cross product of the two vectors to get the normal vector
+	normal = SPoint3D(p1.y*p2.z - p1.z*p2.y,p1.z*p2.x - p1.x*p2.z,p1.x*p2.y - p1.y*p2.x);
+	normal.normalizeVector();
+	return normal;
 }
