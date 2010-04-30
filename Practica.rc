@@ -124,6 +124,16 @@ BEGIN
             MENUITEM "Esquerre",                    ID_MBOCA_ESQUERRE, CHECKED
             MENUITEM "Inferior",                    ID_MBOCA_INFERIOR, CHECKED
         END
+        POPUP "Parpelles"
+        BEGIN
+            MENUITEM "Dreta",                       ID_MPARPELLES_DRETA, CHECKED
+            MENUITEM "Esquerra",                    ID_MPARPELLES_ESQUERRA, CHECKED
+        END
+        POPUP "Galtes"
+        BEGIN
+            MENUITEM "Dreta",                       ID_MGALTES_DRETA, CHECKED
+            MENUITEM "Esquerra",                    ID_MGALTES_ESQUERRA, CHECKED
+        END
     END
     POPUP "E&xpressions"
     BEGIN
@@ -156,21 +166,6 @@ BEGIN
         MENUITEM "Origen Navega",               ID_ININAV
         MENUITEM SEPARATOR
         MENUITEM "Eixos?",                      ID_EIXOS, CHECKED
-    END
-    POPUP "Transforma"
-    BEGIN
-        MENUITEM "Traslació?",                  ID_TRASLACIO, CHECKED
-        MENUITEM "Origen Tras",                 ID_INITRAS
-        MENUITEM SEPARATOR
-        MENUITEM "Rotació?",                    ID_ROTACIO, CHECKED
-        MENUITEM "Origen Rot",                  ID_INIROT
-        MENUITEM SEPARATOR
-        MENUITEM "Escalatge?",                  ID_ESCALATGE, CHECKED
-        MENUITEM "Origen Esc",                  ID_INIESCAL
-        MENUITEM SEPARATOR
-        MENUITEM "Mòbil Eix X?",                ID_MOBILX, CHECKED
-        MENUITEM "Mòbil Eix Y?",                ID_MOBILY, CHECKED
-        MENUITEM "Mòbil Eix Z?",                ID_MOBILZ, CHECKED
     END
     POPUP "O&cultacions"
     BEGIN

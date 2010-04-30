@@ -199,27 +199,27 @@ protected:
 	afx_msg void OnUpdateTest(CCmdUI* pCmdUI);
 	//afx_msg void OnFileSaveAs();
 	//afx_msg void OnFileOpen();
-	afx_msg void OnTraslacio();
+	/*afx_msg void OnTraslacio();
 	afx_msg void OnUpdateTraslacio(CCmdUI* pCmdUI);
 	afx_msg void OnInitras();
 	afx_msg void OnRotacio();
 	afx_msg void OnUpdateRotacio(CCmdUI* pCmdUI);
 	afx_msg void OnInirot();
 	afx_msg void OnEscalatge();
-	afx_msg void OnUpdateEscalatge(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateEscalatge(CCmdUI* pCmdUI);*/
 	afx_msg void OnBackLine();
 	afx_msg void OnUpdateBackLine(CCmdUI* pCmdUI);
 	afx_msg void OnZBuffer();
 	afx_msg void OnUpdateZBuffer(CCmdUI* pCmdUI);
-	afx_msg void OnMobilx();
+	/*afx_msg void OnMobilx();
 	afx_msg void OnMobily();
 	afx_msg void OnUpdateMobily(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateMobilx(CCmdUI* pCmdUI);
 	afx_msg void OnMobilz();
-	afx_msg void OnUpdateMobilz(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateMobilz(CCmdUI* pCmdUI);*/
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnInipan();
-	afx_msg void OnIniescal();
+	/*afx_msg void OnIniescal();*/
 	afx_msg void OnUpdatePlana(CCmdUI* pCmdUI);
 	//afx_msg void OnTruck();
 	//afx_msg void OnUpdateTruck(CCmdUI* pCmdUI);
@@ -242,6 +242,7 @@ protected:
 	afx_msg void OnUpdateMuscleEdit(CCmdUI *pCmdUI);
 	afx_msg void OnExpressionEdit();
 	afx_msg void OnUpdateExpressionEdit(CCmdUI *pCmdUI);
+
 	afx_msg void OnMCellesDreta();
 	afx_msg void OnUpdateMCellesDreta(CCmdUI *pCmdUI);
 	afx_msg void OnMCellesEsquerra();
@@ -252,6 +253,15 @@ protected:
 	afx_msg void OnUpdateMBocaEsquerre(CCmdUI *pCmdUI);
 	afx_msg void OnMBocaInferior();
 	afx_msg void OnUpdateMBocaInferior(CCmdUI *pCmdUI);
+	afx_msg void OnMParpellesDreta();
+	afx_msg void OnUpdateMParpellesDreta(CCmdUI *pCmdUI);
+	afx_msg void OnMParpellesEsquerra();
+	afx_msg void OnUpdateMParpellesEsquerra(CCmdUI *pCmdUI);
+	afx_msg void OnMGaltesEsquerra();
+	afx_msg void OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI);
+	afx_msg void OnMGaltesDreta();
+	afx_msg void OnUpdateMGaltesDreta(CCmdUI *pCmdUI);
+
 	afx_msg void OnExpTrist();
 	afx_msg void OnUpdateExpTrist(CCmdUI *pCmdUI);
 	afx_msg void OnExpAlegre();
