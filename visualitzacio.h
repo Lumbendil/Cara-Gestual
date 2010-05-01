@@ -7,6 +7,8 @@
 #ifndef GLVIS_H
 #define GLVIS_H
 
+#include "stdafx.h"
+
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */
 /* ------------------------------------------------------------------------- */
@@ -50,4 +52,9 @@ bool loadIMA(CString filename, int texID);
 
 // Textures Objecte Truck
 void Init_Textures();
+
+GLdouble* GetProjectionMatrix (void);
+GLint* GetViewportMatrix (void);
+GLdouble* GetModelviewMatrix (void);
+
 #endif

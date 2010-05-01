@@ -48,5 +48,4 @@ public:
 	double		SPoint3D::calcularDistancia	(const SPoint3D& ) const;
 };
 
-
 #endif

@@ -3,16 +3,16 @@
 #include "MuscleManager.h"
 #include "SPoint3D.h"
 
-Expression::Expression()
+Expression::Expression(MuscleManager* MMan)
 {
-	MManager = new MuscleManager();
+	MManager = MMan;
 	movements = (SPoint3D*) malloc (MManager->getNumMuscles()*sizeof(SPoint3D));
 }
 
 Expression::~Expression()
 {
 	delete[] movements;
-	MManager = NULL;
+	free(MManager);
 }
 
 void Expression::modifyMuscle( TypeMuscle muscle, SPoint3D movement )

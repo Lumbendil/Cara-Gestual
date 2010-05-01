@@ -87,6 +87,18 @@
 #define ID_EXPRESSIONS_SORPR32885       32885
 #define ID_EXPRESSIONS_SERIOS           32886
 #define ID_EXPRESSIONS_SORPRES          32887
+#define ID_MUSCLES_PARPELLES            32888
+#define ID_PARPELLES_DRETA              32889
+#define ID_PARPELLES_ESQUERRE           32890
+#define ID_MUSCLES_GALTES               32891
+#define ID_GALTES_DRETA                 32892
+#define ID_GALTES_ESQUERRE              32893
+#define ID_MPARPELLES_DRETA             32894
+#define ID_MPARPELLES_ESQUERRE          32895
+#define ID_MGALTES_DRETA                32896
+#define ID_MGALTES_ESQUERRE             32897
+#define ID_MPARPELLES_ESQUERRA          32898
+#define ID_MGALTES_ESQUERRA             32899
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -103,7 +115,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        129
-#define _APS_NEXT_COMMAND_VALUE         32888
+#define _APS_NEXT_COMMAND_VALUE         32900
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

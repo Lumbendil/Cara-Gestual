@@ -70,7 +70,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 	OBJFileInfo CurrentIndex;	  // Current array index
 	char szString[MAX_STR_SIZE];  // Buffer string for reading the file 
 	char szBasePath[_MAX_PATH];	  // Path were all paths in the OBJ start
-	int nScanReturn = 0;		  // Return value of fscanf_s
+	int nScanReturn = 0;		  // Return value of fscanf
 	float fCoord = 0;			  // Buffer float for reading the file
 	int i;						  // Loop variable
 	unsigned int iCurMaterial = 0;// Current material
@@ -134,7 +134,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		if (!strncmp(szString, VERTEX_ID, sizeof(VERTEX_ID)))
 		{
 			// Read three floats out of the file
-			nScanReturn = fscanf_s(hFile, "%f %f %f",
+			nScanReturn = fscanf(hFile, "%f %f %f",
 				&Model.pVertices[CurrentIndex.iVertexCount].fX,
 				&Model.pVertices[CurrentIndex.iVertexCount].fY,
 				&Model.pVertices[CurrentIndex.iVertexCount].fZ);
@@ -146,7 +146,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		if (!strncmp(szString, TEXCOORD_ID, sizeof(TEXCOORD_ID)))
 		{
 			// Read two floats out of the file
-			nScanReturn = fscanf_s(hFile, "%f %f %f",
+			nScanReturn = fscanf(hFile, "%f %f %f",
 				&Model.pTexCoords[CurrentIndex.iTexCoordCount].fX,
 				&Model.pTexCoords[CurrentIndex.iTexCoordCount].fY);
 			// Next texture coordinate
@@ -157,7 +157,7 @@ bool _stdcall COBJModel::LoadModel(const char szFileName[],unsigned int iDisplay
 		if (!strncmp(szString, NORMAL_ID, sizeof(NORMAL_ID)))
 		{
 			// Read three floats out of the file
-			nScanReturn = fscanf_s(hFile, "%f %f %f",
+			nScanReturn = fscanf(hFile, "%f %f %f",
 				&Model.pNormals[CurrentIndex.iNormalCount].fX,
 				&Model.pNormals[CurrentIndex.iNormalCount].fY,
 				&Model.pNormals[CurrentIndex.iNormalCount].fZ);
@@ -311,17 +311,17 @@ void _stdcall COBJModel::ParseFaceString(char szFaceString[], Face *FaceOut,
 		// Are vertices, normals and texture coordinates present ?
 		if (pNormals && pTexCoords)
 			// Yes
-			sscanf_s(pFaceString, "%i/%i/%i", 
+			sscanf(pFaceString, "%i/%i/%i", 
 				&iVertex, &iTextureCoord, &iNormal);
 		else if (pNormals && !pTexCoords)
 			// Vertices and normals but no texture coordinates
-			sscanf_s(pFaceString, "%i//%i", &iVertex, &iNormal);
+			sscanf(pFaceString, "%i//%i", &iVertex, &iNormal);
 		else if (pTexCoords && !pNormals)
 			// Vertices and texture coordinates but no normals
-			sscanf_s(pFaceString, "%i/%i", &iVertex, &iTextureCoord);
+			sscanf(pFaceString, "%i/%i", &iVertex, &iTextureCoord);
 		else
 			// Only vertices
-			sscanf_s(pFaceString, "%i", &iVertex);
+			sscanf(pFaceString, "%i", &iVertex);
 
 		// Copy vertex into the face. Also check for normals and texture 
 		// coordinates and copy them if present.
@@ -392,7 +392,7 @@ bool _stdcall COBJModel::LoadMaterialLib(const char szFileName[],
 		if (!strncmp(szString, MTL_AMBIENT_ID, sizeof(MTL_AMBIENT_ID)))
 		{
 			// Read into current material
-			fscanf_s(hFile, "%f %f %f",
+			fscanf(hFile, "%f %f %f",
 				&pMaterials[*iCurMaterialIndex].fAmbient[0],
 				&pMaterials[*iCurMaterialIndex].fAmbient[1],
 				&pMaterials[*iCurMaterialIndex].fAmbient[2]);
@@ -402,7 +402,7 @@ bool _stdcall COBJModel::LoadMaterialLib(const char szFileName[],
 		if (!strncmp(szString, MTL_DIFFUSE_ID, sizeof(MTL_DIFFUSE_ID)))
 		{
 			// Read into current material
-			fscanf_s(hFile, "%f %f %f",
+			fscanf(hFile, "%f %f %f",
 				&pMaterials[*iCurMaterialIndex].fDiffuse[0],
 				&pMaterials[*iCurMaterialIndex].fDiffuse[1],
 				&pMaterials[*iCurMaterialIndex].fDiffuse[2]);
@@ -412,7 +412,7 @@ bool _stdcall COBJModel::LoadMaterialLib(const char szFileName[],
 		if (!strncmp(szString, MTL_SPECULAR_ID, sizeof(MTL_SPECULAR_ID)))
 		{
 			// Read into current material
-			fscanf_s(hFile, "%f %f %f",
+			fscanf(hFile, "%f %f %f",
 				&pMaterials[*iCurMaterialIndex].fSpecular[0],
 				&pMaterials[*iCurMaterialIndex].fSpecular[1],
 				&pMaterials[*iCurMaterialIndex].fSpecular[2]);
@@ -437,7 +437,7 @@ bool _stdcall COBJModel::LoadMaterialLib(const char szFileName[],
 		if (!strncmp(szString, MTL_SHININESS_ID, sizeof(MTL_SHININESS_ID)))
 		{
 			// Read into current material
-			fscanf_s(hFile, "%f",
+			fscanf(hFile, "%f",
 				&pMaterials[*iCurMaterialIndex].fShininess);
 			// OBJ files use a shininess from 0 to 1000; Scale for OpenGL
 			pMaterials[*iCurMaterialIndex].fShininess /= 1000.0f;
@@ -688,7 +688,7 @@ void _stdcall COBJModel::GetFileInfo(FILE *hStream, OBJFileInfo *Info,
 				while (!feof(hMaterialLib))
 				{
 					// Read next string
-					fscanf_s(hMaterialLib, "%s" ,szString);
+					fscanf(hMaterialLib, "%s" ,szString);
 					// Is it a "new material" identifier ?
 					if (!strncmp(szString, NEW_MTL_ID, sizeof(NEW_MTL_ID)))
 						// One more material defined
@@ -711,13 +711,13 @@ void _stdcall COBJModel::ReadNextString(char szString[], FILE *hStream)
 	////////////////////////////////////////////////////////////////////////
 
 	bool bSkipLine = FALSE;	// Skip the current line ?
-	int nScanReturn = 0;	// Return value of fscanf_s
+	int nScanReturn = 0;	// Return value of fscanf
 
 	// Skip all strings that contain comments
 	do
 	{
 		// Read new string
-		nScanReturn = fscanf_s(hStream, "%s", szString);
+		nScanReturn = fscanf(hStream, "%s", szString);
 		// Is rest of the line a comment ?
 		if (!strncmp(szString, COMMENT_ID, sizeof(COMMENT_ID)))
 		{
@@ -736,7 +736,7 @@ void _stdcall COBJModel::MakePath(char szFileAndPath[])
 	////////////////////////////////////////////////////////////////////////
 	
 	// Get string length
-	int iNumChars =(int) strlen(szFileAndPath);
+	int iNumChars = strlen(szFileAndPath);
 
 	// Loop from the last to the first char
 	for (int iCurChar=iNumChars-1; iCurChar>=0; iCurChar--)

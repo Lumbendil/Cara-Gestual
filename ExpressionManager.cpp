@@ -4,13 +4,13 @@
 #include "Expression.h"
 #include "SPoint3D.h"
 
-ExpressionManager::ExpressionManager()
+ExpressionManager::ExpressionManager(MuscleManager* MMan)
 {
 	numExpressions = (sizeof(TypeExpression)/sizeof(int))-1;
 	Expressions = (Expression**) malloc (numExpressions*sizeof(Expression));
 	for (int i=0; i<numExpressions; ++i)
 	{
-		Expressions[i] = new Expression();
+		Expressions[i] = new Expression(MMan);
 	}
 }
 

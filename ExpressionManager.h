@@ -19,7 +19,7 @@ private:
 
 public:
 	
-	ExpressionManager();
+	ExpressionManager(MuscleManager* MMan);
 	~ExpressionManager();
 	
 	//Posa tots els muscles de l'expressió sense moviment
