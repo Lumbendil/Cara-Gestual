@@ -73,27 +73,27 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_TEST, OnUpdateTest)
 	//ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
 	//ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
-	ON_COMMAND(ID_TRASLACIO, OnTraslacio)
-	ON_UPDATE_COMMAND_UI(ID_TRASLACIO, OnUpdateTraslacio)
-	ON_COMMAND(ID_INITRAS, OnInitras)
+	/*ON_COMMAND(ID_TRASLACIO, OnTraslacio)
+	ON_UPDATE_COMMAND_UI(ID_TRASLACIO, OnUpdateTraslacio)*/
+	/*ON_COMMAND(ID_INITRAS, OnInitras)
 	ON_COMMAND(ID_ROTACIO, OnRotacio)
 	ON_UPDATE_COMMAND_UI(ID_ROTACIO, OnUpdateRotacio)
 	ON_COMMAND(ID_INIROT, OnInirot)
 	ON_COMMAND(ID_ESCALATGE, OnEscalatge)
-	ON_UPDATE_COMMAND_UI(ID_ESCALATGE, OnUpdateEscalatge)
+	ON_UPDATE_COMMAND_UI(ID_ESCALATGE, OnUpdateEscalatge)*/
 	ON_COMMAND(ID_BACK_LINE, OnBackLine)
 	ON_UPDATE_COMMAND_UI(ID_BACK_LINE, OnUpdateBackLine)
 	ON_COMMAND(ID_ZBuffer, OnZBuffer)
 	ON_UPDATE_COMMAND_UI(ID_ZBuffer, OnUpdateZBuffer)
-	ON_COMMAND(ID_MOBILX, OnMobilx)
+	/*ON_COMMAND(ID_MOBILX, OnMobilx)
 	ON_COMMAND(ID_MOBILY, OnMobily)
 	ON_UPDATE_COMMAND_UI(ID_MOBILY, OnUpdateMobily)
 	ON_UPDATE_COMMAND_UI(ID_MOBILX, OnUpdateMobilx)
 	ON_COMMAND(ID_MOBILZ, OnMobilz)
-	ON_UPDATE_COMMAND_UI(ID_MOBILZ, OnUpdateMobilz)
+	ON_UPDATE_COMMAND_UI(ID_MOBILZ, OnUpdateMobilz)*/
 	ON_WM_MOUSEWHEEL()
 	ON_COMMAND(ID_INIPAN, OnInipan)
-	ON_COMMAND(ID_INIESCAL, OnIniescal)
+	/*ON_COMMAND(ID_INIESCAL, OnIniescal)*/
 	ON_UPDATE_COMMAND_UI(ID_PLANA, OnUpdatePlana)
 	//ON_COMMAND(ID_TRUCK, OnTruck)
 	//ON_UPDATE_COMMAND_UI(ID_TRUCK, OnUpdateTruck)
@@ -131,6 +131,7 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_MUSCLE_EDIT, &CPracticaView::OnUpdateMuscleEdit)
 	ON_COMMAND(ID_EXPRESSION_EDIT, &CPracticaView::OnExpressionEdit)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSION_EDIT, &CPracticaView::OnUpdateExpressionEdit)
+
 	ON_COMMAND(ID_MCELLES_DRETA, &CPracticaView::OnMCellesDreta)
 	ON_UPDATE_COMMAND_UI(ID_MCELLES_DRETA, &CPracticaView::OnUpdateMCellesDreta)
 	ON_COMMAND(ID_MCELLES_ESQUERRE, &CPracticaView::OnMCellesEsquerra)
@@ -141,6 +142,15 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_MBOCA_ESQUERRE, &CPracticaView::OnUpdateMBocaEsquerre)
 	ON_COMMAND(ID_MBOCA_INFERIOR, &CPracticaView::OnMBocaInferior)
 	ON_UPDATE_COMMAND_UI(ID_MBOCA_INFERIOR, &CPracticaView::OnUpdateMBocaInferior)
+	ON_COMMAND(ID_MPARPELLES_DRETA, &CPracticaView::OnMParpellesDreta)
+	ON_UPDATE_COMMAND_UI(ID_MPARPELLES_DRETA, &CPracticaView::OnUpdateMParpellesDreta)
+	ON_COMMAND(ID_MPARPELLES_ESQUERRA, &CPracticaView::OnMParpellesEsquerra)
+	ON_UPDATE_COMMAND_UI(ID_MPARPELLES_ESQUERRA, &CPracticaView::OnUpdateMParpellesEsquerra)
+	ON_COMMAND(ID_MGALTES_DRETA, &CPracticaView::OnMGaltesDreta)
+	ON_UPDATE_COMMAND_UI(ID_MGALTES_DRETA, &CPracticaView::OnUpdateMGaltesDreta)
+	ON_COMMAND(ID_MGALTES_ESQUERRA, &CPracticaView::OnMGaltesEsquerra)
+	ON_UPDATE_COMMAND_UI(ID_MGALTES_ESQUERRA, &CPracticaView::OnUpdateMGaltesEsquerra)
+
 	ON_COMMAND(ID_EXPRESSIONS_TRIST, &CPracticaView::OnExpTrist)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_TRIST, &CPracticaView::OnUpdateExpTrist)
 	ON_COMMAND(ID_EXPRESSIONS_ALEGRE, &CPracticaView::OnExpAlegre)
@@ -2088,185 +2098,185 @@ void CPracticaView::OnUpdateEixos(CCmdUI* pCmdUI)
 /*					6. TRANSFORMA											 */
 /* ------------------------------------------------------------------------- */
 
-// TRANSFORMA: TRASLACIÓ
-void CPracticaView::OnTraslacio() 
-{
-// TODO: Add your command handler code here	
-	trasl=!trasl;
-	rota=false;
-	if (trasl) escal=true;
-	transf=trasl || rota || escal;
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateTraslacio(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(trasl)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// Reinicialitza a l'origen la Traslació
-void CPracticaView::OnInitras() 
-{
-// TODO: Add your command handler code here	
-	if (trasl) 
-		{	fact_Tras=1;
-			VTras.x=0.0;	VTras.y=0.0;	VTras.z=0;	
-		}		
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-// TRANSFORMA: ROTACIÓ
-void CPracticaView::OnRotacio() 
-{
-// TODO: Add your command handler code here
-	rota=!rota;
-	trasl=false;
-	if (rota) escal=true;
-	transf=trasl || rota || escal;
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateRotacio(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(rota)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// Reinicialitza a l'origen la Rotació
-void CPracticaView::OnInirot() 
-{
-// TODO: Add your command handler code here
-	if (rota) 
-		{	fact_Rota=90;
-			VRota.x=0;		VRota.y=0;		VRota.z=0;
-		}
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-
-// TRANSFORMA: ESCALATGE
-void CPracticaView::OnEscalatge() 
-{
-// TODO: Add your command handler code here
-	if ((!rota) && (!trasl)) escal=!escal;
-	transf=trasl || rota || escal;
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateEscalatge(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if(escal)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// Reinicialitza a l'origen l'Escalatge
-void CPracticaView::OnIniescal() 
-{
-// TODO: Add your command handler code here
-	if (escal) {VScal.x=1;	VScal.y=1;	VScal.z=1;}
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-// TRANSFORMA: Transformacions Geomètriques per l'eix X movent el mouse (booleana)
-void CPracticaView::OnMobilx() 
-{
-// TODO: Add your command handler code here
-	if (transf) 
-		{	transX=!transX;
-			if (transX) {	mobil=false;			zzoom=false;
-							pan=false;				navega=false;
-						}
-				else if ((!transY) && (!transZ)){	mobil=true;
-													zzoom=true;
-												}	
-		}
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateMobilx(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if (transX)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// TRANSFORMA: Transformacions Geomètriques per l'eix Y movent el mouse (booleana)
-void CPracticaView::OnMobily() 
-{
-// TODO: Add your command handler code here
-	if (transf) 
-		{	transY=!transY;
-			if (transY) {	mobil=false;			zzoom=false;
-							pan=false;				navega=false;
-						}
-				else if ((!transX) && (!transZ)){	mobil=true;
-													zzoom=true;
-												}
-		}
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateMobily(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if (transY)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
-
-// TRANSFORMA: Transformacions Geomètriques per l'eix X movent el mouse (booleana)
-void CPracticaView::OnMobilz() 
-{
-// TODO: Add your command handler code here
-	if (transf) 
-		{	transZ=!transZ;
-			if (transZ) {	mobil=false;			zzoom=false;
-							pan=false;				navega=false;
-						}
-				else if ((!transX) && (!transY)) {	mobil=true;
-													zzoom=true;
-												}	
-		}
-
-// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
-}
-
-void CPracticaView::OnUpdateMobilz(CCmdUI* pCmdUI) 
-{
-// TODO: Add your command update UI handler code here
-	if (transZ)
-		 pCmdUI->SetCheck(1);
-	else
-		 pCmdUI->SetCheck(0);
-}
+//// TRANSFORMA: TRASLACIÓ
+//void CPracticaView::OnTraslacio() 
+//{
+//// TODO: Add your command handler code here	
+//	trasl=!trasl;
+//	rota=false;
+//	if (trasl) escal=true;
+//	transf=trasl || rota || escal;
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateTraslacio(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(trasl)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// Reinicialitza a l'origen la Traslació
+//void CPracticaView::OnInitras() 
+//{
+//// TODO: Add your command handler code here	
+//	if (trasl) 
+//		{	fact_Tras=1;
+//			VTras.x=0.0;	VTras.y=0.0;	VTras.z=0;	
+//		}		
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//// TRANSFORMA: ROTACIÓ
+//void CPracticaView::OnRotacio() 
+//{
+//// TODO: Add your command handler code here
+//	rota=!rota;
+//	trasl=false;
+//	if (rota) escal=true;
+//	transf=trasl || rota || escal;
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateRotacio(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(rota)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// Reinicialitza a l'origen la Rotació
+//void CPracticaView::OnInirot() 
+//{
+//// TODO: Add your command handler code here
+//	if (rota) 
+//		{	fact_Rota=90;
+//			VRota.x=0;		VRota.y=0;		VRota.z=0;
+//		}
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//
+//// TRANSFORMA: ESCALATGE
+//void CPracticaView::OnEscalatge() 
+//{
+//// TODO: Add your command handler code here
+//	if ((!rota) && (!trasl)) escal=!escal;
+//	transf=trasl || rota || escal;
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateEscalatge(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if(escal)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// Reinicialitza a l'origen l'Escalatge
+//void CPracticaView::OnIniescal() 
+//{
+//// TODO: Add your command handler code here
+//	if (escal) {VScal.x=1;	VScal.y=1;	VScal.z=1;}
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//// TRANSFORMA: Transformacions Geomètriques per l'eix X movent el mouse (booleana)
+//void CPracticaView::OnMobilx() 
+//{
+//// TODO: Add your command handler code here
+//	if (transf) 
+//		{	transX=!transX;
+//			if (transX) {	mobil=false;			zzoom=false;
+//							pan=false;				navega=false;
+//						}
+//				else if ((!transY) && (!transZ)){	mobil=true;
+//													zzoom=true;
+//												}	
+//		}
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateMobilx(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if (transX)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// TRANSFORMA: Transformacions Geomètriques per l'eix Y movent el mouse (booleana)
+//void CPracticaView::OnMobily() 
+//{
+//// TODO: Add your command handler code here
+//	if (transf) 
+//		{	transY=!transY;
+//			if (transY) {	mobil=false;			zzoom=false;
+//							pan=false;				navega=false;
+//						}
+//				else if ((!transX) && (!transZ)){	mobil=true;
+//													zzoom=true;
+//												}
+//		}
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateMobily(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if (transY)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
+//
+//// TRANSFORMA: Transformacions Geomètriques per l'eix X movent el mouse (booleana)
+//void CPracticaView::OnMobilz() 
+//{
+//// TODO: Add your command handler code here
+//	if (transf) 
+//		{	transZ=!transZ;
+//			if (transZ) {	mobil=false;			zzoom=false;
+//							pan=false;				navega=false;
+//						}
+//				else if ((!transX) && (!transY)) {	mobil=true;
+//													zzoom=true;
+//												}	
+//		}
+//
+//// Crida a OnPaint() per redibuixar l'escena
+//	Invalidate();
+//}
+//
+//void CPracticaView::OnUpdateMobilz(CCmdUI* pCmdUI) 
+//{
+//// TODO: Add your command update UI handler code here
+//	if (transZ)
+//		 pCmdUI->SetCheck(1);
+//	else
+//		 pCmdUI->SetCheck(0);
+//}
 
 
 /* ------------------------------------------------------------------------- */
@@ -2697,6 +2707,146 @@ void CPracticaView::OnUpdateMBocaInferior(CCmdUI *pCmdUI)
 		 pCmdUI->SetCheck(0);
 }
 
+void CPracticaView::OnMParpellesDreta()
+{
+	if (selectedMuscle != DPARPELLA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(DPARPELLA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(DPARPELLA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(DPARPELLA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMParpellesDreta(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DPARPELLA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMParpellesEsquerra()
+{
+	if (selectedMuscle != EPARPELLA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(EPARPELLA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(EPARPELLA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(EPARPELLA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMParpellesEsquerra(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == EPARPELLA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMGaltesDreta()
+{
+	if (selectedMuscle != DGALTA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(DGALTA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(DGALTA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(DGALTA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMGaltesDreta(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DGALTA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMGaltesEsquerra()
+{
+	if (selectedMuscle != EGALTA)
+	{
+		if (editExpression)
+		{
+			ChangeMuscleState(EGALTA);
+			//TODO Aquí hi va quan es defineixen els vectors directors
+		}
+		else if (editMuscle)
+		{
+			ChangeMuscleState(EGALTA);
+			//TODO Aquí hi va el codi quan es defineixen els muscles
+		}
+		else
+		{
+			ChangeMuscleState(EGALTA);
+			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+		}
+	}
+	else
+		selectedMuscle = NONE_MUSCLE;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == EGALTA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
 void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 {
 	switch(selectedMuscle)
@@ -2728,6 +2878,30 @@ void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 	case INFBOCA:
 		{
 			this->OnMBocaInferior();
+			selectedMuscle = muscle;
+			break;
+		}
+	case EPARPELLA:
+		{
+			this->OnMParpellesEsquerra();
+			selectedMuscle = muscle;
+			break;
+		}
+	case DPARPELLA:
+		{
+			this->OnMParpellesDreta();
+			selectedMuscle = muscle;
+			break;
+		}
+	case EGALTA:
+		{
+			this->OnMGaltesEsquerra();
+			selectedMuscle = muscle;
+			break;
+		}
+	case DGALTA:
+		{
+			this->OnMGaltesDreta();
 			selectedMuscle = muscle;
 			break;
 		}
