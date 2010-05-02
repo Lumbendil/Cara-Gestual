@@ -16,7 +16,7 @@ public:
 	~EditorManager();
 
 	// Mètodes relacionats amb els muscles
-	void		AddVertex		( TypeMuscle muscle, SPoint3D vertex );
+	void		AddVertex		( TypeMuscle muscle, SPoint3D vertex, Objecte3D* objecte);
 	void		DeleteVertex	( TypeMuscle muscle, SPoint3D vertex );
 	void		CalculateDelta	( TypeMuscle muscle );
 

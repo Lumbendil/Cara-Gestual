@@ -16,7 +16,7 @@ EditorManager::~EditorManager()
 }
 
 //Afegeix un vèrtex al muscle definit
-void EditorManager::AddVertex(TypeMuscle muscle, SPoint3D vertex)
+void EditorManager::AddVertex(TypeMuscle muscle, SPoint3D vertex, Objecte3D* objecte)
 {
 	//S'ha de buscar el punt mitjançant Objecte3D, i afegir el vèrtex al muscle.
 }
