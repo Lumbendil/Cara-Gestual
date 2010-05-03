@@ -76,46 +76,5 @@ struct CColor
 	GLfloat b;
 };
 
-//struct Point3D 
-//{
-//public:
-//	Point3D	() {};
-//	Point3D (Point3D& );
-//	Point3D ( float * );
-//	Point3D	( float fx, float fy, float fz );
-//
-//	//Casting
-//	operator float* ();
-//	operator const float* () const;
-//
-//	//Assignment Operators
-//	Point3D& operator += ( const Point3D& );
-//	Point3D& operator -= ( const Point3D& );
-//	Point3D& operator *= ( float );
-//	Point3D& operator /= ( float );
-//
-//	//Unary Operators
-//	Point3D operator + () const;
-//	Point3D operator - () const;
-//
-//	//Binary Operators
-//	Point3D operator + ( const Point3D& ) const;
-//	Point3D operator - ( const Point3D& ) const;
-//	Point3D operator * ( float ) const;
-//	Point3D operator / ( float ) const;
-//
-//	//Bool Operators
-//	bool operator == (const Point3D& ) const;
-//	bool operator != (const Point3D& ) const;
-//
-//	//Functions
-//	void		Point3D::normalizeVector	( void );
-//	double		Point3D::calcularDistancia	(const Point3D& ) const;
-//
-//	float x;
-//	float y;
-//	float z;
-//};
-
 
 #endif

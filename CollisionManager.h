@@ -3,14 +3,17 @@
 
 #include <coldet/coldet.h>
 #include "SPoint3D.h"
-#include "constants.h"
+
 
 class CCollisionManager
 {
 public:
 
+	CCollisionManager();
+	~CCollisionManager();
+
 	//Crear Instància
-	CCollisionManager*		getInstance		( void );
+	static CCollisionManager*		getInstance		( void );
 
 	//Netega la memòria
 	void		CleanUp		( void );
@@ -29,11 +32,10 @@ public:
 
 private:
 
-	CCollisionManager*		m_Obj;
+	static CCollisionManager*		m_Obj;
 	CollisionModel3D*		m_CollObj;
 
-	CCollisionManager();
-	~CCollisionManager();
+
 	
 };
 #endif

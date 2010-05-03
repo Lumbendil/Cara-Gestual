@@ -5,17 +5,19 @@
 #include <coldet/coldet.h>
 #include <math.h>
 
+CCollisionManager* CCollisionManager::m_Obj = 0;
 
 CCollisionManager::CCollisionManager()
 {
 	m_CollObj = newCollisionModel3D(true);
+	m_Obj = NULL;
 }
 
 CCollisionManager::~CCollisionManager()
 {
 	m_CollObj = NULL;
-	m_Obj = NULL;
 }
+
 CCollisionManager*	CCollisionManager::getInstance(void)
 {
 	if (m_Obj == NULL)

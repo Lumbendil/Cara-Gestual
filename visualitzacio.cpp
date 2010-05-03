@@ -38,6 +38,11 @@ GLint* GetViewportMatrix (void)
 {
 	return viewportMatrix;
 }
+float wx = 0.0,wy = 0.0,wz = 0.0;
+void RenderPoint (float x, float y, float z)
+{
+	wx = x; wy = y; wz = z;
+}
 
 // Iluminació: Configurar iluminació de l'escena
 void Iluminacio(char ilumin,bool textur,char obj,bool bc_lin)
@@ -404,6 +409,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 		default:
 // Dibuix de la resta d'objectes
 			dibuixa(objecte);
+			renderSphereSelection(wx,wy,wz);
 			break;
 	}
 	glPopMatrix();

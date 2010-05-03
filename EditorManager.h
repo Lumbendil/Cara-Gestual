@@ -9,8 +9,10 @@ class EditorManager
 {
 private:
 	MuscleManager*	 MManager;
-	unsigned int *VertexList, TotalVertex = 0;
+	unsigned int *VertexList, TotalVertex;
 	TypeMuscle Muscle;
+
+
 
 public:
 
@@ -29,8 +31,11 @@ public:
 
 	// Kusku
 	// dimensioIgnorada = 0 / dimensioIgnorada: x, etc.
-	void		AddVertexs	( int x1, int y1, int x2, int y2, int dimensioIgnorada );
-	void		DeleteVertexs ( int x1, int y1, int x2, int y2, int dimensioIgnorada );
+	void		AddVertexs	( float x1, float y1, float x2, float y2, int dimensioIgnorada );
+	void		DeleteVertexs ( float x1, float y1, float x2, float y2, int dimensioIgnorada );
+
+	void		RenderVertexs	( void );
+	void		RenderSelection	( float x1, float y1, float x2, float y2 );
 };
 
 #endif

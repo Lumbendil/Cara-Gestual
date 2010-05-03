@@ -44,6 +44,7 @@ protected: // create from serialization only
 
 // Attributes
 public:
+	float x,y,z;
 	CPracticaDoc* GetDocument();
 
 // Operations

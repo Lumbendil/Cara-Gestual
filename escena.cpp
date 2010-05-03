@@ -41,11 +41,18 @@ void dibuixa(char obj)
 		  glutSolidTeapot(1.0);
 		glPopMatrix();
 		break;
-
 	}
 
 }
 
+void renderSphereSelection	(float x, float y, float z)
+{
+		glColor3f(1.0,1.0,1.0);
+		glPushMatrix();
+			glTranslatef(x,y,0.0);
+			glutSolidSphere(1.0,40,40);
+		glPopMatrix();
+}
 
 // OBJECTE Truck amb imatges textura si són actives
 // Truck: Paràmetres:

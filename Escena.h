@@ -17,4 +17,5 @@ void truck(bool textu,GLuint VTextu[NUM_MAX_TEXTURES]);
 void neumatic(bool textur, GLuint VTextur[NUM_MAX_TEXTURES]);
 void llanta(bool textur, GLuint VTextur[NUM_MAX_TEXTURES]);
 void sea(void);
+void renderSphereSelection	(float x, float y, float z);
 #endif
