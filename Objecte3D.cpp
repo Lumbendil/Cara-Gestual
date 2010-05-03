@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Objecte3D.h"
 #include "objLoader.h"
+#include "CollisionManager.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
 	switch (tipus) {
@@ -84,6 +85,15 @@ int Objecte3D::PuntMesProxim(SPoint3D p)
 	}
 	return millorPunt;
 }
+SPoint3D Objecte3D::RetornaPunt(int punt)
+{
+	return this->punts[punt].cordenades;
+}
+int Objecte3D::GetNumVertexs ( void )
+{
+	return nombrePunts;
+}
+
 void Objecte3D::Dibuixar(int list)
 {
 	int iPreviousMaterial = -1,i,j;
@@ -172,4 +182,19 @@ SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
 	normal = SPoint3D(p1.y*p2.z - p1.z*p2.y,p1.z*p2.x - p1.x*p2.z,p1.x*p2.y - p1.y*p2.x);
 	normal.normalizeVector();
 	return normal;
+}
+
+//Mira el punt més proper en què col·lisiona el raig
+int Objecte3D::LineSelect (SPoint3D &LP1, SPoint3D &LP2)
+{
+	SPoint3D HitP;
+	int nbHits = 0;
+	int Punt = -1;
+	float fDistance = 1000000000.0f;
+
+	bool bHit = CCollisionManager::getInstance()->TestCollisionRay(LP1,LP2,10000.0f,HitP);
+	if (bHit)
+		Punt = buscarPunt(HitP);
+
+	return Punt;
 }

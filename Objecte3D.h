@@ -60,6 +60,8 @@ class Objecte3D {
 		punt p.
 		*/
 		int PuntMesProxim(SPoint3D);
+		SPoint3D RetornaPunt ( int );
+		int GetNumVertexs ( void );
 		/*
 		Dibuixa la funció
 		*/
@@ -69,6 +71,11 @@ class Objecte3D {
 		*/
 		void mourePunt(int, SPoint3D);
 		int buscarPunt(SPoint3D);
+
+		//Mètodes per al Rigging
+		int LineSelect (SPoint3D &LP1, SPoint3D &LP2);
+		
+
 	private:
 		Cara *cares;
 		Punt *punts;

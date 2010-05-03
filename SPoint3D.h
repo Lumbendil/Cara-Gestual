@@ -45,7 +45,8 @@ public:
 
 	//Functions
 	void		SPoint3D::normalizeVector	( void );
-	double		SPoint3D::calcularDistancia	(const SPoint3D& ) const;
+	double		SPoint3D::calcularDistancia	( const SPoint3D& ) const;
+	SPoint3D	SPoint3D::CrossProduct		( const SPoint3D& );
 };
 
 #endif
