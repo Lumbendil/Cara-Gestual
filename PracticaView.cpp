@@ -21,6 +21,9 @@
 #include "ExpressionManager.h"
 #include "visualitzacio.h"
 #include "SPoint3D.h"
+#include "Selection.h"
+#include "EditorManager.h"
+#include "MuscleManager.h"
 #include "escena.h"
 #include <gl\gl.h>
 #include <gl\glu.h>
@@ -249,6 +252,10 @@ CPracticaView::CPracticaView()
 	iluInit();					// Inicialitzar llibreria ILU
 	ilutRenderer(ILUT_OPENGL);	// Inicialitzar llibreria ILUT per a OpenGL
 
+	select = NULL;
+
+	MManager = new MuscleManager();
+	editor = new EditorManager(MManager, 430);
 }
 
 CPracticaView::~CPracticaView()
@@ -848,26 +855,49 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 	/////////////////////////////////////////////////////////
 	/////// wx, wy, wz són les coordenades món			/////	
 	/////////////////////////////////////////////////////////
+	if (select == NULL)
+		select = new Selection(ObOBJ,editor);
 
-	GLint* viewport;
-	GLdouble* mvmatrix;
-	GLdouble* projmatrix;
-	GLint realy;  /*  OpenGL y coordinate position  */
-	GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+	select->ButtonDown(point.x, point.y);
+	//GLint* viewport;
+	//GLdouble* mvmatrix;
+	//GLdouble* projmatrix;
+	//GLint realy;  /*  OpenGL y coordinate position  */
+	//GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
 
-	mvmatrix = GetModelviewMatrix();
-	//viewport = GetViewportMatrix();
-	projmatrix = GetProjectionMatrix();
+	//mvmatrix = GetModelviewMatrix();
+	/*viewport = GetViewportMatrix();*/
+	//projmatrix = GetProjectionMatrix();
 
-	realy = viewport[3] - (GLint) point.y;
+	//realy = viewport[3] - point.y;
 
-	//error = 0 -> No retorna les coordenades món
-	GLint error = gluUnProject ((GLdouble) point.x, (GLdouble) realy, 0.5,
-               mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+	////error = 0 -> No retorna les coordenades món
+	//GLint error = gluUnProject ((double) point.x, (double) realy, 0.0,
+ //              mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+	//SPoint3D coord1 ((float)wx, (float)wy,(float) wz);
 
-	RenderPoint(wx,wy,wz);
+	//error = gluUnProject ((GLdouble) point.x, (GLdouble) realy, 1.0,
+ //              mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+
+	//SPoint3D coord2 ((float)wx, (float)wy, (float)wz);
+	//SPoint3D coordfinal = coord2 - coord1;
+	//coordfinal.normalizeVector();
+	//
+	//for (int i=0; i < ObOBJ->GetNumVertexs(); ++i)
+	//{
+	//	SPoint3D p = ObOBJ->RetornaPunt(i) - coord1;
+	//	p.normalizeVector();
+	//	float dist = (float)p.calcularDistancia(coordfinal);
+	//	if (dist < 0.001)
+	//		RenderPoint(coordfinal.x, coordfinal.y, coordfinal.z);
+	//}
+	/*int punt = ObOBJ->PuntMesProxim(coordfinal);
+	coordfinal = ObOBJ->RetornaPunt(punt);
+
+	RenderPoint(coordfinal.x, coordfinal.y, coordfinal.z);*/
 
 	//////////////////////////////////////////////////////////
+
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -877,6 +907,9 @@ void CPracticaView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 // TODO: Add your message handler code here and/or call default
 	m_ButoEAvall = false;
+
+	if (select != NULL)
+		select->ButtonUp();
 
 	CView::OnLButtonUp(nFlags, point);
 }
@@ -939,7 +972,8 @@ BOOL CPracticaView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void CPracticaView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-
+	if (select != NULL)
+		select->ButtonMove(point.x, point.y);
 //	float modul=0;
 //	GLfloat vdir[3]={0,0,0};
 //

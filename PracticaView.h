@@ -27,8 +27,10 @@
 #include "ExpressionManager.h"
 
 #include "PracticaDoc.h"
-
+#include "Selection.h"
 #include "SPoint3D.h"
+#include "EditorManager.h"
+#include "MuscleManager.h"
 
 
 
@@ -44,8 +46,10 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	float x,y,z;
 	CPracticaDoc* GetDocument();
+	Selection* select;
+	EditorManager* editor;
+	MuscleManager* MManager;
 
 // Operations
 public:

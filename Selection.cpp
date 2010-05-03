@@ -107,5 +107,6 @@ void Selection::GetFrustum( SPoint3D Normals[4], SPoint3D P[8])
 
 void Selection::Render()
 {
+
 }
 
