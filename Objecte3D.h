@@ -11,6 +11,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+#include "CollisionManager.h"
 #include "SPoint3D.h"
 #include "objLoader.h"
 

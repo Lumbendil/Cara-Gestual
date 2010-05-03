@@ -14,6 +14,7 @@ Objecte3D::Objecte3D(char* filename, int tipus) {
 }
 void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	int numpunts,numcares,i,j;
+	CCollisionManager* cm = CCollisionManager::getInstance();
 	Punt p;
 
 	COBJModel *o = new COBJModel();
@@ -42,17 +43,14 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->nombreCares = numcares;
 
 	for (i = 0; i < numcares; i++) {
-		//if (ob.pFaces[i].iNumVertices == 3) {
-			for (j = 0; j < 3; j++) {
-				this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
-				this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
-				// TODO: Cordenades de textura de cada vertex
-				this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
-				this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
-			}
-		/*} else {
-			// Error
-		}*/
+		for (j = 0; j < 3; j++) {
+			this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
+			// TODO: Controlar que tenen textures
+			this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
+			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
+			this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
+		}
+		cm->addTriangle(this->cares[i].punts[0]->cordenades,this->cares[i].punts[1]->cordenades,this->cares[i].punts[2]->cordenades);
 	}
 	this->nombreMaterials = o->GetNumMaterials();
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
@@ -71,6 +69,9 @@ int Objecte3D::buscarPunt(SPoint3D p) {
 }
 Objecte3D::~Objecte3D()
 {
+	free(this->punts);
+	free(this->cares);
+	free(this->materials);
 }
 int Objecte3D::PuntMesProxim(SPoint3D p)
 {
