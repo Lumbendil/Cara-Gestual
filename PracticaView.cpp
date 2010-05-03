@@ -20,6 +20,11 @@
 #include "MuscleManager.h"
 #include "ExpressionManager.h"
 #include "visualitzacio.h"
+#include "SPoint3D.h"
+#include <gl\gl.h>
+#include <gl\glu.h>
+#include <gl\glaux.h>
+#include <gl\glut.h>
 
 
 #ifdef _DEBUG
@@ -829,6 +834,7 @@ BOOL CPracticaView::OnEraseBkgnd(CDC* pDC)
 /*                           CONTROL DEL RATOLI                              */
 /* ------------------------------------------------------------------------- */
 
+
 void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 // TODO: Add your message handler code here and/or call default
@@ -837,9 +843,33 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 //  mouse i ho guardem a la variable m_PosEAvall
 	m_ButoEAvall = true;
 	m_PosEAvall = point;
+	
+	/////////////////////////////////////////////////////////
+	/////// wx, wy, wz són les coordenades món			/////	
+	/////////////////////////////////////////////////////////
+
+	GLint* viewport;
+	GLdouble* mvmatrix;
+	GLdouble* projmatrix;
+	GLint realy;  /*  OpenGL y coordinate position  */
+	GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+
+	mvmatrix = GetModelviewMatrix();
+	viewport = GetViewportMatrix();
+	projmatrix = GetProjectionMatrix();
+
+
+	realy = viewport[3] - (GLint) point.y - 1;
+
+	//error = 0 -> No retorna les coordenades món
+	GLint error = gluUnProject ((GLdouble) point.x, (GLdouble) realy, 0.0,
+               mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+
+	//////////////////////////////////////////////////////////
 
 	CView::OnLButtonDown(nFlags, point);
 }
+
 
 void CPracticaView::OnLButtonUp(UINT nFlags, CPoint point) 
 {

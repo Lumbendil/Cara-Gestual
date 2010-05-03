@@ -13,6 +13,8 @@
 #pragma warning(disable : 4996 4267) // Eliminar missatges de warnings C4996 i C4267 de la compilació (Visual 2005)
 #endif // _MSC_VER >= 1000
 
+#include "stdafx.h"
+
 // OBJECTE 3DS: Include per la definició de l'objecte Obj_3DS
 #include "Obj3DS.h"	
 
@@ -24,11 +26,18 @@
 #include "MuscleManager.h"
 #include "ExpressionManager.h"
 
+#include "PracticaDoc.h"
+
+#include "SPoint3D.h"
+
+
+
+
 class CPracticaView : public CView
 {
 protected: // create from serialization only
 	CPracticaView();
-	DECLARE_DYNCREATE(CPracticaView)
+	DECLARE_DYNCREATE(CPracticaView);
 
 	void ChangeMuscleState ( TypeMuscle muscle );
 	void ChangeExpressionState ( TypeExpression expression );

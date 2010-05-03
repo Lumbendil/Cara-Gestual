@@ -6,11 +6,12 @@
 
 #include "stdafx.h"
 #include "escena.h"
+#include "PracticaView.h"
+#include "SPoint3D.h"
 
 // dibuixa: Funció que dibuixa els objectes segons obj
 void dibuixa(char obj)
 {
-
 	switch(obj)
 	{
 
@@ -28,7 +29,7 @@ void dibuixa(char obj)
 		glColor3f(1.0,1.0,1.0);	
 		glPushMatrix();
 		  glScalef(5.0f,5.0f,5.0f);
-		  glutSolidSphere(1.0,40,40);
+		 glutSolidSphere(1.0,40,40);
 		glPopMatrix();
 		break;
 

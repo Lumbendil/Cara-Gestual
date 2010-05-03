@@ -15,9 +15,29 @@
 #include "stdafx.h"
 #include "visualitzacio.h"
 #include "escena.h"
+#include "constants.h"
 
 // TEXTURES: Vector de noms de textura
 GLuint textures[NUM_MAX_TEXTURES]={0,1,2,3,4,5,6,7,8,9};
+
+GLdouble projectionMatrix[16];
+GLint viewportMatrix[4];
+GLdouble ModelViewMatrix[16];
+
+GLdouble* GetProjectionMatrix (void)
+{
+	return projectionMatrix;
+}
+
+GLdouble* GetModelviewMatrix (void)
+{
+	return ModelViewMatrix;
+}
+
+GLint* GetViewportMatrix (void)
+{
+	return viewportMatrix;
+}
 
 // Iluminació: Configurar iluminació de l'escena
 void Iluminacio(char ilumin,bool textur,char obj,bool bc_lin)
@@ -251,9 +271,11 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 // Definició Viewport
 	glViewport(minx,miny,w,h);
 	if (h==0) h=1;
+	glGetIntegerv (GL_VIEWPORT, viewportMatrix);
 
 // Activació i inicialització matriu PROJECTION
 	glMatrixMode(GL_PROJECTION);
+	glGetDoublev (GL_PROJECTION_MATRIX, projectionMatrix);
 	glLoadIdentity();
 
 // PROJECCIO PERSPECTIVA.Definim volum de visualització adaptant-lo 
@@ -264,14 +286,16 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 	gluPerspective(60.0,1.0*w/h,p_near,p_far+zoom);
 	else gluPerspective(60.0*h/w,1.0*w/h,p_near,p_far+zoom);
 
+
+
 // Amb glFrustum (no actualitzar R)
 //	if (w>=h) glFrustum(-rang*w/h,rang*w/h,-rang,rang,p_near,p_far+zoom);
 //	else glFrustum(-rang,rang,-rang*h/w,rang*h/w,p_near,p_far+zoom);
 
 // Activació matriu MODELVIEW (tancar matriu PROJECTION)
 	glMatrixMode(GL_MODELVIEW);
+	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 	glLoadIdentity();
-   	
 }
 
 // Perspectiva: Definició gluLookAt amb possibilitat de moure 

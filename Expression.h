@@ -13,7 +13,7 @@ private:
 
 public:
 
-	Expression();
+	Expression(MuscleManager* MMan);
 	~Expression();
 
 	void		resetMuscles		( void );
