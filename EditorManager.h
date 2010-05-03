@@ -9,20 +9,28 @@ class EditorManager
 {
 private:
 	MuscleManager*	 MManager;
+	unsigned int *VertexList, TotalVertex = 0;
+	TypeMuscle Muscle;
 
 public:
 
-	EditorManager(MuscleManager* MMan);
+	EditorManager(MuscleManager* MMan, int nVertex);
 	~EditorManager();
+	
+	// Roger
+	// Mï¿½todes relacionats amb els muscles
+	void		AddVertex	( SPoint3D vertex, Objecte3D* objecte);
+	void		DeleteVertex	( SPoint3D vertex );
+	void		CalculateDelta	( TypeMuscle m );
+	void		SetMuscle	( TypeMuscle m );
 
-	// Mètodes relacionats amb els muscles
-	void		AddVertex		( TypeMuscle muscle, SPoint3D vertex, Objecte3D* objecte);
-	void		DeleteVertex	( TypeMuscle muscle, SPoint3D vertex );
-	void		CalculateDelta	( TypeMuscle muscle );
-
-	// Mètodes relacionats amb les expressions
+	// Mï¿½todes relacionats amb les expressions
 	void		DefineMovement	( TypeExpression expression, TypeMuscle muscle );
 
+	// Kusku
+	// dimensioIgnorada = 0 / dimensioIgnorada: x, etc.
+	void		AddVertexs	( int x1, int y1, int x2, int y2, int dimensioIgnorada );
+	void		DeleteVertexs ( int x1, int y1, int x2, int y2, int dimensioIgnorada );
 };
 
 #endif
