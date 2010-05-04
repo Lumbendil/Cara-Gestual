@@ -45,6 +45,7 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	for (i = 0; i < numcares; i++) {
 		for (j = 0; j < 3; j++) {
 			this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
+			this->cares[i].normals[j] = SPoint3D(ob.pFaces[i].pNormals[j].fX,ob.pFaces[i].pNormals[j].fY,ob.pFaces[i].pNormals[j].fZ);
 			// TODO: Controlar que tenen textures
 			this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
 			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
@@ -56,7 +57,6 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
 	// Copiar guarro
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
-
 	cm->Finalize();
 }
 
@@ -124,7 +124,8 @@ void Objecte3D::Dibuixar(int list)
 		{
 			// Set vertex normal (if vertex normals are specified)
 			//Sif (this->cares[i].punts[j]->normal)
-				glNormal3fv(this->cares[i].punts[j]->normal);
+				//glNormal3fv(this->cares[i].punts[j]->normal);
+			glNormal3fv(this->cares[i].normals[j]);
 			// Set texture coordinates (if any specified)
 			//if (this->cares[i].punts[j]->cordTex)
 				glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);

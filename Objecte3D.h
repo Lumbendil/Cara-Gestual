@@ -40,6 +40,7 @@ struct Punt {
 // Es guarda la ID relacionada a cada punt.
 struct Cara {
 	Punt *punts[3];
+	SPoint3D normals[3];
 	int materialTextura;
 	Point2D cordTex[3];
 };
