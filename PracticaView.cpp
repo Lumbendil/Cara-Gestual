@@ -864,7 +864,7 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if(TeclaControl)
 	{
-		select->ButtonDown(point.x, point.y);
+		select->ButtonDown(point.x, point.y, opv);
 		select->Render();
 	}
 
@@ -952,7 +952,7 @@ void CPracticaView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if (select != NULL && TeclaControl)
 	{
-		select->ButtonMove(point.x, point.y);
+		select->ButtonMove(point.x, point.y, opv);
 		select->Render();
 		Invalidate();
 	}
