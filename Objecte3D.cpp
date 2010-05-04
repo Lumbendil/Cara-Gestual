@@ -56,6 +56,8 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
 	// Copiar guarro
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
+
+	cm->Finalize();
 }
 
 // TODO: Fer funció
@@ -64,7 +66,7 @@ void Objecte3D::Objecte3DDe3DS(char* filename)
 }
 int Objecte3D::buscarPunt(SPoint3D p) {
 	int i;
-	for (i = 0;this->punts[i].cordenades != p && i < this->nombrePunts; i++);
+	for (i = 0;this->punts[i].cordenades != p; i++);
 	return i;
 }
 Objecte3D::~Objecte3D()
@@ -186,16 +188,18 @@ SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
 }
 
 //Mira el punt més proper en què col·lisiona el raig
-int Objecte3D::LineSelect (SPoint3D &LP1, SPoint3D &LP2)
+int Objecte3D::LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv)
 {
 	SPoint3D HitP;
 	int nbHits = 0;
 	int Punt = -1;
-	float fDistance = 1000000000.0f;
 
-	bool bHit = CCollisionManager::getInstance()->TestCollisionRay(LP1,LP2,10000.0f,HitP);
+	LP2 = LP2 - LP1;
+	LP2.normalizeVector();
+
+	bool bHit = CCollisionManager::getInstance()->TestCollisionRay(opv,LP2,1000.0f,HitP);
 	if (bHit)
-		Punt = buscarPunt(HitP);
+		Punt = PuntMesProxim(HitP);
 
 	return Punt;
 }

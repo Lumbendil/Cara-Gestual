@@ -74,7 +74,7 @@ class Objecte3D {
 		int buscarPunt(SPoint3D);
 
 		//Mètodes per al Rigging
-		int LineSelect (SPoint3D &LP1, SPoint3D &LP2);
+		int LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv);
 		
 
 	private:
