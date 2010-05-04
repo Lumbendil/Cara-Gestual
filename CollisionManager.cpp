@@ -45,11 +45,7 @@ void CCollisionManager::Finalize()
 
 bool CCollisionManager::TestCollisionRay(SPoint3D &coordA, SPoint3D &coordB, float distance, SPoint3D &CollisionPoint)
 {
-	SPoint3D vecDir = coordB - coordA;
-
-	vecDir.normalizeVector();
-
-	if ( m_CollObj->rayCollision(coordA, vecDir, true, 0, distance) )
+	if ( m_CollObj->rayCollision(coordA, coordB, true, 0, distance) )
 	{
 		m_CollObj->getCollisionPoint(CollisionPoint, true);
 		return true;

@@ -24,7 +24,7 @@ Selection::~Selection()
 }
 
 //Al premer el botó esquerre
-void Selection::ButtonDown( float mouseX, float mouseY )
+void Selection::ButtonDown( float mouseX, float mouseY, CPunt3D opv )
 {
 	nStartX = mouseX;
 	nStartY = mouseY;
@@ -33,7 +33,7 @@ void Selection::ButtonDown( float mouseX, float mouseY )
     buttonState = true;	
 
 	GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
-	int index = ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
+	int index = ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1], SPoint3D(opv.x, opv.y, opv.z));	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
 	if (index != -1)
 	{
 		SPoint3D puntTrobat = ObOBJ->RetornaPunt(index);		//Obtenim les coordenades del punt
@@ -42,7 +42,7 @@ void Selection::ButtonDown( float mouseX, float mouseY )
 }
 
 //Al moure el ratolí amb el botó apretat
-void Selection::ButtonMove( float mouseX, float mouseY )
+void Selection::ButtonMove( float mouseX, float mouseY, CPunt3D opv )
 {
 	if ( buttonState )
 	{
@@ -77,14 +77,14 @@ void Selection::ButtonUp( void )
 //Obté una línia d'allà on s'ha apretat en coordenades món
 void Selection::GetLine( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY )
 {
-	double mvmatrix[16];
-	double projmatrix[16];
-	int Viewport[4];
+	double* mvmatrix;
+	double* projmatrix;
+	int* Viewport;
 	double dX, dY, dZ, dClickY; // glUnProject uses doubles, but I'm using floats for these 3D vectors
 
-	glGetIntegerv(GL_VIEWPORT, Viewport);	
-	glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
-	glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
+	Viewport = GetViewportMatrix();
+	mvmatrix = GetModelviewMatrix();
+	projmatrix = GetProjectionMatrix();
 	dClickY = double (Viewport[3] - mouseY); 
 	// OpenGL renders with (0,0) on bottom, mouse reports with (0,0) on top
 
