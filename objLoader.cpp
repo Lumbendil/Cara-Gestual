@@ -943,7 +943,7 @@ void COBJModel::FreeMemory ( void )
 		Model.pTexCoords = NULL;
 		Model.pMaterials = NULL;
 
-		for ( int i = 0; i < Model.info->iFaceCount; i++ )
+		for (unsigned int i = 0; i < Model.info->iFaceCount; i++ )
 		{
 			delete [] Model.pFaces[i].pNormals;
 			delete [] Model.pFaces[i].pTexCoords;
