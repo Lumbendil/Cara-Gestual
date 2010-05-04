@@ -247,6 +247,9 @@ CPracticaView::CPracticaView()
 // GC2: Altres variables
 	nom="";			// Nom del fitxer
 
+// GC2: Tecla Control per a la sel·lecció
+	TeclaControl = false;
+
 // GC2: Inicialització de les llibreries DevIL per a la càrrega de textures i fitxers .3DS
 	ilInit();					// Inicialitzar llibreria IL
 	iluInit();					// Inicialitzar llibreria ILU
@@ -858,43 +861,13 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (select == NULL)
 		select = new Selection(ObOBJ,editor);
 
-	select->ButtonDown(point.x, point.y);
-	//GLint* viewport;
-	//GLdouble* mvmatrix;
-	//GLdouble* projmatrix;
-	//GLint realy;  /*  OpenGL y coordinate position  */
-	//GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+	if(TeclaControl)
+	{
+		select->ButtonDown(point.x, point.y);
+		select->Render();
+	}
 
-	//mvmatrix = GetModelviewMatrix();
-	/*viewport = GetViewportMatrix();*/
-	//projmatrix = GetProjectionMatrix();
-
-	//realy = viewport[3] - point.y;
-
-	////error = 0 -> No retorna les coordenades món
-	//GLint error = gluUnProject ((double) point.x, (double) realy, 0.0,
- //              mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-	//SPoint3D coord1 ((float)wx, (float)wy,(float) wz);
-
-	//error = gluUnProject ((GLdouble) point.x, (GLdouble) realy, 1.0,
- //              mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-
-	//SPoint3D coord2 ((float)wx, (float)wy, (float)wz);
-	//SPoint3D coordfinal = coord2 - coord1;
-	//coordfinal.normalizeVector();
-	//
-	//for (int i=0; i < ObOBJ->GetNumVertexs(); ++i)
-	//{
-	//	SPoint3D p = ObOBJ->RetornaPunt(i) - coord1;
-	//	p.normalizeVector();
-	//	float dist = (float)p.calcularDistancia(coordfinal);
-	//	if (dist < 0.001)
-	//		RenderPoint(coordfinal.x, coordfinal.y, coordfinal.z);
-	//}
-	/*int punt = ObOBJ->PuntMesProxim(coordfinal);
-	coordfinal = ObOBJ->RetornaPunt(punt);
-
-	RenderPoint(coordfinal.x, coordfinal.y, coordfinal.z);*/
+	Invalidate();
 
 	//////////////////////////////////////////////////////////
 
@@ -908,9 +881,13 @@ void CPracticaView::OnLButtonUp(UINT nFlags, CPoint point)
 // TODO: Add your message handler code here and/or call default
 	m_ButoEAvall = false;
 
-	if (select != NULL)
+	if (select != NULL && TeclaControl)
+	{
 		select->ButtonUp();
+		select->NoRender();
+	}
 
+	Invalidate();
 	CView::OnLButtonUp(nFlags, point);
 }
 
@@ -972,192 +949,199 @@ BOOL CPracticaView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void CPracticaView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if (select != NULL)
+	if (select != NULL && TeclaControl)
+	{
 		select->ButtonMove(point.x, point.y);
-//	float modul=0;
-//	GLfloat vdir[3]={0,0,0};
-//
-//// TODO: Add your message handler code here and/or call default
-//	if (m_ButoEAvall && mobil && projeccio!=CAP)
-//	{
-//		
-//// Determinació dels angles (en graus) segons l'increment
-////  horitzontal i vertical de la posició del mouse
-//		CSize gir = m_PosEAvall - point;
-//		m_PosEAvall = point;
-//		angleh = angleh-gir.cx/2;
-//		anglev= anglev+gir.cy/2 ;
-//		
-//// Control per evitar el creixement desmesurat dels angles
-//		if(anglev>=360)	anglev=anglev-360;
-//		if(anglev<0)	anglev=anglev+360;
-//		if(angleh>=360)	angleh=angleh-360;
-//		if(angleh<0)	angleh=angleh+360;
-//		InvalidateRect(NULL, false);	
-//	}
-//	else if (m_ButoEAvall && navega && (projeccio!=CAP && projeccio!=ORTO)) // Opció Navegació
-//			{
-//// Canviar orientació en opció de Navegació
-//			CSize girn = m_PosEAvall - point;
-//			angleZ=girn.cx/2.0;
-//// Control per evitar el creixement desmesurat dels angles
-//			if(angleZ>=360) angleZ=angleZ-360;
-//			if(angleZ<0)	angleZ=angleZ+360;
-////			if(angleZ>=360)	angleZ=angleZ-360;
-////			if(angleZ<0)	angleZ=angleZ+360;
-//
-//			n[0]=n[0]-opv.x;
-//			n[1]=n[1]-opv.y;
-//			n[0]=n[0]*cos(angleZ*pi/180)-n[1]*sin(angleZ*pi/180);
-//			n[1]=n[0]*sin(angleZ*pi/180)+n[1]*cos(angleZ*pi/180);
-//			n[0]=n[0]+opv.x;
-//			n[1]=n[1]+opv.y;
-//
-//			m_PosEAvall = point;
-//			InvalidateRect(NULL,false);
-//			}
-//
-//// Transformació Geomètrica interactiva pels eixos X,Y boto esquerra del mouse
-//			else {	bool transE = transX || transY;
-//					if (m_ButoEAvall && transE && transf)
-//					{
-//// Calcular increment
-//						CSize girT = m_PosEAvall - point;
-//						if (transX)
-//							{	long int incrT=girT.cx;
-//								if (trasl)
-//									{ VTras.x+=incrT*fact_Tras;
-//									  if (VTras.x<-100000) VTras.x=100000;
-//									  if (VTras.x>100000) VTras.x=100000;
-//									}
-//									else if (rota)
-//											{	VRota.x+=incrT*fact_Rota;
-//												while (VRota.x>=360) VRota.x-=360;
-//												while (VRota.x<0) VRota.x+=360;
-//											}
-//											else if (escal)
-//												{ if (incrT<0) incrT=-1/incrT;
-//												  VScal.x=VScal.x*incrT;
-//												  if(VScal.x<0.25) VScal.x=0.25;
-//												  if(VScal.x>8192) VScal.x=8192;
-//												}
-//							}
-//						if (transY)
-//							{	long int incrT=girT.cy;
-//								if (trasl)
-//									{	VTras.y+=incrT*fact_Tras;
-//										if (VTras.y<-100000) VTras.y=100000;
-//										if (VTras.y>100000) VTras.y=100000;
-//									}
-//									else if (rota)
-//										{	VRota.y+=incrT*fact_Rota;
-//											while (VRota.y>=360) VRota.y-=360;
-//											while (VRota.y<0) VRota.y+=360;
-//										}
-//										else if (escal)
-//										{	if (incrT<=0) {	if (incrT>=-2) incrT=-2;
-//															incrT=1/Log2(-incrT);}
-//												else incrT=Log2(incrT);
-//											VScal.y=VScal.y*incrT;
-//											if(VScal.y<0.25) VScal.y=0.25;
-//											if(VScal.y>8192) VScal.y=8192;
-//											}
-//							}
-//					m_PosEAvall = point;
-//					InvalidateRect(NULL,false);
-//					}
-//				}
-//
-//// Determinació del desplaçament del pan segons l'increment
-////   vertical de la posició del mouse (tecla dreta apretada)
-//		if (m_ButoDAvall && pan && (projeccio!=CAP && projeccio!=ORTO))
-//		{	CSize zoomincr=m_PosDAvall - point;
-//			long int incrx=zoomincr.cx;
-//			long int incry=zoomincr.cy;
-//
-//			// Desplaçament pan vertical
-//			tr_cpv[1]-=incry*fact_pan;
-//			if(tr_cpv[1]>100000) tr_cpv[1]=100000;
-//			else if(tr_cpv[1]<-100000) tr_cpv[1]=-100000;
-//
-//			// Desplaçament pan horitzontal
-//			tr_cpv[0]+=incrx*fact_pan;
-//			if(tr_cpv[0]>100000) tr_cpv[0]=100000;
-//			else if(tr_cpv[0]<-100000) tr_cpv[0]=-100000;
-//
-//			m_PosDAvall=point;
-//			InvalidateRect(NULL,false);
-//		}
-//// Determinació del paràmetre R segons l'increment
-////   vertical de la posició del mouse (tecla dreta apretada)
-//		else if (m_ButoDAvall && zzoom && (projeccio!=CAP && projeccio!=ORTO))
-//			{
-//				CSize zoomincr=m_PosDAvall - point;
-//				long int incr=zoomincr.cy/1.0;
-//
-////				zoom=zoom+incr;
-//				R=R+incr;
-//				if (R<1) R=1;
-//				m_PosDAvall=point;
-//				InvalidateRect(NULL,false);
-//			}
-//			else if (m_ButoDAvall && navega && (projeccio!=CAP && projeccio!=ORTO))
-//				{
-//// Avançar en opció de Navegació
-//				if (m_PosDAvall!=point) 
-//					{
-//					CSize zoomincr=m_PosDAvall - point;
-//
-//					float incr=zoomincr.cy/2;
-////					long int incr=zoomincr.cy/2.0;  // Causa assertion en "afx.inl" lin 169
-//					vdir[0]=n[0]-opv.x;
-//					vdir[1]=n[1]-opv.y;
-//					vdir[2]=n[2]-opv.z;
-//					modul=sqrt(vdir[0]*vdir[0]+vdir[1]*vdir[1]+vdir[2]*vdir[2]);
-//					vdir[0]=vdir[0]/modul;
-//					vdir[1]=vdir[1]/modul;
-//					vdir[2]=vdir[2]/modul;
-//					opv.x+=incr*vdir[0];
-//					opv.y+=incr*vdir[1];
-//					n[0]+=incr*vdir[0];
-//					n[1]+=incr*vdir[1];
-//					m_PosDAvall=point;
-//					InvalidateRect(NULL,false);
-//					}
-//				}
-//
-//// Transformació Geomètrica interactiva per l'eix Z amb boto dret del mouse
-//				else if (m_ButoDAvall && transZ && transf)
-//						{
-//// Calcular increment
-//							CSize girT = m_PosDAvall - point;
-//							long int incrT=girT.cy;
-//							if (trasl)
-//								{ VTras.z+=incrT*fact_Tras;
-//								  if (VTras.z<-100000) VTras.z=100000;
-//								  if (VTras.z>100000) VTras.z=100000;
-//								}
-//								else if (rota)
-//										{	incrT=girT.cx;
-//											VRota.z+=incrT*fact_Rota;
-//											while (VRota.z>=360) VRota.z-=360;
-//											while (VRota.z<0) VRota.z+=360;
-//										}
-//									else if (escal)
-//										{	if (incrT<=0) {	if (incrT>=-2) incrT=-2;
-//															incrT=1/Log2(-incrT);}
-//												else incrT=Log2(incrT);
-//											VScal.z=VScal.z*incrT;
-//											if(VScal.z<0.25) VScal.z=0.25;
-//											if(VScal.z>8192) VScal.z=8192;
-//										}
-//	
-//							m_PosDAvall = point;
-//							InvalidateRect(NULL,false);
-//						}
-//
-//	CView::OnMouseMove(nFlags, point);
-// Do not call CView::OnPaint() for painting messages
+		select->Render();
+		Invalidate();
+	}
+	else
+		{
+		float modul=0;
+		GLfloat vdir[3]={0,0,0};
+
+	// TODO: Add your message handler code here and/or call default
+		if (m_ButoEAvall && mobil && projeccio!=CAP)
+		{
+			
+	// Determinació dels angles (en graus) segons l'increment
+	//  horitzontal i vertical de la posició del mouse
+			CSize gir = m_PosEAvall - point;
+			m_PosEAvall = point;
+			angleh = angleh-gir.cx/2;
+			anglev= anglev+gir.cy/2 ;
+			
+	// Control per evitar el creixement desmesurat dels angles
+			if(anglev>=360)	anglev=anglev-360;
+			if(anglev<0)	anglev=anglev+360;
+			if(angleh>=360)	angleh=angleh-360;
+			if(angleh<0)	angleh=angleh+360;
+			InvalidateRect(NULL, false);	
+		}
+		else if (m_ButoEAvall && navega && (projeccio!=CAP && projeccio!=ORTO)) // Opció Navegació
+				{
+	// Canviar orientació en opció de Navegació
+				CSize girn = m_PosEAvall - point;
+				angleZ=girn.cx/2.0;
+	// Control per evitar el creixement desmesurat dels angles
+				if(angleZ>=360) angleZ=angleZ-360;
+				if(angleZ<0)	angleZ=angleZ+360;
+	//			if(angleZ>=360)	angleZ=angleZ-360;
+	//			if(angleZ<0)	angleZ=angleZ+360;
+
+				n[0]=n[0]-opv.x;
+				n[1]=n[1]-opv.y;
+				n[0]=n[0]*cos(angleZ*pi/180)-n[1]*sin(angleZ*pi/180);
+				n[1]=n[0]*sin(angleZ*pi/180)+n[1]*cos(angleZ*pi/180);
+				n[0]=n[0]+opv.x;
+				n[1]=n[1]+opv.y;
+
+				m_PosEAvall = point;
+				InvalidateRect(NULL,false);
+				}
+
+	// Transformació Geomètrica interactiva pels eixos X,Y boto esquerra del mouse
+				else {	bool transE = transX || transY;
+						if (m_ButoEAvall && transE && transf)
+						{
+	// Calcular increment
+							CSize girT = m_PosEAvall - point;
+							if (transX)
+								{	long int incrT=girT.cx;
+									if (trasl)
+										{ VTras.x+=incrT*fact_Tras;
+										  if (VTras.x<-100000) VTras.x=100000;
+										  if (VTras.x>100000) VTras.x=100000;
+										}
+										else if (rota)
+												{	VRota.x+=incrT*fact_Rota;
+													while (VRota.x>=360) VRota.x-=360;
+													while (VRota.x<0) VRota.x+=360;
+												}
+												else if (escal)
+													{ if (incrT<0) incrT=-1/incrT;
+													  VScal.x=VScal.x*incrT;
+													  if(VScal.x<0.25) VScal.x=0.25;
+													  if(VScal.x>8192) VScal.x=8192;
+													}
+								}
+							if (transY)
+								{	long int incrT=girT.cy;
+									if (trasl)
+										{	VTras.y+=incrT*fact_Tras;
+											if (VTras.y<-100000) VTras.y=100000;
+											if (VTras.y>100000) VTras.y=100000;
+										}
+										else if (rota)
+											{	VRota.y+=incrT*fact_Rota;
+												while (VRota.y>=360) VRota.y-=360;
+												while (VRota.y<0) VRota.y+=360;
+											}
+											else if (escal)
+											{	if (incrT<=0) {	if (incrT>=-2) incrT=-2;
+																incrT=1/Log2(-incrT);}
+													else incrT=Log2(incrT);
+												VScal.y=VScal.y*incrT;
+												if(VScal.y<0.25) VScal.y=0.25;
+												if(VScal.y>8192) VScal.y=8192;
+												}
+								}
+						m_PosEAvall = point;
+						InvalidateRect(NULL,false);
+						}
+					}
+
+	// Determinació del desplaçament del pan segons l'increment
+	//   vertical de la posició del mouse (tecla dreta apretada)
+			if (m_ButoDAvall && pan && (projeccio!=CAP && projeccio!=ORTO))
+			{	CSize zoomincr=m_PosDAvall - point;
+				long int incrx=zoomincr.cx;
+				long int incry=zoomincr.cy;
+
+				// Desplaçament pan vertical
+				tr_cpv[1]-=incry*fact_pan;
+				if(tr_cpv[1]>100000) tr_cpv[1]=100000;
+				else if(tr_cpv[1]<-100000) tr_cpv[1]=-100000;
+
+				// Desplaçament pan horitzontal
+				tr_cpv[0]+=incrx*fact_pan;
+				if(tr_cpv[0]>100000) tr_cpv[0]=100000;
+				else if(tr_cpv[0]<-100000) tr_cpv[0]=-100000;
+
+				m_PosDAvall=point;
+				InvalidateRect(NULL,false);
+			}
+	// Determinació del paràmetre R segons l'increment
+	//   vertical de la posició del mouse (tecla dreta apretada)
+			else if (m_ButoDAvall && zzoom && (projeccio!=CAP && projeccio!=ORTO))
+				{
+					CSize zoomincr=m_PosDAvall - point;
+					long int incr=zoomincr.cy/1.0;
+
+	//				zoom=zoom+incr;
+					R=R+incr;
+					if (R<1) R=1;
+					m_PosDAvall=point;
+					InvalidateRect(NULL,false);
+				}
+				else if (m_ButoDAvall && navega && (projeccio!=CAP && projeccio!=ORTO))
+					{
+	// Avançar en opció de Navegació
+					if (m_PosDAvall!=point) 
+						{
+						CSize zoomincr=m_PosDAvall - point;
+
+						float incr=zoomincr.cy/2;
+	//					long int incr=zoomincr.cy/2.0;  // Causa assertion en "afx.inl" lin 169
+						vdir[0]=n[0]-opv.x;
+						vdir[1]=n[1]-opv.y;
+						vdir[2]=n[2]-opv.z;
+						modul=sqrt(vdir[0]*vdir[0]+vdir[1]*vdir[1]+vdir[2]*vdir[2]);
+						vdir[0]=vdir[0]/modul;
+						vdir[1]=vdir[1]/modul;
+						vdir[2]=vdir[2]/modul;
+						opv.x+=incr*vdir[0];
+						opv.y+=incr*vdir[1];
+						n[0]+=incr*vdir[0];
+						n[1]+=incr*vdir[1];
+						m_PosDAvall=point;
+						InvalidateRect(NULL,false);
+						}
+					}
+
+	// Transformació Geomètrica interactiva per l'eix Z amb boto dret del mouse
+					else if (m_ButoDAvall && transZ && transf)
+							{
+	// Calcular increment
+								CSize girT = m_PosDAvall - point;
+								long int incrT=girT.cy;
+								if (trasl)
+									{ VTras.z+=incrT*fact_Tras;
+									  if (VTras.z<-100000) VTras.z=100000;
+									  if (VTras.z>100000) VTras.z=100000;
+									}
+									else if (rota)
+											{	incrT=girT.cx;
+												VRota.z+=incrT*fact_Rota;
+												while (VRota.z>=360) VRota.z-=360;
+												while (VRota.z<0) VRota.z+=360;
+											}
+										else if (escal)
+											{	if (incrT<=0) {	if (incrT>=-2) incrT=-2;
+																incrT=1/Log2(-incrT);}
+													else incrT=Log2(incrT);
+												VScal.z=VScal.z*incrT;
+												if(VScal.z<0.25) VScal.z=0.25;
+												if(VScal.z>8192) VScal.z=8192;
+											}
+		
+								m_PosDAvall = point;
+								InvalidateRect(NULL,false);
+							}
+
+		CView::OnMouseMove(nFlags, point);
+//	 Do not call CView::OnPaint() for painting messages
+	 }
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1178,6 +1162,12 @@ GLfloat vdir[3]={0,0,0};
 
 	if ((!pan) && (!transf) && (!navega)) {
 // Canvi de la intensitat de fons per teclat
+		TeclaControl = false;
+		if (nChar==VK_CONTROL)
+			TeclaControl = true;
+		else
+			TeclaControl = false;
+
 		if(nChar==VK_DOWN) {
 			if (fonsR) {
 				c_fons.r-=nRepCnt*incr;

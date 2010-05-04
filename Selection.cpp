@@ -4,6 +4,7 @@
 #include "matrix.h"
 #include "Objecte3D.h"
 #include "EditorManager.h"
+#include "visualitzacio.h"
 
 void inline swapInt( float &x, float &y )
 {
@@ -33,8 +34,11 @@ void Selection::ButtonDown( float mouseX, float mouseY )
 
 	GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
 	int index = ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
-	SPoint3D puntTrobat = ObOBJ->RetornaPunt(index);		//Obtenim les coordenades del punt
-	editorM->AddVertex(puntTrobat, ObOBJ);					//Afegim el vèrtex a la llista de vèrtexs sel·leccionats
+	if (index != -1)
+	{
+		SPoint3D puntTrobat = ObOBJ->RetornaPunt(index);		//Obtenim les coordenades del punt
+		editorM->AddVertex(puntTrobat, ObOBJ);					//Afegim el vèrtex a la llista de vèrtexs sel·leccionats
+	}
 }
 
 //Al moure el ratolí amb el botó apretat
@@ -107,6 +111,12 @@ void Selection::GetFrustum( SPoint3D Normals[4], SPoint3D P[8])
 
 void Selection::Render()
 {
+	if (buttonState)
+		RenderBox(nStartX, nStartY, nEndX, nEndY);
+}
 
+void Selection::NoRender()
+{
+	RenderBox(0.0,0.0,0.0,0.0);
 }
 

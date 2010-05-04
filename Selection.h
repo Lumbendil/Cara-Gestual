@@ -24,6 +24,7 @@ public:
 	void	GetLine			( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY );
 	void	GetFrustum		( SPoint3D Normals[4], SPoint3D P[8] );
 	void	Render			( void );
+	void	NoRender		( void );
 };
 
 #endif

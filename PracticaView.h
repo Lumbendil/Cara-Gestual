@@ -51,6 +51,8 @@ public:
 	EditorManager* editor;
 	MuscleManager* MManager;
 
+	bool TeclaControl;
+
 // Operations
 public:
 
