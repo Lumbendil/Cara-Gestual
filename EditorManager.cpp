@@ -40,11 +40,11 @@ void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
 {
 }
 
-void EditorManager::AddVertexs	( float x1, float y1, float x2, float y2, int dimensioIgnorada )
+void EditorManager::AddVertexs	( float x1, float y1, float x2, float y2 )
 {
 }
 
-void EditorManager::DeleteVertexs ( float x1, float y1, float x2, float y2, int dimensioIgnorada )
+void EditorManager::DeleteVertexs ( float x1, float y1, float x2, float y2 )
 {
 }
 
@@ -52,7 +52,7 @@ void EditorManager::RenderVertexs()
 {
 }
 
-void EditorManager::RenderSelection(float x1, float y1, float x2, float y2)
+void EditorManager::RenderSelection(float x1, float y1, float x2, float y2 )
 {
 	
 }
