@@ -5,6 +5,7 @@
 #include "Objecte3D.h"
 #include "Muscle.h"
 
+#define numMuscles 10
 //NONE és l'últim element ja que l'array arriba a l'element N-1.
 //NONE és per definir un muscle quan no hi ha cap muscle seleccionada.
 enum TypeMuscle {ECELLA, DCELLA, INFBOCA, EBOCA, DBOCA, EPARPELLA, DPARPELLA, EGALTA, DGALTA, NONE_MUSCLE};
@@ -15,7 +16,6 @@ private:
 
 	Muscle**	muscles;
 	Objecte3D* obj3D;
-	int numMuscles;
 
 public:
 

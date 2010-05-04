@@ -258,6 +258,7 @@ CPracticaView::CPracticaView()
 	select = NULL;
 
 	MManager = new MuscleManager();
+	EManager = new ExpressionManager(MManager);
 	editor = new EditorManager(MManager, 430);
 }
 
@@ -2540,8 +2541,8 @@ void CPracticaView::OnImportMuscles()
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
-	//TODO Cridar al parsejador de fitxers XML per carregar els muscles.
-	// La variable nomfitx conté tot el path del fitxer.
+	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
+	lector->Read();
 
 
 	// Crida a OnPaint() per redibuixar l'escena

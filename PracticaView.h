@@ -31,6 +31,7 @@
 #include "SPoint3D.h"
 #include "EditorManager.h"
 #include "MuscleManager.h"
+#include "XMLReader.h"
 
 
 
@@ -50,6 +51,7 @@ public:
 	Selection* select;
 	EditorManager* editor;
 	MuscleManager* MManager;
+	ExpressionManager* EManager;
 
 	bool TeclaControl;
 
@@ -159,6 +161,8 @@ public:
 // GC2: Variables de control d'Expressions
 	bool editExpression;	// Booleana que indica si s'està editant les expressions.
 	TypeExpression selectedExpression;
+
+	XMLReader* lector;
 
 	virtual ~CPracticaView();
 #ifdef _DEBUG
