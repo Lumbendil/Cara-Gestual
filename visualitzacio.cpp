@@ -409,9 +409,9 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 		default:
 // Dibuix de la resta d'objectes
 			dibuixa(objecte);
-			drawSelectionBox(wx1,wy1,wx2,wy2);
 			break;
 	}
+	drawSelectionBox(wx1,wy1,wx2,wy2);
 	glPopMatrix();
 	
 // Enviar les comandes gràfiques a pantalla
