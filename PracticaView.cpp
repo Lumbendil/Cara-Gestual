@@ -1163,8 +1163,7 @@ GLfloat vdir[3]={0,0,0};
 
 	if ((!pan) && (!transf) && (!navega)) {
 // Canvi de la intensitat de fons per teclat
-		TeclaControl = false;
-		if (nChar==VK_CONTROL)
+		if (nChar==VK_CONTROL && !TeclaControl)
 			TeclaControl = true;
 		else
 			TeclaControl = false;
@@ -2985,9 +2984,10 @@ void CPracticaView::OnImportExpressions()
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
-	//TODO Cridar al parsejador de fitxers XML per carregar les expressions.
+	//Cridar al parsejador de fitxers XML per carregar les expressions.
 	// La variable nomfitx conté tot el path del fitxer.
-
+	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
+	lector->Read();
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
