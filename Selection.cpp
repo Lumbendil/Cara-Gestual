@@ -27,6 +27,8 @@ Selection::Selection(Objecte3D* obj, EditorManager* editor)
 Selection::~Selection()
 {
 	free(ObOBJ);
+	free(editorM);
+	delete[] m_pTriFlags;
 }
 
 //Al premer el botó esquerre
