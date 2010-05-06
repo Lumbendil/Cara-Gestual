@@ -75,19 +75,10 @@ class Objecte3D {
 		void mourePunt(int, SPoint3D);
 		int buscarPunt(SPoint3D);
 
-		//Mètodes per al Rigging
-		int LineSelect (const SPoint3D &LP1, const SPoint3D &LP2);
 		void GetTriangle ( int index, SPoint3D* triangle );
 		int GetNumTriangles ( void );
-		void SetFlagsTriangles ( void );
-		void SelectTriangle	( int nTri );
-		void SetSelectionMode ( int nMode );
-		int FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] );
-		bool IsTriangleSelected ( int nTri );
+		void GetFaceCoords ( int nFace, SPoint3D* coords );
 
-		enum SelectionModes{ SELECT_ADD, SELECT_SUB };
-		enum TriFlags{ TF_SELECTED = 1, NTF_SELECTED = 2, TF_BACKFACING = (1<<1) };
-		
 	private:
 		Cara *cares;
 		Punt *punts;
@@ -99,9 +90,6 @@ class Objecte3D {
 		void Objecte3DDe3DS(char* filename);
 		void UseMaterial(O3DMaterial pMaterial);
 		SPoint3D Objecte3D::GetFaceNormal(const Cara*);
-
-		int m_nSelMode;
-		int *m_pTriFlags;
 };
 
 #endif

@@ -15,7 +15,6 @@ Objecte3D::Objecte3D(char* filename, int tipus) {
 }
 void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	int numpunts,numcares,i,j;
-	//CCollisionManager* cm = CCollisionManager::getInstance();
 	Punt p;
 
 	COBJModel *o = new COBJModel();
@@ -52,14 +51,11 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
 			this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
 		}
-		//cm->addTriangle(this->cares[i].punts[0]->cordenades,this->cares[i].punts[1]->cordenades,this->cares[i].punts[2]->cordenades);
 	}
 	this->nombreMaterials = o->GetNumMaterials();
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
 	// Copiar guarro
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
-	//cm->Finalize();
-	this->SetFlagsTriangles();
 
 }
 
@@ -77,7 +73,6 @@ Objecte3D::~Objecte3D()
 	free(this->punts);
 	free(this->cares);
 	free(this->materials);
-	delete[] m_pTriFlags;
 }
 int Objecte3D::PuntMesProxim(SPoint3D p)
 {
@@ -192,36 +187,7 @@ SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
 	return normal;
 }
 
-//Mira el punt més proper en què col·lisiona el raig
-int Objecte3D::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
-{
-	SPoint3D HitP, puntTA, puntTB, puntTC;
-	int nbHits = 0;
-	int nSelTri = -1;
-	float fDistance = 1000000000.0f;
-	
-	for (int nTri = 0; nTri < nombreCares; ++nTri )
-	{
-		int nV = nTri*3;	
-	
-		puntTA = this->cares[nTri].punts[0]->cordenades;
-		puntTB = this->cares[nTri].punts[1]->cordenades;
-		puntTC = this->cares[nTri].punts[2]->cordenades;
 
-		bool bHit = CheckLineTri( LP2, LP1, puntTA, puntTB, puntTC, HitP );
-		if ( bHit ) {
-			if ( HitP.calcularDistancia( LP1 ) < fDistance ) {
-				fDistance = HitP.calcularDistancia( LP1 );
-				nSelTri = nTri;
-				}
-			++nbHits;
-			}
-	}
-		
-	SelectTriangle( nSelTri );
-	
-	return nbHits;
-}
 
 void Objecte3D::GetTriangle ( int index, SPoint3D* triangle )
 {
@@ -235,51 +201,18 @@ int Objecte3D::GetNumTriangles ( void )
 	return nombreCares;
 }
 
-void Objecte3D::SetFlagsTriangles ( void )
+void Objecte3D::GetFaceCoords ( int nFace, SPoint3D* coords )
 {
-	m_pTriFlags = new int[nombreCares];
+	coords[0] = this->cares[nFace].punts[0]->cordenades;
+	coords[1] = this->cares[nFace].punts[1]->cordenades;
+	coords[2] = this->cares[nFace].punts[2]->cordenades;
 }
 
-void Objecte3D::SelectTriangle	( int nTri )
-{
-	if ( nTri < 0 || nTri >= nombreCares ) return;
-	if ( m_nSelMode == SELECT_ADD ) 
-		m_pTriFlags[ nTri ] = TF_SELECTED;
-	if ( m_nSelMode == SELECT_SUB )
-		m_pTriFlags[ nTri ] &= NTF_SELECTED;
-}
 
-void Objecte3D::SetSelectionMode ( int nMode )
-{
-	m_nSelMode = nMode; 
-}
 
-int Objecte3D::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
-{
-	int nbHits = 0;
-	SPoint3D Tri[3];
 
-	for (int nTri = 0; nTri < nombreCares; ++nTri )
-		{	
-		int nV = nTri*3;
-		Tri[0] = this->cares[nTri].punts[0]->cordenades;
-		Tri[1] = this->cares[nTri].punts[1]->cordenades;
-		Tri[2] = this->cares[nTri].punts[2]->cordenades;
 
-		if ( TriInFrustum( Tri, Normals, Points ) )
-			{
-			SelectTriangle( nTri );			
-			++nbHits;			
-			}
-		}
-	
-	return nbHits;
-}
 
-bool Objecte3D::IsTriangleSelected ( int nTri )
-{
-	if (m_pTriFlags[nTri] == TF_SELECTED)
-		return true;
-	else
-		return false;
-}
+
+
+

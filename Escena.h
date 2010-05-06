@@ -8,6 +8,7 @@
 #define GLSOURCE_H
 
 #include "SPoint3D.h"
+#include "Selection.h"
 #include "Objecte3D.h"
 
 /* ------------------------------------------------------------------------- */
@@ -20,7 +21,7 @@ void truck(bool textu,GLuint VTextu[NUM_MAX_TEXTURES]);
 void neumatic(bool textur, GLuint VTextur[NUM_MAX_TEXTURES]);
 void llanta(bool textur, GLuint VTextur[NUM_MAX_TEXTURES]);
 void sea(void);
-void renderSphereSelection (Objecte3D* ObOBJ);
+void renderSphereSelection (Selection* select, Objecte3D* ObOBJ);
 void drawSelectionBox	(float x1, float y1, float x2, float y2);
 void WireRect( float x1, float y1, float x2, float y2 );
 void SetProjection3D();

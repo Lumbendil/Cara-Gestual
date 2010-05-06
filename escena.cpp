@@ -8,19 +8,20 @@
 #include "escena.h"
 #include "PracticaView.h"
 #include "visualitzacio.h"
+#include "Selection.h"
 #include "Objecte3D.h"
 #include "SPoint3D.h"
 
-void renderSphereSelection (Objecte3D* ObOBJ)
+void renderSphereSelection (Selection* select, Objecte3D* ObOBJ)
 {
 	SPoint3D coords[3];
 
-	if (ObOBJ != NULL)
+	if (select != NULL && ObOBJ != NULL)
 	{
 		int nTri = ObOBJ->GetNumTriangles();
 		for (int i=0; i<nTri; ++i)
 		{
-			if ( ObOBJ->IsTriangleSelected(i) )
+			if ( select->IsTriangleSelected(i) )
 			{
 				ObOBJ->GetTriangle(i, coords);
 
