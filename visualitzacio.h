@@ -13,6 +13,8 @@
 /*                                Funcions                                   */
 /* ------------------------------------------------------------------------- */
 
+void RenderBox (float x1, float y1, float x2, float y2);
+
 // G2: Il.luminació
 void Iluminacio(char ilumin,bool textur,char obj,bool bc_lin,int step);
 

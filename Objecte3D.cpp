@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Objecte3D.h"
 #include "objLoader.h"
+#include "CollisionManager.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
 	switch (tipus) {
@@ -13,6 +14,7 @@ Objecte3D::Objecte3D(char* filename, int tipus) {
 }
 void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	int numpunts,numcares,i,j;
+	CCollisionManager* cm = CCollisionManager::getInstance();
 	Punt p;
 
 	COBJModel *o = new COBJModel();
@@ -41,22 +43,21 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->nombreCares = numcares;
 
 	for (i = 0; i < numcares; i++) {
-		//if (ob.pFaces[i].iNumVertices == 3) {
-			for (j = 0; j < 3; j++) {
-				this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
-				this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
-				// TODO: Cordenades de textura de cada vertex
-				this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
-				this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
-			}
-		/*} else {
-			// Error
-		}*/
+		for (j = 0; j < 3; j++) {
+			this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
+			this->cares[i].normals[j] = SPoint3D(ob.pFaces[i].pNormals[j].fX,ob.pFaces[i].pNormals[j].fY,ob.pFaces[i].pNormals[j].fZ);
+			// TODO: Controlar que tenen textures
+			this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
+			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
+			this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
+		}
+		cm->addTriangle(this->cares[i].punts[0]->cordenades,this->cares[i].punts[1]->cordenades,this->cares[i].punts[2]->cordenades);
 	}
 	this->nombreMaterials = o->GetNumMaterials();
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
 	// Copiar guarro
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
+	cm->Finalize();
 }
 
 // TODO: Fer funció
@@ -65,11 +66,14 @@ void Objecte3D::Objecte3DDe3DS(char* filename)
 }
 int Objecte3D::buscarPunt(SPoint3D p) {
 	int i;
-	for (i = 0;this->punts[i].cordenades != p && i < this->nombrePunts; i++);
+	for (i = 0;this->punts[i].cordenades != p; i++);
 	return i;
 }
 Objecte3D::~Objecte3D()
 {
+	free(this->punts);
+	free(this->cares);
+	free(this->materials);
 }
 int Objecte3D::PuntMesProxim(SPoint3D p)
 {
@@ -84,6 +88,15 @@ int Objecte3D::PuntMesProxim(SPoint3D p)
 	}
 	return millorPunt;
 }
+SPoint3D Objecte3D::RetornaPunt(int punt)
+{
+	return this->punts[punt].cordenades;
+}
+int Objecte3D::GetNumVertexs ( void )
+{
+	return nombrePunts;
+}
+
 void Objecte3D::Dibuixar(int list)
 {
 	int iPreviousMaterial = -1,i,j;
@@ -111,7 +124,8 @@ void Objecte3D::Dibuixar(int list)
 		{
 			// Set vertex normal (if vertex normals are specified)
 			//Sif (this->cares[i].punts[j]->normal)
-				glNormal3fv(this->cares[i].punts[j]->normal);
+				//glNormal3fv(this->cares[i].punts[j]->normal);
+			glNormal3fv(this->cares[i].normals[j]);
 			// Set texture coordinates (if any specified)
 			//if (this->cares[i].punts[j]->cordTex)
 				glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);
@@ -172,4 +186,21 @@ SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
 	normal = SPoint3D(p1.y*p2.z - p1.z*p2.y,p1.z*p2.x - p1.x*p2.z,p1.x*p2.y - p1.y*p2.x);
 	normal.normalizeVector();
 	return normal;
+}
+
+//Mira el punt més proper en què col·lisiona el raig
+int Objecte3D::LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv)
+{
+	SPoint3D HitP;
+	int nbHits = 0;
+	int Punt = -1;
+
+	LP2 = LP2 - LP1;
+	LP2.normalizeVector();
+
+	bool bHit = CCollisionManager::getInstance()->TestCollisionRay(opv,LP2,1000.0f,HitP);
+	if (bHit)
+		Punt = PuntMesProxim(HitP);
+
+	return Punt;
 }

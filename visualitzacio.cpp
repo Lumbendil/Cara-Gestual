@@ -38,6 +38,11 @@ GLint* GetViewportMatrix (void)
 {
 	return viewportMatrix;
 }
+float wx1 = 0.0,wy1 = 0.0,wx2 = 0.0, wy2 = 0.0;
+void RenderBox (float x1, float y1, float x2, float y2)
+{
+	wx1 = x1; wy1 = y1; wx2 = x2;wy2 = y2;
+}
 
 // Iluminació: Configurar iluminació de l'escena
 void Iluminacio(char ilumin,bool textur,char obj,bool bc_lin)
@@ -271,11 +276,9 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 // Definició Viewport
 	glViewport(minx,miny,w,h);
 	if (h==0) h=1;
-	glGetIntegerv (GL_VIEWPORT, viewportMatrix);
 
 // Activació i inicialització matriu PROJECTION
 	glMatrixMode(GL_PROJECTION);
-	glGetDoublev (GL_PROJECTION_MATRIX, projectionMatrix);
 	glLoadIdentity();
 
 // PROJECCIO PERSPECTIVA.Definim volum de visualització adaptant-lo 
@@ -286,16 +289,18 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 	gluPerspective(60.0,1.0*w/h,p_near,p_far+zoom);
 	else gluPerspective(60.0*h/w,1.0*w/h,p_near,p_far+zoom);
 
-
-
 // Amb glFrustum (no actualitzar R)
 //	if (w>=h) glFrustum(-rang*w/h,rang*w/h,-rang,rang,p_near,p_far+zoom);
 //	else glFrustum(-rang,rang,-rang*h/w,rang*h/w,p_near,p_far+zoom);
 
 // Activació matriu MODELVIEW (tancar matriu PROJECTION)
 	glMatrixMode(GL_MODELVIEW);
-	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 	glLoadIdentity();
+
+
+	glGetIntegerv (GL_VIEWPORT, viewportMatrix);
+	glGetDoublev (GL_PROJECTION_MATRIX, projectionMatrix);
+	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 }
 
 // Perspectiva: Definició gluLookAt amb possibilitat de moure 
@@ -406,6 +411,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 			dibuixa(objecte);
 			break;
 	}
+	drawSelectionBox(wx1,wy1,wx2,wy2);
 	glPopMatrix();
 	
 // Enviar les comandes gràfiques a pantalla

@@ -27,8 +27,11 @@
 #include "ExpressionManager.h"
 
 #include "PracticaDoc.h"
-
+#include "Selection.h"
 #include "SPoint3D.h"
+#include "EditorManager.h"
+#include "MuscleManager.h"
+#include "XMLReader.h"
 
 
 
@@ -45,6 +48,12 @@ protected: // create from serialization only
 // Attributes
 public:
 	CPracticaDoc* GetDocument();
+	Selection* select;
+	EditorManager* editor;
+	MuscleManager* MManager;
+	ExpressionManager* EManager;
+
+	bool TeclaControl;
 
 // Operations
 public:
@@ -152,6 +161,8 @@ public:
 // GC2: Variables de control d'Expressions
 	bool editExpression;	// Booleana que indica si s'està editant les expressions.
 	TypeExpression selectedExpression;
+
+	XMLReader* lector;
 
 	virtual ~CPracticaView();
 #ifdef _DEBUG

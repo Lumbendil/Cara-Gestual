@@ -5,7 +5,6 @@
 
 MuscleManager::MuscleManager()
 {
-	numMuscles = (sizeof(TypeMuscle)/sizeof(int))-1;
 	muscles = (Muscle**) malloc (numMuscles*sizeof(Muscle));
 	for(int i=0; i<numMuscles; ++i)
 	{
@@ -23,7 +22,7 @@ MuscleManager::~MuscleManager()
 
 void MuscleManager::addVertexMuscle(TypeMuscle numMuscle, unsigned int vertex, float delta)
 {
-	muscles[numMuscle]->addVertex(vertex, delta);
+	muscles[numMuscle]->addVertex(vertex, delta );
 }
 
 void MuscleManager::moveAMuscle( TypeMuscle numMuscle, SPoint3D vecDir )

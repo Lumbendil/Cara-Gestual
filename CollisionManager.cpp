@@ -5,17 +5,19 @@
 #include <coldet/coldet.h>
 #include <math.h>
 
+CCollisionManager* CCollisionManager::m_Obj = 0;
 
 CCollisionManager::CCollisionManager()
 {
 	m_CollObj = newCollisionModel3D(true);
+	m_Obj = NULL;
 }
 
 CCollisionManager::~CCollisionManager()
 {
 	m_CollObj = NULL;
-	m_Obj = NULL;
 }
+
 CCollisionManager*	CCollisionManager::getInstance(void)
 {
 	if (m_Obj == NULL)
@@ -43,11 +45,7 @@ void CCollisionManager::Finalize()
 
 bool CCollisionManager::TestCollisionRay(SPoint3D &coordA, SPoint3D &coordB, float distance, SPoint3D &CollisionPoint)
 {
-	SPoint3D vecDir = coordB - coordA;
-
-	vecDir.normalizeVector();
-
-	if ( m_CollObj->rayCollision(coordA, vecDir, true, 0, distance) )
+	if ( m_CollObj->rayCollision(coordA, coordB, true, 0, distance) )
 	{
 		m_CollObj->getCollisionPoint(CollisionPoint, true);
 		return true;

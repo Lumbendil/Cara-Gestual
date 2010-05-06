@@ -120,3 +120,7 @@ double SPoint3D::calcularDistancia(const SPoint3D& v) const
 {
 	return sqrt(pow(x - v.x,2) + pow(y - v.y,2) + pow(z - v.z,2));
 }
+SPoint3D SPoint3D::CrossProduct(const SPoint3D& v)
+{
+	return SPoint3D(y *v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
+}

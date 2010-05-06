@@ -11,6 +11,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+#include "CollisionManager.h"
 #include "SPoint3D.h"
 #include "objLoader.h"
 
@@ -39,6 +40,7 @@ struct Punt {
 // Es guarda la ID relacionada a cada punt.
 struct Cara {
 	Punt *punts[3];
+	SPoint3D normals[3];
 	int materialTextura;
 	Point2D cordTex[3];
 };
@@ -60,6 +62,8 @@ class Objecte3D {
 		punt p.
 		*/
 		int PuntMesProxim(SPoint3D);
+		SPoint3D RetornaPunt ( int );
+		int GetNumVertexs ( void );
 		/*
 		Dibuixa la funció
 		*/
@@ -69,6 +73,11 @@ class Objecte3D {
 		*/
 		void mourePunt(int, SPoint3D);
 		int buscarPunt(SPoint3D);
+
+		//Mètodes per al Rigging
+		int LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv);
+		
+
 	private:
 		Cara *cares;
 		Punt *punts;
