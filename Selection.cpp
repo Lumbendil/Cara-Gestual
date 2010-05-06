@@ -5,6 +5,8 @@
 #include "Objecte3D.h"
 #include "EditorManager.h"
 #include "visualitzacio.h"
+#include <gl/gl.h>
+#include <gl/glu.h>
 
 void inline swapInt( float &x, float &y )
 {
@@ -24,7 +26,7 @@ Selection::~Selection()
 }
 
 //Al premer el botó esquerre
-void Selection::ButtonDown( float mouseX, float mouseY, CPunt3D opv )
+void Selection::ButtonDown( float mouseX, float mouseY )
 {
 	nStartX = mouseX;
 	nStartY = mouseY;
@@ -32,17 +34,17 @@ void Selection::ButtonDown( float mouseX, float mouseY, CPunt3D opv )
 	nEndY = mouseY;
     buttonState = true;	
 
-	GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
-	int index = ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1], SPoint3D(opv.x, opv.y, opv.z));	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
-	if (index != -1)
+	if (ObOBJ != NULL)
 	{
-		SPoint3D puntTrobat = ObOBJ->RetornaPunt(index);		//Obtenim les coordenades del punt
-		editorM->AddVertex(puntTrobat, ObOBJ);					//Afegim el vèrtex a la llista de vèrtexs sel·leccionats
+		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
+		ObOBJ->SetSelectionMode( Objecte3D::SELECT_ADD );
+
+		ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
 	}
 }
 
 //Al moure el ratolí amb el botó apretat
-void Selection::ButtonMove( float mouseX, float mouseY, CPunt3D opv )
+void Selection::ButtonMove( float mouseX, float mouseY )
 {
 	if ( buttonState )
 	{
@@ -67,11 +69,14 @@ void Selection::ButtonUp( void )
 		swapInt( nEndX, nStartX );
 	if ( nEndY < nStartY ) 
 		swapInt( nEndY, nStartY );
-
-	SPoint3D P[8];
-	SPoint3D Normals[6];
-	GetFrustum(Normals,P);
-	editorM->AddVertexs( nStartX, nStartY, nEndX, nEndY );
+	
+	if (ObOBJ != NULL)
+	{
+		SPoint3D P[8];
+		SPoint3D Normals[6];
+		GetFrustum(Normals,P);
+		ObOBJ->FrustumSelect(Normals, P);
+	}
 }
 
 //Obté una línia d'allà on s'ha apretat en coordenades món
@@ -80,6 +85,7 @@ void Selection::GetLine( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY 
 	double* mvmatrix;
 	double* projmatrix;
 	int* Viewport;
+	//int Viewport[4];
 	double dX, dY, dZ, dClickY; // glUnProject uses doubles, but I'm using floats for these 3D vectors
 
 	Viewport = GetViewportMatrix();
@@ -120,3 +126,7 @@ void Selection::NoRender()
 	RenderBox(0.0,0.0,0.0,0.0);
 }
 
+void Selection::SetObj( Objecte3D* obj )
+{
+	ObOBJ = obj;
+}

@@ -8,6 +8,7 @@
 #define GLVIS_H
 
 #include "stdafx.h"
+#include "Objecte3D.h"
 
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */
@@ -29,7 +30,7 @@ void Projeccio_Perspectiva(int,int,GLsizei,GLsizei,float);
 void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat tr[3],
 				 CColor col_fons,char objecte,bool TR,
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
-				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix);
+				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix, Objecte3D* ObOBJ);
 
 void PerspectivaN(CPunt3D pv,bool pvb,GLfloat n[3],GLfloat v[3],
 				 bool pant,GLfloat tr[3],CColor col_fons,char objecte,bool color,

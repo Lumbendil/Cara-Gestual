@@ -12,8 +12,6 @@ private:
 	unsigned int *VertexList, TotalVertex;
 	TypeMuscle Muscle;
 
-
-
 public:
 
 	EditorManager(MuscleManager* MMan, int nVertex);
