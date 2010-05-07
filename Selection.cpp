@@ -4,7 +4,10 @@
 #include "matrix.h"
 #include "Objecte3D.h"
 #include "EditorManager.h"
+#include "intersection.h"
 #include "visualitzacio.h"
+#include <gl/gl.h>
+#include <gl/glu.h>
 
 void inline swapInt( float &x, float &y )
 {
@@ -17,14 +20,19 @@ Selection::Selection(Objecte3D* obj, EditorManager* editor)
 {
 	ObOBJ = obj;
 	editorM = editor;
+	m_pTriFlags = NULL;
+	if (obj != NULL)
+		this->SetFlagsTriangles();
 }
 Selection::~Selection()
 {
 	free(ObOBJ);
+	free(editorM);
+	delete[] m_pTriFlags;
 }
 
 //Al premer el botó esquerre
-void Selection::ButtonDown( float mouseX, float mouseY, CPunt3D opv )
+void Selection::ButtonDown( float mouseX, float mouseY )
 {
 	nStartX = mouseX;
 	nStartY = mouseY;
@@ -32,17 +40,17 @@ void Selection::ButtonDown( float mouseX, float mouseY, CPunt3D opv )
 	nEndY = mouseY;
     buttonState = true;	
 
-	GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
-	int index = ObOBJ->LineSelect(m_vLineP[0],m_vLineP[1], SPoint3D(opv.x, opv.y, opv.z));	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
-	if (index != -1)
+	if (ObOBJ != NULL)
 	{
-		SPoint3D puntTrobat = ObOBJ->RetornaPunt(index);		//Obtenim les coordenades del punt
-		editorM->AddVertex(puntTrobat, ObOBJ);					//Afegim el vèrtex a la llista de vèrtexs sel·leccionats
+		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
+		SetSelectionMode( SELECT_ADD );
+
+		LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
 	}
 }
 
 //Al moure el ratolí amb el botó apretat
-void Selection::ButtonMove( float mouseX, float mouseY, CPunt3D opv )
+void Selection::ButtonMove( float mouseX, float mouseY )
 {
 	if ( buttonState )
 	{
@@ -67,11 +75,15 @@ void Selection::ButtonUp( void )
 		swapInt( nEndX, nStartX );
 	if ( nEndY < nStartY ) 
 		swapInt( nEndY, nStartY );
-
-	SPoint3D P[8];
-	SPoint3D Normals[6];
-	GetFrustum(Normals,P);
-	editorM->AddVertexs( nStartX, nStartY, nEndX, nEndY );
+	
+	if (ObOBJ != NULL)
+	{
+		SPoint3D P[8];
+		SPoint3D Normals[6];
+		GetFrustum(Normals,P);
+		FrustumSelect(Normals, P);
+		//Cridar als mètodes de EditorManager per tal d'afegir els vèrtexs allà
+	}
 }
 
 //Obté una línia d'allà on s'ha apretat en coordenades món
@@ -80,6 +92,7 @@ void Selection::GetLine( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY 
 	double* mvmatrix;
 	double* projmatrix;
 	int* Viewport;
+	//int Viewport[4];
 	double dX, dY, dZ, dClickY; // glUnProject uses doubles, but I'm using floats for these 3D vectors
 
 	Viewport = GetViewportMatrix();
@@ -120,3 +133,92 @@ void Selection::NoRender()
 	RenderBox(0.0,0.0,0.0,0.0);
 }
 
+void Selection::SetObj( Objecte3D* obj )
+{
+	if (ObOBJ == NULL)
+	{
+		ObOBJ = obj;
+		this->SetFlagsTriangles();
+	}		
+}
+
+bool Selection::IsTriangleSelected ( int nTri )
+{
+	if (m_pTriFlags != NULL)
+	{
+		if (m_pTriFlags[nTri] == TF_SELECTED)
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+void Selection::SetFlagsTriangles ( void )
+{
+	m_pTriFlags = new int[ObOBJ->GetNumTriangles()];
+}
+
+void Selection::SetSelectionMode ( int nMode )
+{
+	m_nSelMode = nMode; 
+}
+
+void Selection::SelectTriangle	( int nTri )
+{
+	if ( nTri < 0 || nTri >= ObOBJ->GetNumTriangles() ) return;
+	if ( m_nSelMode == SELECT_ADD ) 
+		m_pTriFlags[ nTri ] = TF_SELECTED;
+	if ( m_nSelMode == SELECT_SUB )
+		m_pTriFlags[ nTri ] &= NTF_SELECTED;
+}
+
+int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
+{
+	int nbHits = 0;
+	SPoint3D Tri[3];
+
+	for (int nTri = 0; nTri < ObOBJ->GetNumTriangles(); ++nTri )
+		{	
+		int nV = nTri*3;
+		ObOBJ->GetFaceCoords(nTri, Tri);
+
+		if ( TriInFrustum( Tri, Normals, Points ) )
+			{
+			SelectTriangle( nTri );			
+			++nbHits;			
+			}
+		}
+	
+	return nbHits;
+}
+
+//Mira el punt més proper en què col·lisiona el raig
+int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
+{
+	SPoint3D HitP, pFace[3];
+	int nbHits = 0;
+	int nSelTri = -1;
+	float fDistance = 1000000000.0f;
+	
+	for (int nTri = 0; nTri < ObOBJ->GetNumTriangles(); ++nTri )
+	{
+		int nV = nTri*3;	
+	
+		ObOBJ->GetFaceCoords(nTri, pFace);
+
+		bool bHit = CheckLineTri( LP2, LP1, pFace[0], pFace[1], pFace[2], HitP );
+		if ( bHit ) {
+			if ( HitP.calcularDistancia( LP1 ) < fDistance ) {
+				fDistance = HitP.calcularDistancia( LP1 );
+				nSelTri = nTri;
+				}
+			++nbHits;
+			}
+	}
+		
+	SelectTriangle( nSelTri );
+	
+	return nbHits;
+}

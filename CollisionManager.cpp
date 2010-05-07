@@ -40,12 +40,20 @@ void CCollisionManager::addTriangle(SPoint3D coord1, SPoint3D coord2, SPoint3D c
 
 void CCollisionManager::Finalize()
 {
+	float *transform = new float[16];  
+	for(int i=0;i<16; transform[i++]=0);  
+    transform[0] = transform[5] = transform[10] = transform[15] = 1;
 	m_CollObj->finalize();
+	m_CollObj->setTransform(transform);
+	delete(transform);
 }
 
 bool CCollisionManager::TestCollisionRay(SPoint3D &coordA, SPoint3D &coordB, float distance, SPoint3D &CollisionPoint)
 {
-	if ( m_CollObj->rayCollision(coordA, coordB, true, 0, distance) )
+	SPoint3D vecDir = coordB - coordA;
+	vecDir.normalizeVector();
+
+	if ( m_CollObj->rayCollision(coordA, vecDir, true, 0, distance) )
 	{
 		m_CollObj->getCollisionPoint(CollisionPoint, true);
 		return true;

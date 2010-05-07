@@ -14,6 +14,7 @@
 #include "CollisionManager.h"
 #include "SPoint3D.h"
 #include "objLoader.h"
+#include "intersection.h"
 
 struct O3DMaterial
 {
@@ -74,16 +75,17 @@ class Objecte3D {
 		void mourePunt(int, SPoint3D);
 		int buscarPunt(SPoint3D);
 
-		//Mètodes per al Rigging
-		int LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv);
-		
+		void GetTriangle ( int index, SPoint3D* triangle );
+		int GetNumTriangles ( void );
+		void GetFaceCoords ( int nFace, SPoint3D* coords );
 
 	private:
 		Cara *cares;
 		Punt *punts;
 		O3DMaterial *materials;
 		bool teNormals;
-		int nombreCares, nombrePunts,nombreMaterials;
+		int  nombrePunts,nombreMaterials;
+		int nombreCares;
 		void Objecte3DDeOBJ(char* filename);
 		void Objecte3DDe3DS(char* filename);
 		void UseMaterial(O3DMaterial pMaterial);

@@ -2,6 +2,7 @@
 #include "Objecte3D.h"
 #include "objLoader.h"
 #include "CollisionManager.h"
+#include "intersection.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
 	switch (tipus) {
@@ -14,7 +15,6 @@ Objecte3D::Objecte3D(char* filename, int tipus) {
 }
 void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	int numpunts,numcares,i,j;
-	CCollisionManager* cm = CCollisionManager::getInstance();
 	Punt p;
 
 	COBJModel *o = new COBJModel();
@@ -42,8 +42,8 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->cares = ( Cara * ) malloc(sizeof(Cara) * numcares);
 	this->nombreCares = numcares;
 
-	for (i = 0; i < numcares; i++) {
-		for (j = 0; j < 3; j++) {
+	for (i = 0; i < numcares; ++i) {
+		for (j = 0; j < 3; ++j) {
 			this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
 			this->cares[i].normals[j] = SPoint3D(ob.pFaces[i].pNormals[j].fX,ob.pFaces[i].pNormals[j].fY,ob.pFaces[i].pNormals[j].fZ);
 			// TODO: Controlar que tenen textures
@@ -51,13 +51,12 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
 			this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
 		}
-		cm->addTriangle(this->cares[i].punts[0]->cordenades,this->cares[i].punts[1]->cordenades,this->cares[i].punts[2]->cordenades);
 	}
 	this->nombreMaterials = o->GetNumMaterials();
 	this->materials = ( O3DMaterial * ) malloc(sizeof(O3DMaterial) * this->nombreMaterials);
 	// Copiar guarro
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
-	cm->Finalize();
+
 }
 
 // TODO: Fer funció
@@ -188,19 +187,32 @@ SPoint3D Objecte3D::GetFaceNormal(const Cara *cara)
 	return normal;
 }
 
-//Mira el punt més proper en què col·lisiona el raig
-int Objecte3D::LineSelect (SPoint3D &LP1, SPoint3D &LP2, SPoint3D opv)
+
+
+void Objecte3D::GetTriangle ( int index, SPoint3D* triangle )
 {
-	SPoint3D HitP;
-	int nbHits = 0;
-	int Punt = -1;
-
-	LP2 = LP2 - LP1;
-	LP2.normalizeVector();
-
-	bool bHit = CCollisionManager::getInstance()->TestCollisionRay(opv,LP2,1000.0f,HitP);
-	if (bHit)
-		Punt = PuntMesProxim(HitP);
-
-	return Punt;
+	triangle[0] = this->cares[index].punts[0]->cordenades;
+	triangle[1] = this->cares[index].punts[1]->cordenades;
+	triangle[2] = this->cares[index].punts[2]->cordenades;
 }
+
+int Objecte3D::GetNumTriangles ( void )
+{
+	return nombreCares;
+}
+
+void Objecte3D::GetFaceCoords ( int nFace, SPoint3D* coords )
+{
+	coords[0] = this->cares[nFace].punts[0]->cordenades;
+	coords[1] = this->cares[nFace].punts[1]->cordenades;
+	coords[2] = this->cares[nFace].punts[2]->cordenades;
+}
+
+
+
+
+
+
+
+
+

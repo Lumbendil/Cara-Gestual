@@ -19,6 +19,7 @@
 #include "PracticaView.h"
 #include "MuscleManager.h"
 #include "ExpressionManager.h"
+#include "CollisionManager.h"
 #include "visualitzacio.h"
 #include "SPoint3D.h"
 #include "Selection.h"
@@ -264,6 +265,8 @@ CPracticaView::CPracticaView()
 
 CPracticaView::~CPracticaView()
 {
+	CCollisionManager::getInstance()->CleanUp();
+
 	// Eliminar estructures dinàmiques
 	if (Ob3DS!=NULL) delete Ob3DS;
 	if (ObOBJ!=NULL) {	//ObOBJ->EliminaLlista(OBJECTEOBJ);
@@ -471,7 +474,7 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, select, ObOBJ);
 			}
 
 // Intercanvia l'escena al front de la pantalla
@@ -862,9 +865,12 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (select == NULL)
 		select = new Selection(ObOBJ,editor);
 
+	if(ObOBJ != NULL)
+		select->SetObj(ObOBJ);
+
 	if(TeclaControl)
 	{
-		select->ButtonDown(point.x, point.y, opv);
+		select->ButtonDown(point.x, point.y);
 		select->Render();
 	}
 
@@ -952,7 +958,7 @@ void CPracticaView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if (select != NULL && TeclaControl)
 	{
-		select->ButtonMove(point.x, point.y, opv);
+		select->ButtonMove(point.x, point.y);
 		select->Render();
 		Invalidate();
 	}

@@ -124,3 +124,8 @@ SPoint3D SPoint3D::CrossProduct(const SPoint3D& v)
 {
 	return SPoint3D(y *v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
 }
+
+float SPoint3D::Dot (const SPoint3D& v)
+{
+	return (x*v.x + y*v.y + z*v.z);
+}

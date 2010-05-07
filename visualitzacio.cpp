@@ -16,6 +16,7 @@
 #include "visualitzacio.h"
 #include "escena.h"
 #include "constants.h"
+#include "Selection.h"
 
 // TEXTURES: Vector de noms de textura
 GLuint textures[NUM_MAX_TEXTURES]={0,1,2,3,4,5,6,7,8,9};
@@ -300,7 +301,6 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 
 	glGetIntegerv (GL_VIEWPORT, viewportMatrix);
 	glGetDoublev (GL_PROJECTION_MATRIX, projectionMatrix);
-	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 }
 
 // Perspectiva: Definició gluLookAt amb possibilitat de moure 
@@ -309,7 +309,7 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat tr[3],
 				 CColor col_fons,char objecte,bool TR, 
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
-				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix)
+				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix, Selection* select, Objecte3D* ObOBJ)
 {    
 	GLfloat cam[3],up[3];
 
@@ -411,11 +411,15 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 			dibuixa(objecte);
 			break;
 	}
+	renderSphereSelection(select, ObOBJ);
 	drawSelectionBox(wx1,wy1,wx2,wy2);
 	glPopMatrix();
 	
+	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 // Enviar les comandes gràfiques a pantalla
 	glFlush();
+
+	
 
 }
 
