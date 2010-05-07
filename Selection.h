@@ -8,7 +8,7 @@
 #include "constants.h"
 
 enum SelectionModes{ SELECT_ADD, SELECT_SUB };
-enum TriFlags{ TF_SELECTED = 1, NTF_SELECTED = 2, TF_BACKFACING = (1<<1) };
+enum TriFlags{ TF_SELECTED = 1, NTF_SELECTED = 2, TF_BACKFACING = 3, NTF_BACKFACING = 4 };
 
 class Selection
 {
@@ -20,6 +20,7 @@ private:
 	EditorManager* editorM;
 
 	int *m_pTriFlags;
+	int *m_pTriBackFacing;
 	int m_nSelMode;
 
 	int		FrustumSelect		( SPoint3D Normals[4], SPoint3D Points[8] );
@@ -33,7 +34,7 @@ public:
 	Selection(Objecte3D* obj, EditorManager* editor);
 	~Selection();
 
-	void	ButtonDown			( float mouseX, float mouseY );
+	void	ButtonDown			( float mouseX, float mouseY, int flag );
 	void	ButtonMove			( float mouseX, float mouseY );
 	void	ButtonUp			( void );
 	void	GetLine				( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY );
@@ -42,9 +43,7 @@ public:
 	void	NoRender			( void );
 	void	SetObj				( Objecte3D* obj );
 	bool	IsTriangleSelected	( int nTri );
-	
-	
-	
+	void	SetZBufferTriangles	( SPoint3D camera );
 };
 
 #endif

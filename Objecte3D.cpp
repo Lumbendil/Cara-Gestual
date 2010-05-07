@@ -207,7 +207,10 @@ void Objecte3D::GetFaceCoords ( int nFace, SPoint3D* coords )
 	coords[1] = this->cares[nFace].punts[1]->cordenades;
 	coords[2] = this->cares[nFace].punts[2]->cordenades;
 }
-
+SPoint3D Objecte3D::GetNormalsFace ( int nFace )
+{
+	return this->GetFaceNormal(&this->cares[nFace]);
+}
 
 
 

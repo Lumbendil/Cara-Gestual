@@ -54,6 +54,8 @@ public:
 	ExpressionManager* EManager;
 
 	bool TeclaControl;
+	bool TeclaTab;
+	bool zBuffer;
 
 // Operations
 public:
@@ -213,6 +215,7 @@ protected:
 	afx_msg void OnIFixe();
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnPan();
 	afx_msg void OnUpdatePan(CCmdUI* pCmdUI);
 	afx_msg void OnTest();

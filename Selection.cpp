@@ -32,7 +32,7 @@ Selection::~Selection()
 }
 
 //Al premer el botó esquerre
-void Selection::ButtonDown( float mouseX, float mouseY )
+void Selection::ButtonDown( float mouseX, float mouseY, int flag )
 {
 	nStartX = mouseX;
 	nStartY = mouseY;
@@ -43,7 +43,19 @@ void Selection::ButtonDown( float mouseX, float mouseY )
 	if (ObOBJ != NULL)
 	{
 		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
-		SetSelectionMode( SELECT_ADD );
+		switch (flag)
+		{
+		case 1:
+			{
+				SetSelectionMode( SELECT_ADD );	//Indica que els vèrtexs que es seleccionin s'han d'afegir a la selecció
+				break;
+			}
+		case 2:
+			{
+				SetSelectionMode( SELECT_SUB ); //Indica que els vèrtexs que es seleccionin s'han de borrar de la selecció.
+				break;
+			}
+		}
 
 		LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
 	}
@@ -70,7 +82,8 @@ void Selection::ButtonMove( float mouseX, float mouseY )
 void Selection::ButtonUp( void )
 {
 	buttonState = false;
-	if ( abs( nEndX - nStartX ) < 4 && abs( nEndY - nStartY ) < 4 ) return;
+	if ( abs( nEndX - nStartX ) < 4 && abs( nEndY - nStartY ) < 4 ) 
+		return;
 	if ( nEndX < nStartX ) 
 		swapInt( nEndX, nStartX );
 	if ( nEndY < nStartY ) 
@@ -158,6 +171,7 @@ bool Selection::IsTriangleSelected ( int nTri )
 void Selection::SetFlagsTriangles ( void )
 {
 	m_pTriFlags = new int[ObOBJ->GetNumTriangles()];
+	m_pTriBackFacing = new int[ObOBJ->GetNumTriangles()];
 }
 
 void Selection::SetSelectionMode ( int nMode )
@@ -167,11 +181,14 @@ void Selection::SetSelectionMode ( int nMode )
 
 void Selection::SelectTriangle	( int nTri )
 {
-	if ( nTri < 0 || nTri >= ObOBJ->GetNumTriangles() ) return;
+	if ( nTri < 0 || nTri >= ObOBJ->GetNumTriangles() ) 
+		return; //Surt si no s'ha seleccionat cap triangle
+
 	if ( m_nSelMode == SELECT_ADD ) 
-		m_pTriFlags[ nTri ] = TF_SELECTED;
+		m_pTriFlags[ nTri ] = TF_SELECTED; //Selecciona el triangle
+
 	if ( m_nSelMode == SELECT_SUB )
-		m_pTriFlags[ nTri ] &= NTF_SELECTED;
+		m_pTriFlags[ nTri ] = NTF_SELECTED; //NO selecciona el triangle
 }
 
 int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
@@ -204,6 +221,9 @@ int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 	
 	for (int nTri = 0; nTri < ObOBJ->GetNumTriangles(); ++nTri )
 	{
+		if ( m_pTriBackFacing[ nTri ] == TF_BACKFACING ) 
+			continue; // Check only front facing triangles
+
 		int nV = nTri*3;	
 	
 		ObOBJ->GetFaceCoords(nTri, pFace);
@@ -221,4 +241,17 @@ int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 	SelectTriangle( nSelTri );
 	
 	return nbHits;
+}
+void Selection::SetZBufferTriangles( SPoint3D camera )
+{
+	SPoint3D coords[3];
+
+	for (int nTri = 0; nTri < ObOBJ->GetNumTriangles(); nTri++ )
+	{
+		ObOBJ->GetTriangle(nTri, coords);
+		if ( ObOBJ->GetNormalsFace(nTri).Dot( camera - coords[0] ) < 0 ) 
+			m_pTriBackFacing[ nTri ] = TF_BACKFACING;
+		else
+			m_pTriBackFacing[ nTri ] = NTF_BACKFACING;
+	}
 }
