@@ -28,19 +28,19 @@ void renderSphereSelection (Selection* select, Objecte3D* ObOBJ)
 				glColor3f(1.0,1.0,1.0);	
 				glPushMatrix();
 					glTranslatef(coords[0].x, coords[0].y, coords[0].z);
-					glutSolidSphere(0.3,5,5);
+					glutSolidSphere(0.1,5,5);
 				glPopMatrix();
 
 				glColor3f(1.0,1.0,1.0);	
 				glPushMatrix();
 					glTranslatef(coords[1].x, coords[1].y, coords[1].z);
-					glutSolidSphere(0.3,5,5);
+					glutSolidSphere(0.1,5,5);
 				glPopMatrix();
 
 				glColor3f(1.0,1.0,1.0);	
 				glPushMatrix();
 					glTranslatef(coords[2].x, coords[2].y, coords[2].z);
-					glutSolidSphere(0.3,5,5);
+					glutSolidSphere(0.1,5,5);
 				glPopMatrix();
 			}
 		}

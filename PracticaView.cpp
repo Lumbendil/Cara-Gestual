@@ -250,6 +250,8 @@ CPracticaView::CPracticaView()
 
 // GC2: Tecla Control per a la sel·lecció
 	TeclaControl = false;
+	TeclaTab = false;
+	zBuffer = false;
 
 // GC2: Inicialització de les llibreries DevIL per a la càrrega de textures i fitxers .3DS
 	ilInit();					// Inicialitzar llibreria IL
@@ -866,12 +868,32 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 		select = new Selection(ObOBJ,editor);
 
 	if(ObOBJ != NULL)
-		select->SetObj(ObOBJ);
-
-	if(TeclaControl)
 	{
-		select->ButtonDown(point.x, point.y);
-		select->Render();
+		select->SetObj(ObOBJ);
+		select->SetZBufferTriangles(SPoint3D(opv.x,opv.y,opv.z));
+		if(TeclaControl)
+		{
+			select->ButtonDown(point.x, point.y, 1);
+			select->Render();
+		}
+		else if (TeclaTab)
+		{
+			select->ButtonDown(point.x, point.y, 2);
+			select->Render();
+		}
+	}
+	else
+	{
+		if(TeclaControl)
+		{
+			select->ButtonDown(point.x, point.y, 1);
+			select->Render();
+		}
+		else if (TeclaTab)
+		{
+			select->ButtonDown(point.x, point.y, 2);
+			select->Render();
+		}
 	}
 
 	Invalidate();
@@ -888,8 +910,9 @@ void CPracticaView::OnLButtonUp(UINT nFlags, CPoint point)
 // TODO: Add your message handler code here and/or call default
 	m_ButoEAvall = false;
 
-	if (select != NULL && TeclaControl)
+	if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab))
 	{
+		//select->SetZBufferTriangles(SPoint3D(opv.x,opv.y,opv.z));
 		select->ButtonUp();
 		select->NoRender();
 	}
@@ -956,7 +979,7 @@ BOOL CPracticaView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void CPracticaView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if (select != NULL && TeclaControl)
+	if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab) || (select != NULL && zBuffer))
 	{
 		select->ButtonMove(point.x, point.y);
 		select->Render();
@@ -1169,10 +1192,21 @@ GLfloat vdir[3]={0,0,0};
 
 	if ((!pan) && (!transf) && (!navega)) {
 // Canvi de la intensitat de fons per teclat
+
 		if (nChar==VK_CONTROL && !TeclaControl)
+		{
 			TeclaControl = true;
+			TeclaTab = false;
+		}
 		else
 			TeclaControl = false;
+		if (nChar==VK_TAB && !TeclaTab)
+		{
+			TeclaTab = true;
+			TeclaControl = false;
+		}
+		else
+			TeclaTab = false;
 
 		if(nChar==VK_DOWN) {
 			if (fonsR) {
