@@ -31,7 +31,7 @@ Selection::~Selection()
 	delete[] m_pTriFlags;
 }
 
-//Al premer el botó esquerre
+//Al premer el botï¿½ esquerre
 void Selection::ButtonDown( float mouseX, float mouseY, int flag )
 {
 	nStartX = mouseX;
@@ -42,26 +42,26 @@ void Selection::ButtonDown( float mouseX, float mouseY, int flag )
 
 	if (ObOBJ != NULL)
 	{
-		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la línia que pertany a on s'ha clickat
+		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );	//Obtenim la lï¿½nia que pertany a on s'ha clickat
 		switch (flag)
 		{
 		case 1:
 			{
-				SetSelectionMode( SELECT_ADD );	//Indica que els vèrtexs que es seleccionin s'han d'afegir a la selecció
+				SetSelectionMode( SELECT_ADD );	//Indica que els vï¿½rtexs que es seleccionin s'han d'afegir a la selecciï¿½
 				break;
 			}
 		case 2:
 			{
-				SetSelectionMode( SELECT_SUB ); //Indica que els vèrtexs que es seleccionin s'han de borrar de la selecció.
+				SetSelectionMode( SELECT_SUB ); //Indica que els vï¿½rtexs que es seleccionin s'han de borrar de la selecciï¿½.
 				break;
 			}
 		}
 
-		LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'índex del punt més proper a la col·lisió en aquell punt
+		LineSelect(m_vLineP[0],m_vLineP[1]);	//Agafem l'ï¿½ndex del punt mï¿½s proper a la colï¿½lisiï¿½ en aquell punt
 	}
 }
 
-//Al moure el ratolí amb el botó apretat
+//Al moure el ratolï¿½ amb el botï¿½ apretat
 void Selection::ButtonMove( float mouseX, float mouseY )
 {
 	if ( buttonState )
@@ -78,7 +78,7 @@ void Selection::ButtonMove( float mouseX, float mouseY )
 	}
 }
 
-//Al deixar el botó esquerre
+//Al deixar el botï¿½ esquerre
 void Selection::ButtonUp( void )
 {
 	buttonState = false;
@@ -95,11 +95,11 @@ void Selection::ButtonUp( void )
 		SPoint3D Normals[6];
 		GetFrustum(Normals,P);
 		FrustumSelect(Normals, P);
-		//Cridar als mètodes de EditorManager per tal d'afegir els vèrtexs allà
+		//Cridar als mï¿½todes de EditorManager per tal d'afegir els vï¿½rtexs allï¿½
 	}
 }
 
-//Obté una línia d'allà on s'ha apretat en coordenades món
+//Obtï¿½ una lï¿½nia d'allï¿½ on s'ha apretat en coordenades mï¿½n
 void Selection::GetLine( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY )
 {
 	double* mvmatrix;
@@ -209,6 +209,10 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 			{
 				if ( PointInFrustum(Tri[i],Normals,Points) )
 				{
+<<<<<<< HEAD
+=======
+//Mirar el codi perque sempre va a Dleete
+>>>>>>> 379474c2218836cd3e2b68eef9cc66e64a9b540b
 				  if (m_pTriFlags[nTri] == TF_SELECTED)
 					editorM->AddVertex(Tri[i]);
 				  else
@@ -221,7 +225,7 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 	return nbHits;
 }
 
-//Mira el punt més proper en què col·lisiona el raig
+//Mira el punt mï¿½s proper en quï¿½ colï¿½lisiona el raig
 int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 {
 	SPoint3D HitP, pFace[3];
