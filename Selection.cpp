@@ -209,7 +209,7 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 			{
 				if ( PointInFrustum(Tri[i],Normals,Points) )
 				{
-				  if (m_pTriFlags[i] == TF_SELECTED)
+				  if (m_pTriFlags[nTri] == TF_SELECTED)
 					editorM->AddVertex(Tri[i]);
 				  else
 					editorM->DeleteVertex(Tri[i]);
