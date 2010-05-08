@@ -5,11 +5,19 @@
 #include "SPoint3D.h"
 #include "Objecte3D.h"
 
-EditorManager::EditorManager(MuscleManager* MMan, int nVertex)
+EditorManager::EditorManager(MuscleManager* MMan, Objecte3D* objecte)
 {
 	MManager = MMan;
-	VertexList = (unsigned int*) malloc (nVertex*sizeof(unsigned int));
-	TotalVertex = 0;
+	CurrentVertex = 0;
+	CurrentMuscle = NONE_MUSCLE;
+	this->objecte = objecte;
+	int nVertex = objecte->GetNumVertexs();
+	VertexList = (bool*) malloc (nVertex*(sizeof(bool)));
+	DeltaList = (float*) malloc (nVertex*(sizeof(float)));
+	for ( int i = 0; i < nVertex; ++i ) {
+		VertexList[i] = false;
+		DeltaList[i] = 0.0;
+	}
 }
 
 EditorManager::~EditorManager()
@@ -19,20 +27,25 @@ EditorManager::~EditorManager()
 }
 
 //Afegeix un vèrtex al muscle definit
-void EditorManager::AddVertex(SPoint3D vertex, Objecte3D* objecte)
+void EditorManager::AddVertex(SPoint3D vertex)
 {
-	//S'ha de buscar el punt mitjançant Objecte3D, i afegir el vèrtex al muscle.
+	int v = this->objecte->buscarPunt(vertex);
+	this->VertexList[v] = true;
+	++CurrentVertex;
 }
 
 //Calcula i assigna les deltes del muscle concret
-void EditorManager::CalculateDelta(TypeMuscle muscle)
+void EditorManager::CalculateDelta(TypeMuscle muscle, SPoint3D vertexPrincipal)
 {
+	// S'ha de pensar com calcular les deltes.
 }
 
 //Elimina un vèrtex del muscle definit
 void EditorManager::DeleteVertex(SPoint3D vertex)
 {
-	//S'ha de buscar el punt mitjançant Objecte3D, i borrar el vèrtex del muscle.
+	int v = objecte->buscarPunt(vertex);
+	VertexList[v] = false;
+	--CurrentVertex;
 }
 
 //Defineix el moviment del muscle per a una expressió
@@ -40,19 +53,35 @@ void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
 {
 }
 
-void EditorManager::AddVertexs	( float x1, float y1, float x2, float y2 )
+void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
 }
 
-void EditorManager::DeleteVertexs ( float x1, float y1, float x2, float y2 )
+void EditorManager::SetMuscle(TypeMuscle muscle)
 {
+	int i = 0, maxVertex;
+	maxVertex = objecte->GetNumVertexs();
+	if ( CurrentMuscle != NONE_MUSCLE) {
+		while (CurrentVertex) {
+			if (VertexList[i]) {
+				// Afegir el vertex al muscle
+				MManager->addVertexMuscle(CurrentMuscle, (unsigned int) i, DeltaList[i]);
+				// Eliminar el vertex ja guardat
+				VertexList[i] = false;
+				--CurrentVertex;
+			}
+			++i;
+		}
+	}
+	// Canviar el muscle que s'està editant
+	this->CurrentMuscle = muscle;
 }
-
+/*
 void EditorManager::RenderVertexs()
 {
 }
 
 void EditorManager::RenderSelection(float x1, float y1, float x2, float y2 )
-{
-	
+{	
 }
+*/

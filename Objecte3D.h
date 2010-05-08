@@ -50,8 +50,7 @@ class Objecte3D {
 	public:
 		/*
 		Constructor.
-		El tipus seria 1 per a OBJ i 2 per a 3DS. 
-		Aix� seria extensible a mes tipus.
+		El tipus seria 1 per a OBJ i 2 per a 3DS.
 		*/
 		Objecte3D(char* file,int tipus);
 		/*

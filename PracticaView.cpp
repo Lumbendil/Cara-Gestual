@@ -262,7 +262,6 @@ CPracticaView::CPracticaView()
 
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
-	editor = new EditorManager(MManager, 430);
 }
 
 CPracticaView::~CPracticaView()
@@ -1721,6 +1720,7 @@ void CPracticaView::OnFileOpenObj()
 	/* i carreguem */	
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
 	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
+	editor = new EditorManager(MManager,ObOBJ);
 	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 

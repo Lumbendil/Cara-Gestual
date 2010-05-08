@@ -9,7 +9,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
-void inline swapInt( float &x, float &y )
+void inline swapFloat( float &x, float &y )
 {
 	 float temp = x; 
 	 x = y;
@@ -85,9 +85,9 @@ void Selection::ButtonUp( void )
 	if ( abs( nEndX - nStartX ) < 4 && abs( nEndY - nStartY ) < 4 ) 
 		return;
 	if ( nEndX < nStartX ) 
-		swapInt( nEndX, nStartX );
+		swapFloat( nEndX, nStartX );
 	if ( nEndY < nStartY ) 
-		swapInt( nEndY, nStartY );
+		swapFloat( nEndY, nStartY );
 	
 	if (ObOBJ != NULL)
 	{
@@ -208,10 +208,12 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 			for (int i=0; i < 3; ++i)
 			{
 				if ( PointInFrustum(Tri[i],Normals,Points) )
-          if (m_pTriBackFacing[i] == TF_SELECTED)
-					  editorM->AddVertex(Tri[i],ObOBJ);
-          else
-            editorM->DeleteVertex(Tri[i]);
+				{
+				  if (m_pTriFlags[i] == TF_SELECTED)
+					editorM->AddVertex(Tri[i]);
+				  else
+					editorM->DeleteVertex(Tri[i]);
+				}
 			}
 		}
 	}
