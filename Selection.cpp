@@ -197,16 +197,24 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 	SPoint3D Tri[3];
 
 	for (int nTri = 0; nTri < ObOBJ->GetNumTriangles(); ++nTri )
-		{	
+	{	
 		int nV = nTri*3;
 		ObOBJ->GetFaceCoords(nTri, Tri);
 
 		if ( TriInFrustum( Tri, Normals, Points ) )
-			{
+		{
 			SelectTriangle( nTri );			
-			++nbHits;			
+			++nbHits;
+			for (int i=0; i < 3; ++i)
+			{
+				if ( PointInFrustum(Tri[i],Normals,Points) )
+          if (m_pTriBackFacing[i] == TF_SELECTED)
+					  editorM->AddVertex(Tri[i],ObOBJ);
+          else
+            editorM->DeleteVertex(Tri[i]);
 			}
 		}
+	}
 	
 	return nbHits;
 }
