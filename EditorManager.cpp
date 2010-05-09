@@ -61,7 +61,7 @@ void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
 
 void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
-	puntFinal = triangle[0];
+	SPoint3D puntFinal = triangle[0];
 	float distanciaMinima, distanciaActual;
 	distanciaMinima = colisio.calcularDistancia(puntFinal);
 	for (int i = 1; i < 3; i++) {
@@ -71,6 +71,7 @@ void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
 			distanciaMinima = distanciaActual;
 		}
 	}
+	this->AddVertex(puntFinal);
 }
 
 void EditorManager::SetMuscle(TypeMuscle muscle)
