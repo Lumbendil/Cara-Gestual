@@ -37,7 +37,13 @@ void EditorManager::AddVertex(SPoint3D vertex)
 //Calcula i assigna les deltes del muscle concret
 void EditorManager::CalculateDelta(TypeMuscle muscle, SPoint3D vertexPrincipal)
 {
-	// S'ha de pensar com calcular les deltes.
+	int numVertex;
+	numVertex = objecte->GetNumVertexs();
+	for (int i = 0; i < numVertex; i++) {
+		if (this->VertexList[i]) {
+			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(vertexPrincipal));
+		}
+	}
 }
 
 //Elimina un vèrtex del muscle definit
@@ -55,6 +61,16 @@ void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
 
 void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
+	puntFinal = triangle[0];
+	float distanciaMinima, distanciaActual;
+	distanciaMinima = colisio.calcularDistancia(puntFinal);
+	for (int i = 1; i < 3; i++) {
+		distanciaActual = colisio.calcularDistancia(triangle[i]);
+		if (distanciaActual < distanciaMinima) {
+			puntFinal = triangle[i];
+			distanciaMinima = distanciaActual;
+		}
+	}
 }
 
 void EditorManager::SetMuscle(TypeMuscle muscle)
