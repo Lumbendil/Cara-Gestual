@@ -61,17 +61,16 @@ void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
 
 void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
-	SPoint3D puntFinal = triangle[0];
-	float distanciaMinima, distanciaActual;
-	distanciaMinima = colisio.calcularDistancia(puntFinal);
-	for (int i = 1; i < 3; i++) {
-		distanciaActual = colisio.calcularDistancia(triangle[i]);
-		if (distanciaActual < distanciaMinima) {
-			puntFinal = triangle[i];
-			distanciaMinima = distanciaActual;
-		}
-	}
+	SPoint3D puntFinal;
+	puntFinal = this->PuntMesProximTriangle(colisio,triangle);
 	this->AddVertex(puntFinal);
+}
+
+void EditorManager::DeleteVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
+{
+	SPoint3D puntFinal;
+	puntFinal = this->PuntMesProximTriangle(colisio,triangle);
+	this->DeleteVertex(puntFinal);
 }
 
 void EditorManager::SetMuscle(TypeMuscle muscle)
@@ -93,8 +92,25 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	// Canviar el muscle que s'està editant
 	this->CurrentMuscle = muscle;
 }
+<<<<<<< HEAD
 void EditorManager::DeleteVertexFromTriangle ( SPoint3D colisio, SPoint3D* triangle )
 {
+=======
+
+SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triangle)
+{
+	SPoint3D puntFinal = triangle[0];
+	float distanciaMinima, distanciaActual;
+	distanciaMinima = colisio.calcularDistancia(puntFinal);
+	for (int i = 1; i < 3; i++) {
+		distanciaActual = colisio.calcularDistancia(triangle[i]);
+		if (distanciaActual < distanciaMinima) {
+			puntFinal = triangle[i];
+			distanciaMinima = distanciaActual;
+		}
+	}
+	return puntFinal;
+>>>>>>> ae2b87061a5922c62efe4920891f699cee5d4a55
 }
 /*
 void EditorManager::RenderVertexs()
