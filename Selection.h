@@ -27,7 +27,6 @@ private:
 	int			LineSelect			( const SPoint3D &LP1, const SPoint3D &LP2 );
 	void		SetSelectionMode	( int nMode );
 	void		SelectTriangle		( int nTri );
-	void		SetFlagsTriangles	( void );
 
 public:
 	Selection(Objecte3D* obj, EditorManager* editor);
@@ -43,7 +42,7 @@ public:
 	void	SetObj				( Objecte3D* obj );
 	bool	IsTriangleSelected	( int nTri );
 	void	SetZBufferTriangles	( SPoint3D camera );
-	void	ResetFlags			( void );
+	void	SetFlagsTriangles	( void );
 };
 
 #endif

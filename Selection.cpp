@@ -170,6 +170,12 @@ bool Selection::IsTriangleSelected ( int nTri )
 
 void Selection::SetFlagsTriangles ( void )
 {
+	if (m_pTriFlags != NULL)
+	{
+		delete [] m_pTriFlags;
+		delete [] m_pTriBackFacing;
+	}
+
 	m_pTriFlags = new int[ObOBJ->GetNumTriangles()];
 	m_pTriBackFacing = new int[ObOBJ->GetNumTriangles()];
 }
@@ -188,7 +194,10 @@ void Selection::SelectTriangle	( int nTri )
 		m_pTriFlags[ nTri ] = TF_SELECTED; //Selecciona el triangle
 
 	if ( m_nSelMode == SELECT_SUB )
+	{
 		m_pTriFlags[ nTri ] = NTF_SELECTED; //NO selecciona el triangle
+
+	}
 }
 
 int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
@@ -209,10 +218,16 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 			{
 				if ( PointInFrustum(Tri[i],Normals,Points) )
 				{
-				  if (m_pTriFlags[nTri] == TF_SELECTED)
-					editorM->AddVertex(Tri[i]);
-				  else
-					editorM->DeleteVertex(Tri[i]);
+					if (m_nSelMode == SELECT_ADD)
+					{
+						if (m_pTriFlags[nTri] == TF_SELECTED)
+							editorM->AddVertex(Tri[i]);
+					}
+					else
+					{
+						if (m_pTriFlags[nTri] == NTF_SELECTED)
+							editorM->DeleteVertex(Tri[i]);
+					}
 				}
 			}
 		}
@@ -244,7 +259,11 @@ int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 			{
 				fDistance = HitP.calcularDistancia( LP1 );
 				nSelTri = nTri;
-				editorM->AddVertexFromTriangle(HitP,pFace);
+
+				if (m_nSelMode == SELECT_ADD)
+					editorM->AddVertexFromTriangle(HitP,pFace);
+				else
+					editorM->DeleteVertexFromTriangle(HitP,pFace);
 			}
 			++nbHits;
 		}
@@ -268,10 +287,3 @@ void Selection::SetZBufferTriangles( SPoint3D camera )
 	}
 }
 
-void Selection::ResetFlags( void )
-{
-	int size = ObOBJ->GetNumTriangles();
-	for (int i=0; i<size; ++i)
-		m_pTriFlags[i] = NTF_SELECTED;
-		
-}

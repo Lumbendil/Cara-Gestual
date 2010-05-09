@@ -1692,6 +1692,10 @@ void CPracticaView::OnFileOpen3ds()
 	Ob3DS->Dibuixa3DS(false,OBJECTE3DS);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
+//Resetejar la memòria de Selection
+	if (select != NULL)
+		select->SetFlagsTriangles();
+
 // Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
 
@@ -1723,6 +1727,10 @@ void CPracticaView::OnFileOpenObj()
 	editor = new EditorManager(MManager,ObOBJ);
 	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
+
+//Resetejar la memòria de Selection
+	if (select != NULL)
+		select->SetFlagsTriangles();
 
 // Crida a OnPaint() per redibuixar l'escena
 	Invalidate();	
@@ -2642,6 +2650,7 @@ void CPracticaView::OnMCellesDreta()
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 			editor->SetMuscle(DCELLA);
+		
 		}
 		else
 		{
@@ -2654,6 +2663,7 @@ void CPracticaView::OnMCellesDreta()
 	{
 		selectedMuscle = NONE_MUSCLE;
 		SetRenderMuscle(NONE_MUSCLE);
+		
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
