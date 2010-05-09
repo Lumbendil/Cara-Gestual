@@ -47,3 +47,9 @@ int MuscleManager::getNumMuscles ()
 {
 	return numMuscles;
 }
+
+void MuscleManager::RenderMuscle( TypeMuscle numMuscle )
+{
+	if (numMuscle != NONE_MUSCLE)
+		muscles[numMuscle]->RenderMuscle(obj3D);
+}

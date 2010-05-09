@@ -10,6 +10,7 @@
 #include "SPoint3D.h"
 #include "Selection.h"
 #include "Objecte3D.h"
+#include "MuscleManager.h"
 
 /* ------------------------------------------------------------------------- */
 /*                            Funcions de les escenes                        */
@@ -27,4 +28,5 @@ void WireRect( float x1, float y1, float x2, float y2 );
 void SetProjection3D();
 void SetProjection2D();
 void DrawLine( const SPoint3D &P1, const SPoint3D &P2 );
+void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager);
 #endif

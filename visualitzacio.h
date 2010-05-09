@@ -9,12 +9,14 @@
 
 #include "stdafx.h"
 #include "Selection.h"
+#include "MuscleManager.h"
 
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */
 /* ------------------------------------------------------------------------- */
 
 void RenderBox (float x1, float y1, float x2, float y2);
+void SetRenderMuscle ( TypeMuscle numMuscle );
 
 // G2: Il.luminació
 void Iluminacio(char ilumin,bool textur,char obj,bool bc_lin,int step);
@@ -30,7 +32,8 @@ void Projeccio_Perspectiva(int,int,GLsizei,GLsizei,float);
 void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat tr[3],
 				 CColor col_fons,char objecte,bool TR,
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
-				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix, Selection* select, Objecte3D* ObOBJ);
+				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
+				 Selection* select, Objecte3D* ObOBJ, MuscleManager* MManager);
 
 void PerspectivaN(CPunt3D pv,bool pvb,GLfloat n[3],GLfloat v[3],
 				 bool pant,GLfloat tr[3],CColor col_fons,char objecte,bool color,

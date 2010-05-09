@@ -475,7 +475,7 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, select, ObOBJ);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, select, ObOBJ, MManager);
 			}
 
 // Intercanvia l'escena al front de la pantalla
@@ -2641,15 +2641,20 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(DCELLA);
 		}
 		else
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(DCELLA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2676,15 +2681,20 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(ECELLA);
 		}
 		else
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(ECELLA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2711,15 +2721,20 @@ void CPracticaView::OnMBocaDreta()
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(DBOCA);
 		}
 		else
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(DBOCA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2746,15 +2761,20 @@ void CPracticaView::OnMBocaEsquerre()
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(EBOCA);
 		}
 		else
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(EBOCA);
 		}
 	}
 	else
-		selectedMuscle = NONE_MUSCLE;;
+	{
+		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2781,15 +2801,20 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(INFBOCA);
 		}
 		else
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(INFBOCA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2816,15 +2841,20 @@ void CPracticaView::OnMParpellesDreta()
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(DPARPELLA);
 		}
 		else
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(DPARPELLA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2851,15 +2881,20 @@ void CPracticaView::OnMParpellesEsquerra()
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(EPARPELLA);
 		}
 		else
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(EPARPELLA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2886,15 +2921,20 @@ void CPracticaView::OnMGaltesDreta()
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(DGALTA);
 		}
 		else
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(DGALTA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2921,15 +2961,20 @@ void CPracticaView::OnMGaltesEsquerra()
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
+			editor->SetMuscle(EGALTA);
 		}
 		else
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
+			SetRenderMuscle(EGALTA);
 		}
 	}
 	else
+	{
 		selectedMuscle = NONE_MUSCLE;
+		SetRenderMuscle(NONE_MUSCLE);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();

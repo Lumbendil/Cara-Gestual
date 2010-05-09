@@ -114,3 +114,18 @@ int Muscle::getNumVertexs()
 {
 	return size;
 }
+
+void Muscle::RenderMuscle( Objecte3D* obj3D )
+{
+	SPoint3D vertex;
+
+	for (int i=0; i < size; ++i)
+	{
+		vertex = obj3D->RetornaPunt( vertexIndex[i] );
+		glColor3f(1.0,1.0,1.0);	
+		glPushMatrix();
+			glTranslatef(vertex.x, vertex.y, vertex.z);
+			glutSolidSphere(0.1,5,5);
+		glPopMatrix();
+	}
+}

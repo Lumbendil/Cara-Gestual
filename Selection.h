@@ -23,12 +23,11 @@ private:
 	int *m_pTriBackFacing;
 	int m_nSelMode;
 
-	int		FrustumSelect		( SPoint3D Normals[4], SPoint3D Points[8] );
-	int		LineSelect			( const SPoint3D &LP1, const SPoint3D &LP2 );
-	void	SetSelectionMode	( int nMode );
-	void	SelectTriangle		( int nTri );
-	void	SetFlagsTriangles	( void );
-	
+	int			FrustumSelect		( SPoint3D Normals[4], SPoint3D Points[8] );
+	int			LineSelect			( const SPoint3D &LP1, const SPoint3D &LP2 );
+	void		SetSelectionMode	( int nMode );
+	void		SelectTriangle		( int nTri );
+	void		SetFlagsTriangles	( void );
 
 public:
 	Selection(Objecte3D* obj, EditorManager* editor);
@@ -44,6 +43,7 @@ public:
 	void	SetObj				( Objecte3D* obj );
 	bool	IsTriangleSelected	( int nTri );
 	void	SetZBufferTriangles	( SPoint3D camera );
+	void	ResetFlags			( void );
 };
 
 #endif

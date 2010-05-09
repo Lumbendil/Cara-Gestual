@@ -10,7 +10,13 @@
 #include "visualitzacio.h"
 #include "Selection.h"
 #include "Objecte3D.h"
+#include "MuscleManager.h"
 #include "SPoint3D.h"
+
+void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager)
+{
+	MManager->RenderMuscle(muscle);
+}
 
 void renderSphereSelection (Selection* select, Objecte3D* ObOBJ)
 {

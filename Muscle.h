@@ -23,6 +23,7 @@ public:
 	void			moveMuscle		( Objecte3D* obj3D, SPoint3D vecDir );
 	int				alterDelta		( unsigned int vertex, float newDelta );
 	int				deleteVertex	( unsigned int vertex );
+	void			RenderMuscle	( Objecte3D* obj3D );
 
 	unsigned int*	getVertexIndex	( void );
 	float*			getVertexDelta	( void );

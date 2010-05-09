@@ -209,10 +209,6 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 			{
 				if ( PointInFrustum(Tri[i],Normals,Points) )
 				{
-<<<<<<< HEAD
-=======
-//Mirar el codi perque sempre va a Dleete
->>>>>>> 379474c2218836cd3e2b68eef9cc66e64a9b540b
 				  if (m_pTriFlags[nTri] == TF_SELECTED)
 					editorM->AddVertex(Tri[i]);
 				  else
@@ -225,7 +221,6 @@ int Selection::FrustumSelect ( SPoint3D Normals[4], SPoint3D Points[8] )
 	return nbHits;
 }
 
-//Mira el punt m�s proper en qu� col�lisiona el raig
 int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 {
 	SPoint3D HitP, pFace[3];
@@ -243,13 +238,16 @@ int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 		ObOBJ->GetFaceCoords(nTri, pFace);
 
 		bool bHit = CheckLineTri( LP2, LP1, pFace[0], pFace[1], pFace[2], HitP );
-		if ( bHit ) {
-			if ( HitP.calcularDistancia( LP1 ) < fDistance ) {
+		if ( bHit ) 
+		{
+			if ( HitP.calcularDistancia( LP1 ) < fDistance ) 
+			{
 				fDistance = HitP.calcularDistancia( LP1 );
 				nSelTri = nTri;
-				}
-			++nbHits;
+				editorM->AddVertexFromTriangle(HitP,pFace);
 			}
+			++nbHits;
+		}
 	}
 		
 	SelectTriangle( nSelTri );
@@ -268,4 +266,12 @@ void Selection::SetZBufferTriangles( SPoint3D camera )
 		else
 			m_pTriBackFacing[ nTri ] = NTF_BACKFACING;
 	}
+}
+
+void Selection::ResetFlags( void )
+{
+	int size = ObOBJ->GetNumTriangles();
+	for (int i=0; i<size; ++i)
+		m_pTriFlags[i] = NTF_SELECTED;
+		
 }

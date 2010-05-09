@@ -17,6 +17,7 @@
 #include "escena.h"
 #include "constants.h"
 #include "Selection.h"
+#include "MuscleManager.h"
 
 // TEXTURES: Vector de noms de textura
 GLuint textures[NUM_MAX_TEXTURES]={0,1,2,3,4,5,6,7,8,9};
@@ -24,6 +25,8 @@ GLuint textures[NUM_MAX_TEXTURES]={0,1,2,3,4,5,6,7,8,9};
 GLdouble projectionMatrix[16];
 GLint viewportMatrix[4];
 GLdouble ModelViewMatrix[16];
+TypeMuscle muscle = NONE_MUSCLE;
+float wx1 = 0.0,wy1 = 0.0,wx2 = 0.0, wy2 = 0.0;
 
 GLdouble* GetProjectionMatrix (void)
 {
@@ -39,7 +42,12 @@ GLint* GetViewportMatrix (void)
 {
 	return viewportMatrix;
 }
-float wx1 = 0.0,wy1 = 0.0,wx2 = 0.0, wy2 = 0.0;
+
+void SetRenderMuscle ( TypeMuscle numMuscle )
+{
+	muscle = numMuscle;
+}
+
 void RenderBox (float x1, float y1, float x2, float y2)
 {
 	wx1 = x1; wy1 = y1; wx2 = x2;wy2 = y2;
@@ -309,7 +317,8 @@ void Projeccio_Perspectiva(int minx,int miny,GLsizei w,GLsizei h,float zoom)
 void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat tr[3],
 				 CColor col_fons,char objecte,bool TR, 
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
-				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix, Selection* select, Objecte3D* ObOBJ)
+				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
+				 Selection* select, Objecte3D* ObOBJ, MuscleManager* MManager)
 {    
 	GLfloat cam[3],up[3];
 
@@ -413,6 +422,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 	}
 	renderSphereSelection(select, ObOBJ);
 	drawSelectionBox(wx1,wy1,wx2,wy2);
+	RenderSelectedMuscle(muscle,MManager);
 	glPopMatrix();
 	
 	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);

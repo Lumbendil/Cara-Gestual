@@ -45,17 +45,19 @@ protected: // create from serialization only
 	void ChangeMuscleState ( TypeMuscle muscle );
 	void ChangeExpressionState ( TypeExpression expression );
 
-// Attributes
-public:
-	CPracticaDoc* GetDocument();
+private:
+	bool TeclaControl;
+	bool TeclaTab;
+	bool zBuffer;
+
 	Selection* select;
 	EditorManager* editor;
 	MuscleManager* MManager;
 	ExpressionManager* EManager;
 
-	bool TeclaControl;
-	bool TeclaTab;
-	bool zBuffer;
+// Attributes
+public:
+	CPracticaDoc* GetDocument();
 
 // Operations
 public:

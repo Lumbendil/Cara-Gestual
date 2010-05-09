@@ -25,6 +25,7 @@ public:
 	void			addVertexMuscle		( TypeMuscle numMuscle, unsigned int vertex, float delta );
 	void			moveAMuscle			( TypeMuscle numMuscle, SPoint3D vecDir );
 	void			deleteMuscle		( TypeMuscle numMuscle );
+	void			RenderMuscle		( TypeMuscle numMuscle );
 
 	Muscle**		getMuscleList		( void );
 	int				getNumMuscles		( void );
