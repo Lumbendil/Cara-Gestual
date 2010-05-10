@@ -5,15 +5,15 @@
 
 MuscleManager::MuscleManager()
 {
-	muscles = (Muscle**) malloc (numMuscles*sizeof(Muscle));
-	for(int i=0; i<numMuscles; ++i)
+	muscles = (Muscle**) malloc (NMUSCLES*sizeof(Muscle));
+	for(int i=0; i<NMUSCLES; ++i)
 	{
 		muscles[i] = new Muscle();
 	}
 }
 MuscleManager::~MuscleManager()
 {
-	for (int i=0; i<numMuscles; ++i)
+	for (int i=0; i<NMUSCLES; ++i)
 	{
 		delete [] muscles[i];
 	}
@@ -45,7 +45,7 @@ Muscle** MuscleManager::getMuscleList(void)
 
 int MuscleManager::getNumMuscles ()
 {
-	return numMuscles;
+	return NMUSCLES;
 }
 
 void MuscleManager::RenderMuscle( TypeMuscle numMuscle )

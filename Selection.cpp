@@ -20,13 +20,14 @@ Selection::Selection(Objecte3D* obj, EditorManager* editor)
 {
 	ObOBJ = obj;
 	editorM = editor;
+	dominantSelect = false;
 	m_pTriFlags = NULL;
 	if (obj != NULL)
 		this->SetFlagsTriangles();
 }
 Selection::~Selection()
 {
-	free(ObOBJ);
+	ObOBJ = NULL;
 	free(editorM);
 	delete[] m_pTriFlags;
 }
@@ -61,7 +62,7 @@ void Selection::ButtonDown( float mouseX, float mouseY, int flag )
 	}
 }
 
-//Al moure el ratol� amb el bot� apretat
+//Calcula el quadrat de sel·lecció al moure el ratolí
 void Selection::ButtonMove( float mouseX, float mouseY )
 {
 	if ( buttonState )
@@ -78,7 +79,7 @@ void Selection::ButtonMove( float mouseX, float mouseY )
 	}
 }
 
-//Al deixar el bot� esquerre
+//Acció al deixar el d'apretar el botó esquerre del ratolí
 void Selection::ButtonUp( void )
 {
 	buttonState = false;
@@ -96,6 +97,18 @@ void Selection::ButtonUp( void )
 		GetFrustum(Normals,P);
 		FrustumSelect(Normals, P);
 		//Cridar als m�todes de EditorManager per tal d'afegir els v�rtexs all�
+	}
+}
+
+//Selecciona el vèrtex dominant del muscle
+void Selection::ButtonRDown( float mouseX, float mouseY )
+{
+	if (ObOBJ != NULL)
+	{
+		dominantSelect = true;
+		GetLine( m_vLineP[0], m_vLineP[1], mouseX, mouseY );
+		LineSelect(m_vLineP[0],m_vLineP[1]);
+		dominantSelect = false;
 	}
 }
 
@@ -260,15 +273,22 @@ int Selection::LineSelect (const SPoint3D &LP1, const SPoint3D &LP2 )
 				fDistance = HitP.calcularDistancia( LP1 );
 				nSelTri = nTri;
 
-				if (m_nSelMode == SELECT_ADD)
-					editorM->AddVertexFromTriangle(HitP,pFace);
+				if (dominantSelect)
+				{
+					editorM->SetDominantVertex(HitP,pFace);
+				}
 				else
-					editorM->DeleteVertexFromTriangle(HitP,pFace);
+				{
+					if (m_nSelMode == SELECT_ADD)
+						editorM->AddVertexFromTriangle(HitP,pFace);
+					else
+						editorM->DeleteVertexFromTriangle(HitP,pFace);
+				}
 			}
 			++nbHits;
 		}
 	}
-		
+
 	SelectTriangle( nSelTri );
 	
 	return nbHits;

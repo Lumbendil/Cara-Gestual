@@ -5,6 +5,7 @@
 #include "MuscleManager.h"
 #include "SPoint3D.h"
 
+#define NEXPRESSIONS 5
 //NONE és l'últim element ja que l'array arriba a l'element N-1.
 //NONE és per definir una expressió quan no hi ha cap expressió seleccionada.
 

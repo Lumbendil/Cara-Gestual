@@ -913,6 +913,18 @@ void CPracticaView::OnRButtonDown(UINT nFlags, CPoint point)
 // TODO: Add your message handler code here and/or call default
 	m_ButoDAvall = true;
 	m_PosDAvall = point;
+
+	//Sel·lecció del punt domimant del muscle del model
+	if (editMuscle && ObOBJ != NULL)
+	{
+		if (select == NULL)
+			select = new Selection(ObOBJ,editor);
+
+		select->SetObj(ObOBJ);
+		select->SetZBufferTriangles(SPoint3D(opv.x,opv.y,opv.z));
+		if (TeclaControl)
+			select->ButtonRDown(point.x,point.y);
+	}
 	
 	CView::OnRButtonDown(nFlags, point);
 }
@@ -2598,6 +2610,7 @@ void CPracticaView::OnExportMuscles()
     else
 	   {nom=openExportXML.GetPathName();}
 
+	nom = nom + CString(".xml");
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
@@ -3101,6 +3114,7 @@ void CPracticaView::OnExportExpressions()
     else
 	   {nom=openExportXML.GetPathName();}
 
+	nom = nom + CString(".xml");
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 

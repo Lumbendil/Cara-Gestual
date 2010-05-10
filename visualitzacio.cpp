@@ -428,9 +428,6 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
 // Enviar les comandes gràfiques a pantalla
 	glFlush();
-
-	
-
 }
 
 

@@ -111,8 +111,13 @@ SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triang
 	}
 	return puntFinal;
 }
-void EditorManager::SetDominantVertex( SPoint3D point )
+void EditorManager::SetDominantVertex( SPoint3D colisio, SPoint3D* triangle )
 {
+	SPoint3D puntFinal;
+
+	puntFinal = this->PuntMesProximTriangle(colisio,triangle);
+	this->AddVertex(puntFinal);
+	DominantVertex = objecte->buscarPunt(puntFinal);
 }
 
 /*

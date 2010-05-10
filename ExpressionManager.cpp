@@ -6,9 +6,8 @@
 
 ExpressionManager::ExpressionManager(MuscleManager* MMan)
 {
-	numExpressions = (sizeof(TypeExpression)/sizeof(int))-1;
-	Expressions = (Expression**) malloc (numExpressions*sizeof(Expression));
-	for (int i=0; i<numExpressions; ++i)
+	Expressions = (Expression**) malloc (NEXPRESSIONS*sizeof(Expression));
+	for (int i=0; i<NEXPRESSIONS; ++i)
 	{
 		Expressions[i] = new Expression(MMan);
 	}
@@ -16,7 +15,7 @@ ExpressionManager::ExpressionManager(MuscleManager* MMan)
 
 ExpressionManager::~ExpressionManager()
 {
-	for (int i=0; i<numExpressions; ++i)
+	for (int i=0; i<NEXPRESSIONS; ++i)
 	{
 		delete [] Expressions[i];
 	}
@@ -45,5 +44,5 @@ Expression** ExpressionManager::getExpressionList(void)
 
 int ExpressionManager::getNumExpressions ()
 {
-	return numExpressions;
+	return NEXPRESSIONS;
 }

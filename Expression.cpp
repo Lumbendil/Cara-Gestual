@@ -7,12 +7,13 @@ Expression::Expression(MuscleManager* MMan)
 {
 	MManager = MMan;
 	movements = (SPoint3D*) malloc (MManager->getNumMuscles()*sizeof(SPoint3D));
+	resetMuscles();
 }
 
 Expression::~Expression()
 {
 	delete[] movements;
-	free(MManager);
+	MManager = NULL;
 }
 
 void Expression::modifyMuscle( TypeMuscle muscle, SPoint3D movement )
@@ -29,7 +30,7 @@ void Expression::resetMuscles( void )
 {
 	for (int i=0; i<MManager->getNumMuscles(); ++i)
 	{
-		movements[i] = SPoint3D(0.f,0.f,0.f);
+		movements[i] = SPoint3D(1.f,1.f,1.f);
 	}
 }
 
