@@ -26,6 +26,7 @@ public:
 	void			moveAMuscle			( TypeMuscle numMuscle, SPoint3D vecDir );
 	void			deleteMuscle		( TypeMuscle numMuscle );
 	void			RenderMuscle		( TypeMuscle numMuscle );
+	void			SetModel			( Objecte3D* ObOBJ );
 
 	Muscle**		getMuscleList		( void );
 	int				getNumMuscles		( void );

@@ -28,6 +28,7 @@ public:
 	void		SetMuscle				( TypeMuscle m );
 	void		AddVertexFromTriangle	( SPoint3D colisio, SPoint3D* triangle );
 	void		DeleteVertexFromTriangle( SPoint3D colisio, SPoint3D* triangle );
+	void		SetDominantVertex		( SPoint3D point );
 
 	// Metodes relacionats amb les expresions
 	void		DefineMovement	( TypeExpression expression, TypeMuscle muscle );

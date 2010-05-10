@@ -1680,6 +1680,7 @@ void CPracticaView::OnFileOpen3ds()
 	Ob3DS->Dibuixa3DS(false,OBJECTE3DS);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
+	MManager->SetModel(ObOBJ);
 //Resetejar la memòria de Selection
 	if (select != NULL)
 		select->SetFlagsTriangles();
@@ -1716,6 +1717,7 @@ void CPracticaView::OnFileOpenObj()
 	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
+	MManager->SetModel(ObOBJ);
 //Resetejar la memòria de Selection
 	if (select != NULL)
 		select->SetFlagsTriangles();
