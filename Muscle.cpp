@@ -15,24 +15,27 @@ Muscle::~Muscle()
 
 int Muscle::addVertex(unsigned int vertex, float delta)
 {
-	size++;
-	//Si el vector no existia el creem. Si ja existia, el fem més gran per tal de fer caber les noves dades
-	if(size==1)
-	{
-		vertexIndex = (unsigned int *) malloc(sizeof(unsigned int));
-		vertexDelta = (float *) malloc(sizeof(float));
+	if ( searchMuscle(vertex) == -1) {
+		size++;
+		//Si el vector no existia el creem. Si ja existia, el fem més gran per tal de fer caber les noves dades
+		if(size==1)
+		{
+			vertexIndex = (unsigned int *) malloc(sizeof(unsigned int));
+			vertexDelta = (float *) malloc(sizeof(float));
+		}
+		else
+		{
+			vertexIndex = (unsigned int *) realloc (vertexIndex, size*sizeof(unsigned int));
+			vertexDelta = (float *) realloc(vertexDelta, size*sizeof(float));
+		}
+		
+		vertexIndex[size-1] = vertex;
+		vertexDelta[size-1] = delta;
 	}
-	else
-	{
-		vertexIndex = (unsigned int *) realloc (vertexIndex, size*sizeof(unsigned int));
-		vertexDelta = (float *) realloc(vertexDelta, size*sizeof(float));
-	}
-	
-	vertexIndex[size-1] = vertex;
-	vertexDelta[size-1] = delta;
 
 	return size;
 }
+
 int Muscle::alterDelta(unsigned int vertex, float newDelta)
 {
 	int posicio;
@@ -92,22 +95,13 @@ unsigned int* Muscle::getVertexIndex(void)
 
 int	Muscle::searchMuscle(unsigned int vertex)
 {
-	int posicio=0;
 	//Buscar on es troba el vertex
-	while((vertexIndex[posicio]!=vertex)&&(posicio<size))
-	{
-		posicio++;
+	for (int i = 0; i < size; i++) {
+		if ( vertexIndex[i] == vertex ) {
+			return i;
+		}
 	}
-
-	//Si no es troba es retorna -1. Si es troba es retorna la posicio en el que esta.
-	if(vertexIndex[posicio]!=vertex)
-	{
-		return -1;
-	}
-	else
-	{
-		return posicio;
-	}
+	return -1;
 }
 
 int Muscle::getNumVertexs()
