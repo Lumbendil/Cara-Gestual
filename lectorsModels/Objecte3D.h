@@ -11,10 +11,9 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
-#include "CollisionManager.h"
-#include "SPoint3D.h"
+#include "../SPoint3D.h"
 #include "objLoader.h"
-#include "intersection.h"
+#include "../Seleccions/intersection.h"
 
 struct O3DMaterial
 {

@@ -1,8 +1,8 @@
 #ifndef MUSCLE_H
 #define MUSCLE_H
 
-#include "SPoint3D.h"
-#include "Objecte3D.h"
+#include "../SPoint3D.h"
+#include "../lectorsModels/Objecte3D.h"
 
 class Muscle
 {

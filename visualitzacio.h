@@ -8,8 +8,8 @@
 #define GLVIS_H
 
 #include "stdafx.h"
-#include "Selection.h"
-#include "MuscleManager.h"
+#include "Seleccions/Selection.h"
+#include "Muscles/MuscleManager.h"
 
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */

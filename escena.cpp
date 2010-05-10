@@ -8,9 +8,9 @@
 #include "escena.h"
 #include "PracticaView.h"
 #include "visualitzacio.h"
-#include "Selection.h"
-#include "Objecte3D.h"
-#include "MuscleManager.h"
+#include "Seleccions/Selection.h"
+#include "lectorsModels/Objecte3D.h"
+#include "Muscles/MuscleManager.h"
 #include "SPoint3D.h"
 
 void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager)

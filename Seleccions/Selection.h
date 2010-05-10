@@ -1,11 +1,11 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
-#include "SPoint3D.h"
-#include "Objecte3D.h"
+#include "../SPoint3D.h"
+#include "../lectorsModels/Objecte3D.h"
 #include "EditorManager.h"
 #include "intersection.h"
-#include "constants.h"
+#include "../constants.h"
 
 enum SelectionModes{ SELECT_ADD, SELECT_SUB };
 enum TriFlags{ TF_SELECTED = 1, NTF_SELECTED = 2, TF_BACKFACING = 3, NTF_BACKFACING = 4 };

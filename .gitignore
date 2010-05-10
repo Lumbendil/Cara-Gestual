@@ -1,0 +1,7 @@
+.settings
+.cproject
+.project
+*.user
+*.vcproj
+Release
+Debug

@@ -16,23 +16,23 @@
 #include "stdafx.h"
 
 // OBJECTE 3DS: Include per la definició de l'objecte Obj_3DS
-#include "Obj3DS.h"	
+#include "lectorsModels/Obj3DS.h"	
 
 // OBJECTE OBJ: Include per la definició de l'objecte Obj_OBJ
-#include "objLoader.h"
-#include "Objecte3D.h"
+#include "lectorsModels/objLoader.h"
+#include "lectorsModels/Objecte3D.h"
 
 // MUSCLES I EXPRESSIONS
-#include "MuscleManager.h"
-#include "ExpressionManager.h"
+#include "Muscles/MuscleManager.h"
+#include "Expresions/ExpressionManager.h"
 
 #include "PracticaDoc.h"
-#include "Selection.h"
+#include "Seleccions/Selection.h"
 #include "SPoint3D.h"
-#include "EditorManager.h"
-#include "MuscleManager.h"
-#include "XMLReader.h"
-#include "XMLWriter.h"
+#include "Seleccions/EditorManager.h"
+#include "Muscles/MuscleManager.h"
+#include "tractarXML/XMLReader.h"
+#include "tractarXML/XMLWriter.h"
 
 
 

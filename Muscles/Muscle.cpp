@@ -1,7 +1,7 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Muscle.h"
-#include "Objecte3D.h"
-#include "SPoint3D.h"
+#include "../lectorsModels/Objecte3D.h"
+#include "../SPoint3D.h"
 
 Muscle::Muscle()
 {

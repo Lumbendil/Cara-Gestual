@@ -1,8 +1,8 @@
 #ifndef XMLWRITER_H
 #define XMLWRITER_H
-#include "ExpressionManager.h"
-#include "MuscleManager.h"
-#include "SPoint3D.h"
+#include "../Expresions/ExpressionManager.h"
+#include "../Muscles/MuscleManager.h"
+#include "../SPoint3D.h"
 #include <stdio.h>
 #include <stdlib.h> 
 #include <windows.h>

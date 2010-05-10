@@ -1,9 +1,9 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "EditorManager.h"
-#include "MuscleManager.h"
-#include "ExpressionManager.h"
-#include "SPoint3D.h"
-#include "Objecte3D.h"
+#include "../Muscles/MuscleManager.h"
+#include "../Expresions/ExpressionManager.h"
+#include "../SPoint3D.h"
+#include "../lectorsModels/Objecte3D.h"
 
 EditorManager::EditorManager(MuscleManager* MMan, Objecte3D* objecte)
 {

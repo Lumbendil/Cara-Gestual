@@ -8,7 +8,7 @@
 //    tcs_web@gmx.de / tcs_web@hotmail.com / tcs@thereisnofate.net
 //                 http://glvelocity.demonews.com
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "objLoader.h"
 
 // OBJ File string indentifiers

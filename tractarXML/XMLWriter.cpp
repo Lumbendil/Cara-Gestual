@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "XMLWriter.h"
 
 XMLWriter::XMLWriter(char* path, ExpressionManager* EManager, MuscleManager* MManager, int x) {

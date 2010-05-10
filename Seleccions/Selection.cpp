@@ -1,11 +1,11 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Selection.h"
-#include "SPoint3D.h"
-#include "matrix.h"
-#include "Objecte3D.h"
+#include "../SPoint3D.h"
+#include "../matrix.h"
+#include "../lectorsModels/Objecte3D.h"
 #include "EditorManager.h"
 #include "intersection.h"
-#include "visualitzacio.h"
+#include "../visualitzacio.h"
 #include <gl/gl.h>
 #include <gl/glu.h>
 

@@ -1,8 +1,8 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include "SPoint3D.h"
-#include "MuscleManager.h"
+#include "../SPoint3D.h"
+#include "../Muscles/MuscleManager.h"
 
 class Expression
 {

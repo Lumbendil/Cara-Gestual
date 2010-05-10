@@ -1,6 +1,6 @@
 // CONJUNT DE FUNCIONS PER A CARREGAR FITXERS 3DS
 
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Load3DS.h"
 
 #ifdef _DEBUG

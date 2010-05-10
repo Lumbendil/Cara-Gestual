@@ -1,7 +1,7 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Muscle.h"
 #include "MuscleManager.h"
-#include "SPoint3D.h"
+#include "../SPoint3D.h"
 
 MuscleManager::MuscleManager()
 {

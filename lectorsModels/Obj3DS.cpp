@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Obj3DS.h"
 #include <stack>
 #include <il\ilut.h>		// Header File For OpenIL

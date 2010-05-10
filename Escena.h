@@ -8,9 +8,9 @@
 #define GLSOURCE_H
 
 #include "SPoint3D.h"
-#include "Selection.h"
-#include "Objecte3D.h"
-#include "MuscleManager.h"
+#include "Seleccions/Selection.h"
+#include "lectorsModels/Objecte3D.h"
+#include "Muscles/MuscleManager.h"
 
 /* ------------------------------------------------------------------------- */
 /*                            Funcions de les escenes                        */

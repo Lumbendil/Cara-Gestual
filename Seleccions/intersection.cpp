@@ -4,8 +4,8 @@
 // by Jonathan Kreuzer
 // http://www.3dkingdoms.com/weekly
 //
-#include "stdafx.h"
-#include "SPoint3D.h"
+#include "../stdafx.h"
+#include "../SPoint3D.h"
 #include <math.h>
 
 //

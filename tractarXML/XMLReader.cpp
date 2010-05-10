@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "XMLReader.h"
 
 XMLReader::XMLReader(char* path, ExpressionManager* EManager, MuscleManager* MManager) {
