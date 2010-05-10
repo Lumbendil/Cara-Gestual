@@ -863,26 +863,14 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 	/////////////////////////////////////////////////////////
 	/////// wx, wy, wz són les coordenades món			/////	
 	/////////////////////////////////////////////////////////
-	if (select == NULL)
-		select = new Selection(ObOBJ,editor);
-
-	if(ObOBJ != NULL)
+	
+	if (editMuscle && ObOBJ != NULL)
 	{
+		if (select == NULL)
+			select = new Selection(ObOBJ,editor);
+
 		select->SetObj(ObOBJ);
 		select->SetZBufferTriangles(SPoint3D(opv.x,opv.y,opv.z));
-		if(TeclaControl)
-		{
-			select->ButtonDown(point.x, point.y, 1);
-			select->Render();
-		}
-		else if (TeclaTab)
-		{
-			select->ButtonDown(point.x, point.y, 2);
-			select->Render();
-		}
-	}
-	else
-	{
 		if(TeclaControl)
 		{
 			select->ButtonDown(point.x, point.y, 1);
@@ -2651,7 +2639,8 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(DCELLA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(DCELLA);
 		
 		}
 		else
@@ -2693,7 +2682,8 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(ECELLA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(ECELLA);
 		}
 		else
 		{
@@ -2733,7 +2723,8 @@ void CPracticaView::OnMBocaDreta()
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(DBOCA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(DBOCA);
 		}
 		else
 		{
@@ -2773,7 +2764,8 @@ void CPracticaView::OnMBocaEsquerre()
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(EBOCA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(EBOCA);
 		}
 		else
 		{
@@ -2813,7 +2805,8 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(INFBOCA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(INFBOCA);
 		}
 		else
 		{
@@ -2853,7 +2846,8 @@ void CPracticaView::OnMParpellesDreta()
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(DPARPELLA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(DPARPELLA);
 		}
 		else
 		{
@@ -2893,7 +2887,8 @@ void CPracticaView::OnMParpellesEsquerra()
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(EPARPELLA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(EPARPELLA);
 		}
 		else
 		{
@@ -2933,7 +2928,8 @@ void CPracticaView::OnMGaltesDreta()
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(DGALTA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(DGALTA);
 		}
 		else
 		{
@@ -2973,7 +2969,8 @@ void CPracticaView::OnMGaltesEsquerra()
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			editor->SetMuscle(EGALTA);
+			if (ObOBJ != NULL)
+				editor->SetMuscle(EGALTA);
 		}
 		else
 		{
