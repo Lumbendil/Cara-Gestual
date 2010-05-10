@@ -30,8 +30,10 @@ EditorManager::~EditorManager()
 void EditorManager::AddVertex(SPoint3D vertex)
 {
 	int v = this->objecte->buscarPunt(vertex);
-	this->VertexList[v] = true;
-	++CurrentVertex;
+	if(!this->VertexList[v]) {
+		this->VertexList[v] = true;
+		++CurrentVertex;
+	}
 }
 
 //Calcula i assigna les deltes del muscle concret
@@ -50,8 +52,10 @@ void EditorManager::CalculateDelta(TypeMuscle muscle, SPoint3D vertexPrincipal)
 void EditorManager::DeleteVertex(SPoint3D vertex)
 {
 	int v = objecte->buscarPunt(vertex);
-	VertexList[v] = false;
-	--CurrentVertex;
+	if(this->VertexList[v]) {
+		this->VertexList[v] = false;
+		--CurrentVertex;
+	}
 }
 
 //Defineix el moviment del muscle per a una expressió
