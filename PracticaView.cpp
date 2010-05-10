@@ -1720,7 +1720,7 @@ void CPracticaView::OnFileOpenObj()
 	/* i carreguem */	
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
 	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
-	editor = new EditorManager(MManager,ObOBJ);
+	editor = new EditorManager(MManager,EManager,ObOBJ);
 	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 

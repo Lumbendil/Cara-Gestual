@@ -5,9 +5,10 @@
 #include "../SPoint3D.h"
 #include "../lectorsModels/Objecte3D.h"
 
-EditorManager::EditorManager(MuscleManager* MMan, Objecte3D* objecte)
+EditorManager::EditorManager(MuscleManager* MMan, ExpressionManager* EMan, Objecte3D* objecte)
 {
 	MManager = MMan;
+	EManager = EMan;
 	CurrentVertex = 0;
 	CurrentMuscle = NONE_MUSCLE;
 	this->objecte = objecte;
@@ -37,13 +38,13 @@ void EditorManager::AddVertex(SPoint3D vertex)
 }
 
 //Calcula i assigna les deltes del muscle concret
-void EditorManager::CalculateDelta(TypeMuscle muscle, SPoint3D vertexPrincipal)
+void EditorManager::CalculateDelta()
 {
 	int numVertex;
 	numVertex = objecte->GetNumVertexs();
 	for (int i = 0; i < numVertex; i++) {
 		if (this->VertexList[i]) {
-			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(vertexPrincipal));
+			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(objecte->RetornaPunt(DominantVertex)));
 		}
 	}
 }
@@ -59,7 +60,7 @@ void EditorManager::DeleteVertex(SPoint3D vertex)
 }
 
 //Defineix el moviment del muscle per a una expressió
-void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle)
+void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle, SPoint3D desplaçament)
 {
 }
 
@@ -79,9 +80,14 @@ void EditorManager::DeleteVertexFromTriangle(SPoint3D colisio, SPoint3D* triangl
 
 void EditorManager::SetMuscle(TypeMuscle muscle)
 {
-	int i = 0, maxVertex;
+	int i = 0,index, maxVertex;
+	unsigned int *llistatVertex;
+	float *llistatDelta;
+	Muscle *m;
+
 	maxVertex = objecte->GetNumVertexs();
 	if ( CurrentMuscle != NONE_MUSCLE) {
+		this->CalculateDelta();
 		while (CurrentVertex) {
 			if (VertexList[i]) {
 				// Afegir el vertex al muscle
@@ -95,6 +101,16 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	}
 	// Canviar el muscle que s'està editant
 	this->CurrentMuscle = muscle;
+	// Carregar les dades del nou muscle
+	m = MManager->getMuscleList()[muscle];
+	llistatVertex = m->getVertexIndex();
+	llistatDelta = m->getVertexDelta();
+	CurrentVertex = m->getNumVertexs();
+	for (i = 0; i < CurrentVertex; i++) {
+		index = llistatVertex[i];
+		this->VertexList[index] = true;
+		this->DeltaList[index] = llistatDelta[i];
+	}
 }
 
 SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triangle)
