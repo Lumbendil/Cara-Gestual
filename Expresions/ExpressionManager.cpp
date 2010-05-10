@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "ExpressionManager.h"
-#include "MuscleManager.h"
+#include "../Muscles/MuscleManager.h"
 #include "Expression.h"
-#include "SPoint3D.h"
+#include "../SPoint3D.h"
 
 ExpressionManager::ExpressionManager(MuscleManager* MMan)
 {

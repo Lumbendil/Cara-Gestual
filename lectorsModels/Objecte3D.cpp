@@ -1,8 +1,7 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Objecte3D.h"
 #include "objLoader.h"
-#include "CollisionManager.h"
-#include "intersection.h"
+#include "../Seleccions/intersection.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
 	switch (tipus) {

@@ -2,8 +2,8 @@
 #define	EXPMANAGER_H
 
 #include "Expression.h"
-#include "MuscleManager.h"
-#include "SPoint3D.h"
+#include "../Muscles/MuscleManager.h"
+#include "../SPoint3D.h"
 
 //NONE és l'últim element ja que l'array arriba a l'element N-1.
 //NONE és per definir una expressió quan no hi ha cap expressió seleccionada.

@@ -1,4 +1,4 @@
-#include "SPoint3D.h"
+#include "../SPoint3D.h"
 
 bool CheckLineBox( SPoint3D L1, SPoint3D L2, SPoint3D B1, SPoint3D B2, SPoint3D &HitP );
 bool CheckLineTri( const SPoint3D &L1, const SPoint3D &L2, const SPoint3D &PV1, const SPoint3D &PV2, const SPoint3D &PV3, SPoint3D &HitP );

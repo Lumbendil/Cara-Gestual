@@ -17,20 +17,17 @@
 #include "Practica.h"
 #include "PracticaDoc.h"
 #include "PracticaView.h"
-#include "MuscleManager.h"
-#include "ExpressionManager.h"
-#include "CollisionManager.h"
+#include "Muscles/MuscleManager.h"
+#include "Expresions/ExpressionManager.h"
 #include "visualitzacio.h"
 #include "SPoint3D.h"
-#include "Selection.h"
-#include "EditorManager.h"
-#include "MuscleManager.h"
+#include "Seleccions/Selection.h"
+#include "Seleccions/EditorManager.h"
 #include "escena.h"
 #include <gl\gl.h>
 #include <gl\glu.h>
 #include <gl\glaux.h>
 #include <gl\glut.h>
-#include "XMLWriter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -266,8 +263,6 @@ CPracticaView::CPracticaView()
 
 CPracticaView::~CPracticaView()
 {
-	CCollisionManager::getInstance()->CleanUp();
-
 	// Eliminar estructures dinàmiques
 	if (Ob3DS!=NULL) delete Ob3DS;
 	if (ObOBJ!=NULL) {	//ObOBJ->EliminaLlista(OBJECTEOBJ);

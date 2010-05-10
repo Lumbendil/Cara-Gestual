@@ -1,8 +1,8 @@
 #ifndef MUSCLEMANAGER_H
 #define MUSCLEMANAGER_H
 
-#include "SPoint3D.h"
-#include "Objecte3D.h"
+#include "../SPoint3D.h"
+#include "../lectorsModels/Objecte3D.h"
 #include "Muscle.h"
 
 #define numMuscles 10

@@ -16,8 +16,8 @@
 #include "visualitzacio.h"
 #include "escena.h"
 #include "constants.h"
-#include "Selection.h"
-#include "MuscleManager.h"
+#include "Seleccions/Selection.h"
+#include "Muscles/MuscleManager.h"
 
 // TEXTURES: Vector de noms de textura
 GLuint textures[NUM_MAX_TEXTURES]={0,1,2,3,4,5,6,7,8,9};

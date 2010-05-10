@@ -1,9 +1,9 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "SPoint3D.h"
-#include "MuscleManager.h"
-#include "ExpressionManager.h"
+#include "../SPoint3D.h"
+#include "../Muscles/MuscleManager.h"
+#include "../Expresions/ExpressionManager.h"
 
 class EditorManager
 {
