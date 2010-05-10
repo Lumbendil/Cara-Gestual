@@ -27,11 +27,7 @@ public:
 	void		CalculateDelta			( TypeMuscle m, SPoint3D vertexPrincipal );
 	void		SetMuscle				( TypeMuscle m );
 	void		AddVertexFromTriangle	( SPoint3D colisio, SPoint3D* triangle );
-<<<<<<< HEAD
-	void		DeleteVertexFromTriangle ( SPoint3D colisio, SPoint3D* triangle );
-=======
 	void		DeleteVertexFromTriangle( SPoint3D colisio, SPoint3D* triangle );
->>>>>>> ae2b87061a5922c62efe4920891f699cee5d4a55
 
 	// Metodes relacionats amb les expresions
 	void		DefineMovement	( TypeExpression expression, TypeMuscle muscle );

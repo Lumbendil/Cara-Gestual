@@ -32,6 +32,7 @@
 #include "EditorManager.h"
 #include "MuscleManager.h"
 #include "XMLReader.h"
+#include "XMLWriter.h"
 
 
 
@@ -166,7 +167,8 @@ public:
 	bool editExpression;	// Booleana que indica si s'està editant les expressions.
 	TypeExpression selectedExpression;
 
-	XMLReader* lector;
+	//XMLReader* lector;
+	//XMLWriter* escritor;
 
 	virtual ~CPracticaView();
 #ifdef _DEBUG

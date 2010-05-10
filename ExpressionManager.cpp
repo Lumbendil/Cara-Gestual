@@ -37,3 +37,13 @@ void ExpressionManager::RenderExpression( TypeExpression nameExpression )
 {
 	Expressions[nameExpression]->RenderExpression();
 }
+
+Expression** ExpressionManager::getExpressionList(void)
+{
+	return Expressions;
+}
+
+int ExpressionManager::getNumExpressions ()
+{
+	return numExpressions;
+}

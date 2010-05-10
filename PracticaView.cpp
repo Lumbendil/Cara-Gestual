@@ -30,7 +30,7 @@
 #include <gl\glu.h>
 #include <gl\glaux.h>
 #include <gl\glut.h>
-
+#include "XMLWriter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -2611,8 +2611,10 @@ void CPracticaView::OnExportMuscles()
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
-	//TODO Cridar al parsejador de fitxers XML per guardar els muscles.
 	// La variable nomfitx conté tot el path del fitxer.
+	XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,1);
+	escriptura->Guardar();
+	delete escriptura;
 
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -3103,8 +3105,10 @@ void CPracticaView::OnExportExpressions()
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
-	//TODO Cridar al parsejador de fitxers XML per guardar les expressions.
 	// La variable nomfitx conté tot el path del fitxer.
+	XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,0);
+	escriptura->Guardar();
+	delete escriptura;
 
 
 	// Crida a OnPaint() per redibuixar l'escena

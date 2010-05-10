@@ -92,10 +92,6 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	// Canviar el muscle que s'està editant
 	this->CurrentMuscle = muscle;
 }
-<<<<<<< HEAD
-void EditorManager::DeleteVertexFromTriangle ( SPoint3D colisio, SPoint3D* triangle )
-{
-=======
 
 SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
@@ -110,7 +106,6 @@ SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triang
 		}
 	}
 	return puntFinal;
->>>>>>> ae2b87061a5922c62efe4920891f699cee5d4a55
 }
 /*
 void EditorManager::RenderVertexs()
