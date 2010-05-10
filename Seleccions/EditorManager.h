@@ -16,7 +16,7 @@ private:
 	TypeMuscle CurrentMuscle;
 	Objecte3D* objecte;
 
-
+	void		CalculateDelta			( );
 	SPoint3D	PuntMesProximTriangle	( SPoint3D colisio, SPoint3D* triangle );
 
 public:
@@ -28,7 +28,6 @@ public:
 	// Metodes relacionats amb els muscles
 	void		AddVertex				( SPoint3D vertex );
 	void		DeleteVertex			( SPoint3D vertex );
-	void		CalculateDelta			( TypeMuscle m, SPoint3D vertexPrincipal );
 	void		SetMuscle				( TypeMuscle m );
 	void		AddVertexFromTriangle	( SPoint3D colisio, SPoint3D* triangle );
 	void		DeleteVertexFromTriangle( SPoint3D colisio, SPoint3D* triangle );

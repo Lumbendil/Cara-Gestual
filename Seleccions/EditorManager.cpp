@@ -37,13 +37,13 @@ void EditorManager::AddVertex(SPoint3D vertex)
 }
 
 //Calcula i assigna les deltes del muscle concret
-void EditorManager::CalculateDelta(TypeMuscle muscle, SPoint3D vertexPrincipal)
+void EditorManager::CalculateDelta()
 {
 	int numVertex;
 	numVertex = objecte->GetNumVertexs();
 	for (int i = 0; i < numVertex; i++) {
 		if (this->VertexList[i]) {
-			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(vertexPrincipal));
+			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(objecte->RetornaPunt(DominantVertex)));
 		}
 	}
 }
@@ -79,9 +79,13 @@ void EditorManager::DeleteVertexFromTriangle(SPoint3D colisio, SPoint3D* triangl
 
 void EditorManager::SetMuscle(TypeMuscle muscle)
 {
-	int i = 0, maxVertex;
+	int i = 0,index, maxVertex, *llistatVertex;
+	float *llistatDelta;
+	Muscle *m;
+
 	maxVertex = objecte->GetNumVertexs();
 	if ( CurrentMuscle != NONE_MUSCLE) {
+		this->CalculateDelta();
 		while (CurrentVertex) {
 			if (VertexList[i]) {
 				// Afegir el vertex al muscle
@@ -95,6 +99,16 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	}
 	// Canviar el muscle que s'està editant
 	this->CurrentMuscle = muscle;
+	// Carregar les dades del nou muscle
+	m = MManager->getMuscleList()[muscle];
+	llistatVertex = m->getVertexIndex();
+	llistatDelta = m->getVertexDelta();
+	CurrentVertex = m->getNumVertex();
+	for (i = 0; i < CurrentVertex; i++) {
+		index = llistatVertex[i];
+		this->VertexList[index] = true;
+		this->DeltaList[index] = llistatDelta[i];
+	}
 }
 
 SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triangle)
