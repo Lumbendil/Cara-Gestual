@@ -1,0 +1,12 @@
+<expressions>
+        <expressio nom = "ALEGRE">
+		<muscle nom = "DCELLA" vector = "0.0,0.0,1.0"/>
+		<muscle nom = "ECELLA" vector = "0.0,0.0,-1.0"/>
+		<muscle nom = "EBOCA" vector = "0.0,0.0,0.0"/>
+	</expressio>
+	<expressio nom = "TRIST">
+		<muscle nom = "DCELLA" vector = "0.0,0.0,1.0"/>
+		<muscle nom = "ECELLA" vector = "0.0,0.0,-1.0"/>
+		<muscle nom = "EBOCA" vector = "0.0,0.0,0.0"/>
+	</expressio>
+</expressions>
