@@ -256,6 +256,7 @@ CPracticaView::CPracticaView()
 	ilutRenderer(ILUT_OPENGL);	// Inicialitzar llibreria ILUT per a OpenGL
 
 	select = NULL;
+	deform = NULL;
 
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
@@ -859,7 +860,16 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 	/////// wx, wy, wz són les coordenades món			/////	
 	/////////////////////////////////////////////////////////
 	
-	if (editMuscle && ObOBJ != NULL)
+	if (editExpression && ObOBJ != NULL)
+	{
+		if (deform == NULL)
+			deform = new Deformation(EManager,ObOBJ,editor);
+
+		deform->SetObjecte(ObOBJ);
+		deform->ButtonDown(point.x, point.y, SPoint3D(opv.x, opv.y, opv.z));
+
+	}
+	else if (editMuscle && ObOBJ != NULL)
 	{
 		if (select == NULL)
 			select = new Selection(ObOBJ,editor);
@@ -892,7 +902,11 @@ void CPracticaView::OnLButtonUp(UINT nFlags, CPoint point)
 // TODO: Add your message handler code here and/or call default
 	m_ButoEAvall = false;
 
-	if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab))
+	if (editExpression && deform != NULL)
+	{
+		deform->ButtonUp();
+	}
+	else if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab))
 	{
 		//select->SetZBufferTriangles(SPoint3D(opv.x,opv.y,opv.z));
 		select->ButtonUp();
@@ -973,7 +987,11 @@ BOOL CPracticaView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void CPracticaView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab) || (select != NULL && zBuffer))
+	if (deform != NULL && editExpression)
+	{
+		deform->ButtonMove(point.x, point.y);
+	}
+	else if ((select != NULL && TeclaControl) ||(select != NULL && TeclaTab) || (select != NULL && zBuffer))
 	{
 		select->ButtonMove(point.x, point.y);
 		select->Render();
@@ -2644,6 +2662,11 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2687,6 +2710,11 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2728,6 +2756,11 @@ void CPracticaView::OnMBocaDreta()
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2769,6 +2802,11 @@ void CPracticaView::OnMBocaEsquerre()
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2810,6 +2848,11 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2851,6 +2894,11 @@ void CPracticaView::OnMParpellesDreta()
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2892,6 +2940,11 @@ void CPracticaView::OnMParpellesEsquerra()
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2933,6 +2986,11 @@ void CPracticaView::OnMGaltesDreta()
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{
@@ -2974,6 +3032,11 @@ void CPracticaView::OnMGaltesEsquerra()
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			if (deform != NULL)
+			{
+				deform->SetExpression(selectedExpression);
+				deform->SetMuscle(selectedMuscle);
+			}
 		}
 		else if (editMuscle)
 		{

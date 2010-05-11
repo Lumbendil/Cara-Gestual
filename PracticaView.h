@@ -33,6 +33,7 @@
 #include "Muscles/MuscleManager.h"
 #include "tractarXML/XMLReader.h"
 #include "tractarXML/XMLWriter.h"
+#include "Seleccions/Deformation.h"
 
 
 
@@ -55,6 +56,7 @@ private:
 	EditorManager* editor;
 	MuscleManager* MManager;
 	ExpressionManager* EManager;
+	Deformation* deform;
 
 // Attributes
 public:
