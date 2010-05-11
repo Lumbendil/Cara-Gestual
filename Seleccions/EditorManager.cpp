@@ -153,7 +153,10 @@ void EditorManager::SetDominantVertex( SPoint3D colisio, SPoint3D* triangle )
 	this->AddVertex(puntFinal);
 	DominantVertex = objecte->buscarPunt(puntFinal);
 }
-
+SPoint3D EditorManager::GetDominantVertex( void )
+{
+	return objecte->RetornaPunt(DominantVertex);
+}
 
 void EditorManager::RenderVertexs()
 {
