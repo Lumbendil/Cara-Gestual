@@ -31,6 +31,7 @@ public:
 	void		AddVertex				( SPoint3D vertex );
 	void		DeleteVertex			( SPoint3D vertex );
 	void		SetMuscle				( TypeMuscle m );
+	void		SaveMuscle				( void );
 	void		AddVertexFromTriangle	( SPoint3D colisio, SPoint3D* triangle );
 	void		DeleteVertexFromTriangle( SPoint3D colisio, SPoint3D* triangle );
 	void		SetDominantVertex		( SPoint3D colisio, SPoint3D* triangle );

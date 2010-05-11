@@ -2644,7 +2644,11 @@ void CPracticaView::OnMuscleEdit()
 {
 	editMuscle = !editMuscle;
 	if (!editMuscle)
+	{
 		ChangeMuscleState(NONE_MUSCLE);
+		//TODO Cridar funció de EditorManager per tal de guardar les dades a Muscles
+		editor->SaveMuscle();
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2690,7 +2694,6 @@ void CPracticaView::OnMCellesDreta()
 	{
 		selectedMuscle = NONE_MUSCLE;
 		SetRenderMuscle(NONE_MUSCLE);
-		
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena

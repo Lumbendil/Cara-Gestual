@@ -132,6 +132,25 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	}
 }
 
+void EditorManager::SaveMuscle()
+{
+	int i = 0, maxVertex;
+	int CurrentTemp = CurrentVertex;
+
+	maxVertex = objecte->GetNumVertexs();
+	if ( CurrentMuscle != NONE_MUSCLE) {
+		this->CalculateDelta();
+		while (CurrentTemp) {
+			if (VertexList[i]) {
+				// Afegir el vertex al muscle
+				MManager->addVertexMuscle(CurrentMuscle, (unsigned int) i, DeltaList[i]);
+				--CurrentTemp;
+			}
+			++i;
+		}
+	}
+}
+
 SPoint3D EditorManager::PuntMesProximTriangle(SPoint3D colisio, SPoint3D* triangle)
 {
 	SPoint3D puntFinal = triangle[0];
