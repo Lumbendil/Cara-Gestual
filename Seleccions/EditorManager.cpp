@@ -23,8 +23,8 @@ EditorManager::EditorManager(MuscleManager* MMan, ExpressionManager* EMan, Objec
 
 EditorManager::~EditorManager()
 {
-	free(MManager);
 	delete [] VertexList;
+	delete [] DeltaList;
 }
 
 //Afegeix un vèrtex al muscle definit
@@ -34,6 +34,9 @@ void EditorManager::AddVertex(SPoint3D vertex)
 	if(!this->VertexList[v]) {
 		this->VertexList[v] = true;
 		++CurrentVertex;
+		if (CurrentVertex == 1) {
+			this->DominantVertex = v;
+		}
 	}
 }
 
@@ -74,6 +77,9 @@ void EditorManager::DeleteVertex(SPoint3D vertex)
 	if(this->VertexList[v]) {
 		this->VertexList[v] = false;
 		--CurrentVertex;
+		if ( v == DominantVertex ) {
+			for (DominantVertex = 0; !VertexList[DominantVertex]; ++DominantVertex);
+		}
 	}
 }
 
@@ -129,6 +135,9 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 		index = llistatVertex[i];
 		this->VertexList[index] = true;
 		this->DeltaList[index] = llistatDelta[i];
+		if (this->DeltaList[index] == 1.0) {
+			this->DominantVertex = index;
+		}
 	}
 }
 
@@ -173,15 +182,8 @@ void EditorManager::SetDominantVertex( SPoint3D colisio, SPoint3D* triangle )
 	this->AddVertex(puntFinal);
 	DominantVertex = objecte->buscarPunt(puntFinal);
 }
+
 SPoint3D EditorManager::GetDominantVertex( void )
 {
 	return objecte->RetornaPunt(DominantVertex);
-}
-
-void EditorManager::RenderVertexs()
-{
-}
-
-void EditorManager::RenderSelection(float x1, float y1, float x2, float y2 )
-{	
 }
