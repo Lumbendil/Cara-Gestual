@@ -5,3 +5,4 @@ bool CheckLineTri( const SPoint3D &L1, const SPoint3D &L2, const SPoint3D &PV1, 
 bool PointInFrustum( const SPoint3D &P, SPoint3D Normals[4], SPoint3D Points[8] );
 bool TriInFrustum( SPoint3D vTri[3], SPoint3D Normals[4], SPoint3D Points[8] );
 bool LineInFrustum( const SPoint3D &LP1, const SPoint3D &LP2, SPoint3D Normals[4], SPoint3D Points[8] );
+bool CheckLinePlane(const SPoint3D& planeN, const SPoint3D& planePoint, const SPoint3D& LP1, const SPoint3D& LP2, SPoint3D& HitP);

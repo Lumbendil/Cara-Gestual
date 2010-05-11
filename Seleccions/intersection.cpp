@@ -8,6 +8,7 @@
 #include "../SPoint3D.h"
 #include <math.h>
 
+#define SMALL_NUM  0.00000001
 //
 // CheckLineBox Helper Functions
 //
@@ -62,35 +63,35 @@ return false;
 //
 bool CheckLineTri( const SPoint3D &L1, const SPoint3D &L2, const SPoint3D &PV1, const SPoint3D &PV2, const SPoint3D &PV3, SPoint3D &HitP )
 {
-SPoint3D VIntersect;
+	SPoint3D VIntersect;
 
-// Find Triangle Normal, would be quicker to have these computed already
-SPoint3D VNorm;
-VNorm = ( PV2 - PV1 ).CrossProduct( PV3 - PV1 );
-VNorm.normalizeVector();
+	// Find Triangle Normal, would be quicker to have these computed already
+	SPoint3D VNorm;
+	VNorm = ( PV2 - PV1 ).CrossProduct( PV3 - PV1 );
+	VNorm.normalizeVector();
 
-// Find distance from L1 and L2 to the plane defined by the triangle
-float fDst1 = (L1-PV1).Dot( VNorm );
-float fDst2 = (L2-PV1).Dot( VNorm );
+	// Find distance from L1 and L2 to the plane defined by the triangle
+	float fDst1 = (L1-PV1).Dot( VNorm );
+	float fDst2 = (L2-PV1).Dot( VNorm );
 
-if ( (fDst1 * fDst2) >= 0.0f) return false;  // line doesn't cross the triangle.
-if ( fDst1 == fDst2) {return false;} // line and plane are parallel
+	if ( (fDst1 * fDst2) >= 0.0f) return false;  // line doesn't cross the triangle.
+	if ( fDst1 == fDst2) {return false;} // line and plane are parallel
 
-// Find point on the line that intersects with the plane
-VIntersect = L1 + (L2-L1) * ( -fDst1/(fDst2-fDst1) );
+	// Find point on the line that intersects with the plane
+	VIntersect = L1 + (L2-L1) * ( -fDst1/(fDst2-fDst1) );
 
-// Find if the interesection point lies inside the triangle by testing it against all edges
-SPoint3D VTest;
-VTest = VNorm.CrossProduct( PV2-PV1 );
-if ( VTest.Dot( VIntersect-PV1 ) < 0.0f ) return false;
-VTest = VNorm.CrossProduct( PV3-PV2 );
-if ( VTest.Dot( VIntersect-PV2 ) < 0.0f ) return false;
-VTest = VNorm.CrossProduct( PV1-PV3 );
-if ( VTest.Dot( VIntersect-PV1 ) < 0.0f ) return false;
+	// Find if the interesection point lies inside the triangle by testing it against all edges
+	SPoint3D VTest;
+	VTest = VNorm.CrossProduct( PV2-PV1 );
+	if ( VTest.Dot( VIntersect-PV1 ) < 0.0f ) return false;
+	VTest = VNorm.CrossProduct( PV3-PV2 );
+	if ( VTest.Dot( VIntersect-PV2 ) < 0.0f ) return false;
+	VTest = VNorm.CrossProduct( PV1-PV3 );
+	if ( VTest.Dot( VIntersect-PV1 ) < 0.0f ) return false;
 
-HitP = VIntersect;
+	HitP = VIntersect;
 
-return true;
+	return true;
 }
 
 //
@@ -152,4 +153,25 @@ bool TriInFrustum( SPoint3D vTri[3], SPoint3D Normals[4], SPoint3D Points[8] )
   if ( CheckLineTri( Points[0], Points[1], vTri[0], vTri[1], vTri[2], HitP ) ) return true;
   
 return false;
+}
+bool CheckLinePlane (const SPoint3D& planeN, const SPoint3D& planePoint,
+					 const SPoint3D& LP1, const SPoint3D& LP2, SPoint3D& HitP)
+{
+    SPoint3D u = LP2 - LP1;
+    SPoint3D w = LP1 - planePoint;
+
+    float D = u.Dot(planeN);
+	float N = -w.Dot(planeN);
+
+    if (abs(D) < SMALL_NUM) // segment is parallel to plane		
+		return false;
+
+    // they are not parallel
+    // compute intersect param
+    float sI = N / D;
+    if (sI < 0 || sI > 1)
+        return false;                       // no intersection
+
+    HitP = LP1 + u*sI;                 // compute segment intersect point
+    return true;
 }

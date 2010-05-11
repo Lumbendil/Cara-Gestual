@@ -866,6 +866,8 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 		if (deform == NULL)
 			deform = new Deformation(EManager,ObOBJ,editor);
 
+		deform->SetExpression(selectedExpression);
+		deform->SetMuscle(selectedMuscle);
 		deform->SetObjecte(ObOBJ);
 		deform->ButtonDown(point.x, point.y, SPoint3D(opv.x, opv.y, opv.z));
 
@@ -988,7 +990,7 @@ BOOL CPracticaView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void CPracticaView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if (deform != NULL && editExpression)
+	if (deform != NULL && editExpression && m_ButoEAvall)
 	{
 		deform->ButtonMove(point.x, point.y);
 	}
@@ -3214,6 +3216,9 @@ void CPracticaView::OnExpTrist()
 		{
 			ChangeExpressionState(TRIST);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			EManager->RenderExpression(selectedExpression);
+			if (ObOBJ != NULL)
+				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3240,6 +3245,9 @@ void CPracticaView::OnExpAlegre()
 		{
 			ChangeExpressionState(ALEGRE);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			EManager->RenderExpression(selectedExpression);
+			if (ObOBJ != NULL)
+				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3267,6 +3275,9 @@ void CPracticaView::OnExpEnfadat()
 		{
 			ChangeExpressionState(ENFADAT);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			EManager->RenderExpression(selectedExpression);
+			if (ObOBJ != NULL)
+				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3294,6 +3305,9 @@ void CPracticaView::OnExpSerios()
 		{
 			ChangeExpressionState(SERIOS);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			EManager->RenderExpression(selectedExpression);
+			if (ObOBJ != NULL)
+				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3321,6 +3335,9 @@ void CPracticaView::OnExpSorpres()
 		{
 			ChangeExpressionState(SORPRES);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			EManager->RenderExpression(selectedExpression);
+			if (ObOBJ != NULL)
+				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else

@@ -80,6 +80,7 @@ void EditorManager::DeleteVertex(SPoint3D vertex)
 //Defineix el moviment del muscle per a una expressió
 void EditorManager::DefineMovement(TypeExpression expression, TypeMuscle muscle, SPoint3D desplaçament)
 {
+	EManager->modifyMuscleExpression(expression,muscle,desplaçament);
 }
 
 void EditorManager::AddVertexFromTriangle(SPoint3D colisio, SPoint3D* triangle)
