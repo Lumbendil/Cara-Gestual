@@ -24,17 +24,23 @@ ExpressionManager::~ExpressionManager()
 
 void ExpressionManager::resetExpression( TypeExpression nameExpression )
 {
-	Expressions[nameExpression]->resetMuscles();	
+	if ( nameExpression != NONE_EXPRESSION ) {
+		Expressions[nameExpression]->resetMuscles();
+	}
 }
 
 void ExpressionManager::modifyMuscleExpression(TypeExpression nameExpression, TypeMuscle nameMuscle, SPoint3D movement)
 {
-	Expressions[nameExpression]->modifyMuscle(nameMuscle, movement);
+	if ( nameExpression != NONE_EXPRESSION ) {
+		Expressions[nameExpression]->modifyMuscle(nameMuscle, movement);
+	}
 }
 
 void ExpressionManager::RenderExpression( TypeExpression nameExpression )
 {
-	Expressions[nameExpression]->RenderExpression();
+	if ( nameExpression != NONE_EXPRESSION ) {
+		Expressions[nameExpression]->RenderExpression();
+	}
 }
 
 Expression** ExpressionManager::getExpressionList(void)
