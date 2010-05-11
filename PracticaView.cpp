@@ -472,7 +472,7 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle);
 			}
 
 // Intercanvia l'escena al front de la pantalla
@@ -3194,6 +3194,9 @@ void CPracticaView::OnExportExpressions()
 
 void CPracticaView::OnExpressionEdit()
 {
+	if (editMuscle)
+		editor->SaveMuscle();
+
 	editExpression = !editExpression;
 	if (!editExpression)
 		ChangeExpressionState(NONE_EXPRESSION);

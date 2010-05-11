@@ -13,9 +13,25 @@
 #include "Muscles/MuscleManager.h"
 #include "SPoint3D.h"
 
-void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager)
+void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager, Objecte3D* ObOBJ)
 {
-	MManager->RenderMuscle(muscle);
+	//MManager->RenderMuscle(muscle);
+	if (MManager != NULL && ObOBJ != NULL && muscle != NONE_MUSCLE)
+	{
+		SPoint3D vertex;
+		unsigned int* vIndex = MManager->getMuscleList()[muscle]->getVertexIndex();
+		int size = MManager->getMuscleList()[muscle]->getNumVertexs();
+
+		for (int i=0; i < size; ++i)
+		{
+			vertex = ObOBJ->RetornaPunt( vIndex[i] );
+			glColor3f(1.0,1.0,1.0);	
+			glPushMatrix();
+				glTranslatef(vertex.x, vertex.y, vertex.z);
+				glutSolidSphere(0.1,5,5);
+			glPopMatrix();
+		}
+	}
 }
 
 void renderSphereSelection (EditorManager* EdManager)
