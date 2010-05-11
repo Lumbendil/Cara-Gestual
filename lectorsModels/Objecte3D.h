@@ -77,7 +77,7 @@ class Objecte3D {
 		int GetNumTriangles ( void );
 		void GetFaceCoords ( int nFace, SPoint3D* coords );
 		SPoint3D GetNormalsFace ( int nFace );
-
+		void Render( void );
 	private:
 		Cara *cares;
 		Punt *punts;
