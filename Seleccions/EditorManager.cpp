@@ -37,6 +37,24 @@ void EditorManager::AddVertex(SPoint3D vertex)
 	}
 }
 
+SPoint3D* EditorManager::GetPointList(int* tamany, int* dominant)
+{
+	*tamany = this->CurrentVertex;
+	int i = -1, nVertex;
+	nVertex = *tamany;
+	SPoint3D *llista = new SPoint3D[*tamany];
+	while (nVertex) {
+		if(this->VertexList[++i]) {
+			if (i == this->DominantVertex) {
+				*dominant = *tamany - nVertex;
+			}
+			llista[*tamany - nVertex] = objecte->RetornaPunt(i);
+			--nVertex;
+		}
+	}
+	return llista;
+}
+
 //Calcula i assigna les deltes del muscle concret
 void EditorManager::CalculateDelta()
 {
