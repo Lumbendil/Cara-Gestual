@@ -1,0 +1,12 @@
+<muscles>
+	<muscle nom = "DCELLA">
+		<param vertex = "3" delta = "1.0"/>
+		<param vertex = "4" delta = "1.1"/>
+		<param vertex = "5" delta = "1.2"/>
+	</muscle>
+	<muscle nom = "ECELLA">
+		<param vertex = "6" delta = "1.0"/>
+		<param vertex = "7" delta = "1.1"/>
+		<param vertex = "8" delta = "1.2"/>
+	</muscle>
+</muscles>

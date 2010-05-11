@@ -18,8 +18,26 @@ void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager)
 	MManager->RenderMuscle(muscle);
 }
 
-void renderSphereSelection (Selection* select, Objecte3D* ObOBJ)
+void renderSphereSelection (EditorManager* EdManager)
 {
+	// TODO: Implementar amb EditorManager
+	int tamany,dominant;
+	SPoint3D *llista;
+	if (EdManager != NULL) {
+		llista = EdManager->GetPointList(&tamany,&dominant);
+		for (int i = 0; i < tamany; i++) {
+			if (i == dominant) {
+				glColor3f(1.0,0.0,0.0);
+			} else {
+				glColor3f(1.0,1.0,1.0);
+			}
+			glPushMatrix();
+				glTranslatef(llista[i].x,llista[i].y,llista[i].z);
+				glutSolidSphere(0.1,5,5);
+			glPopMatrix();
+		}
+	}
+	/*
 	SPoint3D coords[3];
 
 	if (select != NULL && ObOBJ != NULL)
@@ -51,6 +69,7 @@ void renderSphereSelection (Selection* select, Objecte3D* ObOBJ)
 			}
 		}
 	}
+	*/
 }
 
 // dibuixa: Funció que dibuixa els objectes segons obj

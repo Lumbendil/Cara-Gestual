@@ -318,7 +318,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 				 CColor col_fons,char objecte,bool TR, 
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
 				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
-				 Selection* select, Objecte3D* ObOBJ, MuscleManager* MManager)
+				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager)
 {    
 	GLfloat cam[3],up[3];
 
@@ -420,7 +420,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 			dibuixa(objecte);
 			break;
 	}
-	renderSphereSelection(select, ObOBJ);
+	renderSphereSelection(EdManager);
 	drawSelectionBox(wx1,wy1,wx2,wy2);
 	RenderSelectedMuscle(muscle,MManager);
 	glPopMatrix();

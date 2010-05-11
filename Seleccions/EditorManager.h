@@ -34,6 +34,7 @@ public:
 	void		AddVertexFromTriangle	( SPoint3D colisio, SPoint3D* triangle );
 	void		DeleteVertexFromTriangle( SPoint3D colisio, SPoint3D* triangle );
 	void		SetDominantVertex		( SPoint3D colisio, SPoint3D* triangle );
+	SPoint3D*	GetPointList			( int* tamany, int* dominant );
 	SPoint3D	GetDominantVertex		( void );
 
 	// Metodes relacionats amb les expresions

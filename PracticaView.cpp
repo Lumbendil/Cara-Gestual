@@ -260,6 +260,7 @@ CPracticaView::CPracticaView()
 
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
+	editor = NULL;
 }
 
 CPracticaView::~CPracticaView()
@@ -471,7 +472,7 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, select, ObOBJ, MManager);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager);
 			}
 
 // Intercanvia l'escena al front de la pantalla
