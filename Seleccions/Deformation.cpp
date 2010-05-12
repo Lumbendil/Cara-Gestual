@@ -31,6 +31,7 @@ void Deformation::ButtonDown(float mouseX, float mouseY, SPoint3D opv)
 		GetLine(LP1, LP2, mouseX, mouseY);
 
 		SPoint3D dominant = editorM->GetDominantVertex();
+
 		normalPla = opv;
 		normalPla.normalizeVector();
 
@@ -41,7 +42,6 @@ void Deformation::ButtonDown(float mouseX, float mouseY, SPoint3D opv)
 			vecDir = HitP - dominant;
 			editorM->DefineMovement(expression,muscle,vecDir);
 			EManager->RenderExpression(expression);
-			ObOBJ->Dibuixar(5);
 		}
 		
 	}
@@ -61,8 +61,7 @@ void Deformation::ButtonMove(float mouseX, float mouseY)
 		vecDir = HitP - dominant;
 		editorM->DefineMovement(expression,muscle,vecDir);
 	}
-	EManager->RenderExpression(expression);
-	ObOBJ->Dibuixar(5);
+	//EManager->RenderExpression(expression);
 }
 
 void Deformation::ButtonUp()

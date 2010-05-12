@@ -10,6 +10,7 @@ private:
 	
 	SPoint3D*			movements;
 	MuscleManager*		MManager;
+	bool*				activeMuscles;
 
 public:
 

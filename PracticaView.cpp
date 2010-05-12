@@ -2669,6 +2669,7 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2687,13 +2688,13 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(DCELLA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2716,6 +2717,7 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2733,13 +2735,13 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(ECELLA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2762,6 +2764,7 @@ void CPracticaView::OnMBocaDreta()
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2779,13 +2782,13 @@ void CPracticaView::OnMBocaDreta()
 		{
 			ChangeMuscleState(DBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(DBOCA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2808,6 +2811,7 @@ void CPracticaView::OnMBocaEsquerre()
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2825,13 +2829,13 @@ void CPracticaView::OnMBocaEsquerre()
 		{
 			ChangeMuscleState(EBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(EBOCA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2854,6 +2858,7 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2871,13 +2876,13 @@ void CPracticaView::OnMBocaInferior()
 		{
 			ChangeMuscleState(INFBOCA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(INFBOCA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2900,6 +2905,7 @@ void CPracticaView::OnMParpellesDreta()
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2917,13 +2923,13 @@ void CPracticaView::OnMParpellesDreta()
 		{
 			ChangeMuscleState(DPARPELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(DPARPELLA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2946,6 +2952,7 @@ void CPracticaView::OnMParpellesEsquerra()
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2963,13 +2970,13 @@ void CPracticaView::OnMParpellesEsquerra()
 		{
 			ChangeMuscleState(EPARPELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(EPARPELLA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2992,6 +2999,7 @@ void CPracticaView::OnMGaltesDreta()
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -3009,13 +3017,13 @@ void CPracticaView::OnMGaltesDreta()
 		{
 			ChangeMuscleState(DGALTA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(DGALTA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -3038,6 +3046,7 @@ void CPracticaView::OnMGaltesEsquerra()
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
+			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -3055,13 +3064,13 @@ void CPracticaView::OnMGaltesEsquerra()
 		{
 			ChangeMuscleState(EGALTA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(EGALTA);
+			SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
 	{
 		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
