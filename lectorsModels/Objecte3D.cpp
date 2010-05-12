@@ -215,6 +215,7 @@ void Objecte3D::Render ( void )
 {
 	int iPreviousMaterial = -1,i,j;
 	glPushAttrib(GL_TEXTURE_BIT);
+<<<<<<< HEAD
 
 	for (i=0; i < this->nombreCares; i++)
 	{
@@ -247,10 +248,37 @@ void Objecte3D::Render ( void )
 	}
 	glPopAttrib();
 }
+=======
+>>>>>>> ed23bb751c341edf0a69ac4ada0d4d740629dd19
 
-
-
-
-
-
-
+	for (i=0; i < this->nombreCares; i++)
+	{
+		if (iPreviousMaterial != (int) this->cares[i].materialTextura)
+		{
+			iPreviousMaterial = this->cares[i].materialTextura;
+			UseMaterial(this->materials[iPreviousMaterial]);
+		}
+		glBegin(GL_TRIANGLES);
+		// Calculate and set face normal if no vertex normals are specified
+		if (!this->teNormals)
+		{
+			SPoint3D fNormal = GetFaceNormal(&this->cares[i]);
+			glNormal3fv(fNormal);
+		}
+		// Process all vertices
+		for (j=0; j < 3; j++)
+		{
+			// Set vertex normal (if vertex normals are specified)
+			//Sif (this->cares[i].punts[j]->normal)
+				//glNormal3fv(this->cares[i].punts[j]->normal);
+			glNormal3fv(this->cares[i].normals[j]);
+			// Set texture coordinates (if any specified)
+			//if (this->cares[i].punts[j]->cordTex)
+				glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);
+			// Set vertex
+			glVertex3fv(this->cares[i].punts[j]->cordenades);
+		}
+		glEnd();	
+	}
+	glPopAttrib();
+}
