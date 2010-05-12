@@ -412,7 +412,10 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 
 		case OBJOBJ:
 // Objecte OBJ: Dibuix de l'objecte OBJ
-			glCallList(OBJECTEOBJ);
+			//glCallList(OBJECTEOBJ);
+			if (ObOBJ != NULL)
+				ObOBJ->Render();
+
 			break;
 
 		default:
