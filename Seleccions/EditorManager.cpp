@@ -13,8 +13,8 @@ EditorManager::EditorManager(MuscleManager* MMan, ExpressionManager* EMan, Objec
 	CurrentMuscle = NONE_MUSCLE;
 	this->objecte = objecte;
 	int nVertex = objecte->GetNumVertexs();
-	VertexList = (bool*) malloc (nVertex*(sizeof(bool)));
-	DeltaList = (float*) malloc (nVertex*(sizeof(float)));
+	VertexList = new bool[nVertex];
+	DeltaList = new float[nVertex];
 	for ( int i = 0; i < nVertex; ++i ) {
 		VertexList[i] = false;
 		DeltaList[i] = 0.0;

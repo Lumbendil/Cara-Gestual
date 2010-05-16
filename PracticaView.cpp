@@ -1742,7 +1742,6 @@ void CPracticaView::OnFileOpenObj()
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
 	ObOBJ = new Objecte3D(nomfitx,TIPUS_OBJ);
 	editor = new EditorManager(MManager,EManager,ObOBJ);
-	ObOBJ->Dibuixar(OBJECTEOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
 	MManager->SetModel(ObOBJ);
@@ -2665,6 +2664,8 @@ void CPracticaView::OnMCellesDreta()
 {
 	if (selectedMuscle != DCELLA)
 	{
+		if (ObOBJ != NULL)
+			editor->SetMuscle(DCELLA);
 		if (editExpression)
 		{
 			ChangeMuscleState(DCELLA);
@@ -2680,8 +2681,8 @@ void CPracticaView::OnMCellesDreta()
 		{
 			ChangeMuscleState(DCELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(DCELLA);
+			/*if (ObOBJ != NULL)
+				editor->SetMuscle(DCELLA);*/
 		
 		}
 		else
@@ -2713,11 +2714,14 @@ void CPracticaView::OnMCellesEsquerra()
 {
 	if (selectedMuscle != ECELLA)
 	{
+		if (ObOBJ != NULL)
+				editor->SetMuscle(ECELLA);
+		SetRenderMuscle(selectedMuscle);
 		if (editExpression)
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
+			//
 			if (deform != NULL)
 			{
 				deform->SetExpression(selectedExpression);
@@ -2728,14 +2732,13 @@ void CPracticaView::OnMCellesEsquerra()
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(ECELLA);
+			
 		}
 		else
 		{
 			ChangeMuscleState(ECELLA);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
+			//SetRenderMuscle(selectedMuscle);
 		}
 	}
 	else
@@ -3234,8 +3237,6 @@ void CPracticaView::OnExpTrist()
 			//Posar el model a estat inicial.
 			//Fer el render de l'expressio
 			EManager->RenderExpression(selectedExpression);
-			if (ObOBJ != NULL)
-				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3263,8 +3264,6 @@ void CPracticaView::OnExpAlegre()
 			ChangeExpressionState(ALEGRE);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
 			EManager->RenderExpression(selectedExpression);
-			if (ObOBJ != NULL)
-				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3293,8 +3292,6 @@ void CPracticaView::OnExpEnfadat()
 			ChangeExpressionState(ENFADAT);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
 			EManager->RenderExpression(selectedExpression);
-			if (ObOBJ != NULL)
-				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3323,8 +3320,6 @@ void CPracticaView::OnExpSerios()
 			ChangeExpressionState(SERIOS);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
 			EManager->RenderExpression(selectedExpression);
-			if (ObOBJ != NULL)
-				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else
@@ -3353,8 +3348,6 @@ void CPracticaView::OnExpSorpres()
 			ChangeExpressionState(SORPRES);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
 			EManager->RenderExpression(selectedExpression);
-			if (ObOBJ != NULL)
-				ObOBJ->Dibuixar(OBJECTEOBJ);
 		}
 	}
 	else

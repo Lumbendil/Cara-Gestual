@@ -68,7 +68,6 @@ void Deformation::ButtonUp()
 {
 	editorM->DefineMovement(expression, muscle, vecDir);
 	EManager->RenderExpression(expression);
-	ObOBJ->Dibuixar(5);
 }
 
 void Deformation::GetLine( SPoint3D &L1, SPoint3D &L2, float mouseX, float mouseY )

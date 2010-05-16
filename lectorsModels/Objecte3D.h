@@ -32,7 +32,7 @@ struct Point2D {
 };
 
 struct Punt {
-	SPoint3D cordenades,normal;
+	SPoint3D cordenades,normal,moviment;
 	Point2D cordTex;
 };
 
@@ -47,42 +47,25 @@ struct Cara {
 
 class Objecte3D {
 	public:
-		/*
-		Constructor.
-		El tipus seria 1 per a OBJ i 2 per a 3DS.
-		*/
 		Objecte3D(char* file,int tipus);
-		/*
-		El destructor, que alliberaria tota la memoria
-		*/
 		~Objecte3D();
-		/*
-		Retorna l'identificador del punt de l'objecte mes proxim al
-		punt p.
-		*/
 		int PuntMesProxim(SPoint3D);
 		SPoint3D RetornaPunt ( int );
 		int GetNumVertexs ( void );
-		/*
-		Dibuixa la funció
-		*/
-		void Dibuixar(int list); 
-		/*
-		Canvia el punt n per el nouPunt
-		*/
+		// No guarda el moviment a dins del vertex!!!
 		void mourePunt(int, SPoint3D);
 		int buscarPunt(SPoint3D);
-
 		void GetTriangle ( int index, SPoint3D* triangle );
 		int GetNumTriangles ( void );
 		void GetFaceCoords ( int nFace, SPoint3D* coords );
 		SPoint3D GetNormalsFace ( int nFace );
-
 		void Render( void );
-
+		// A implementar
+		void resetMoviments();
 	private:
 		Cara *cares;
 		Punt *punts;
+		SPoint3D *moviment;
 		O3DMaterial *materials;
 		bool teNormals;
 		int  nombrePunts,nombreMaterials;

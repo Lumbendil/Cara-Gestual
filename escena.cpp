@@ -52,6 +52,7 @@ void renderSphereSelection (EditorManager* EdManager)
 				glutSolidSphere(0.1,5,5);
 			glPopMatrix();
 		}
+		delete [] llista;
 	}
 	/*
 	SPoint3D coords[3];
