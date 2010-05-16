@@ -13,10 +13,6 @@ MuscleManager::MuscleManager()
 }
 MuscleManager::~MuscleManager()
 {
-	for (int i=0; i<NMUSCLES; ++i)
-	{
-		delete [] muscles[i];
-	}
 	delete [] muscles;
 }
 

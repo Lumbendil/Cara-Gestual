@@ -41,10 +41,11 @@
 
 // GC2: Includes per lectura fitxers, funcions trigonomètriques i nombres aleatoris.
 #include <stdio.h>
+#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
+#include <crtdbg.h>
 #include <math.h>
 #include <time.h>
-
 
 // GC2: Constants de l'aplicació Practica
 #include "constants.h"

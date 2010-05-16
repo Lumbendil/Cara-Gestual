@@ -15,10 +15,6 @@ ExpressionManager::ExpressionManager(MuscleManager* MMan)
 
 ExpressionManager::~ExpressionManager()
 {
-	for (int i=0; i<NEXPRESSIONS; ++i)
-	{
-		delete [] Expressions[i];
-	}
 	delete [] Expressions;
 }
 

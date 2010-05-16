@@ -266,12 +266,17 @@ CPracticaView::CPracticaView()
 CPracticaView::~CPracticaView()
 {
 	// Eliminar estructures dinàmiques
-	if (Ob3DS!=NULL) delete Ob3DS;
-	if (ObOBJ!=NULL) {	//ObOBJ->EliminaLlista(OBJECTEOBJ);
-						delete ObOBJ;
-					 }
+	if (ObOBJ!=NULL)
+		delete ObOBJ;
+	if (MManager != NULL)
+		delete MManager;
+	if (EManager != NULL)
+		delete EManager;
+	if (editor != NULL)
+		delete editor;
+	if (deform != NULL)
+		delete deform;
 }
-
 
 BOOL CPracticaView::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -2607,7 +2612,7 @@ void CPracticaView::OnImportMuscles()
 
 	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
 	lector->Read();
-
+	delete lector;
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2845,6 +2850,7 @@ void CPracticaView::OnImportExpressions()
 	// La variable nomfitx conté tot el path del fitxer.
 	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
 	lector->Read();
+	delete lector;
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
