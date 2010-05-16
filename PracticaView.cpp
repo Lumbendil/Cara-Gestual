@@ -3231,6 +3231,8 @@ void CPracticaView::OnExpTrist()
 		{
 			ChangeExpressionState(TRIST);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			//Posar el model a estat inicial.
+			//Fer el render de l'expressio
 			EManager->RenderExpression(selectedExpression);
 			if (ObOBJ != NULL)
 				ObOBJ->Dibuixar(OBJECTEOBJ);
