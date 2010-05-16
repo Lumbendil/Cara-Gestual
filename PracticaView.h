@@ -272,6 +272,10 @@ protected:
 	afx_msg void OnExpressionEdit();
 	afx_msg void OnUpdateExpressionEdit(CCmdUI *pCmdUI);
 
+
+	afx_msg void SwitchMuscle(TypeMuscle m);
+	afx_msg void SwitchExpression(TypeExpression e);
+
 	afx_msg void OnMCellesDreta();
 	afx_msg void OnUpdateMCellesDreta(CCmdUI *pCmdUI);
 	afx_msg void OnMCellesEsquerra();

@@ -50,7 +50,7 @@ SPoint3D* EditorManager::GetPointList(int* tamany, int* dominant)
 			if (i == this->DominantVertex) {
 				*dominant = *tamany - nVertex;
 			}
-			llista[*tamany - nVertex] = objecte->RetornaPunt(i);
+			llista[*tamany - nVertex] = objecte->RetornaPunt(i) + objecte->returnMoviment(i);
 			--nVertex;
 		}
 	}
@@ -129,12 +129,15 @@ void EditorManager::SetMuscle(TypeMuscle muscle)
 	llistatVertex = m->getVertexIndex();
 	llistatDelta = m->getVertexDelta();
 	CurrentVertex = m->getNumVertexs();
+	float maxDelta = 0.0;
 	for (i = 0; i < CurrentVertex; i++) {
 		index = llistatVertex[i];
 		this->VertexList[index] = true;
 		this->DeltaList[index] = llistatDelta[i];
-		if (this->DeltaList[index] == 1.0)
+		if (this->DeltaList[index] > maxDelta) {
 			this->DominantVertex = index;
+			maxDelta = this->DeltaList[index];
+		}
 	}
 }
 
@@ -182,12 +185,4 @@ void EditorManager::SetDominantVertex( SPoint3D colisio, SPoint3D* triangle )
 SPoint3D EditorManager::GetDominantVertex( void )
 {
 	return objecte->RetornaPunt(DominantVertex);
-}
-
-void EditorManager::RenderVertexs()
-{
-}
-
-void EditorManager::RenderSelection(float x1, float y1, float x2, float y2 )
-{	
 }

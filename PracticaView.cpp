@@ -2660,15 +2660,16 @@ void CPracticaView::OnUpdateMuscleEdit(CCmdUI *pCmdUI)
 	else
 		 pCmdUI->SetCheck(0);
 }
-void CPracticaView::OnMCellesDreta()
+
+void CPracticaView::SwitchMuscle(TypeMuscle m)
 {
-	if (selectedMuscle != DCELLA)
+	if (selectedMuscle != m)
 	{
 		if (ObOBJ != NULL)
-			editor->SetMuscle(DCELLA);
+			editor->SetMuscle(m);
 		if (editExpression)
 		{
-			ChangeMuscleState(DCELLA);
+			ChangeMuscleState(m);
 			//TODO Aquí hi va quan es defineixen els vectors directors
 			SetRenderMuscle(selectedMuscle);
 			if (deform != NULL)
@@ -2679,7 +2680,7 @@ void CPracticaView::OnMCellesDreta()
 		}
 		else if (editMuscle)
 		{
-			ChangeMuscleState(DCELLA);
+			ChangeMuscleState(m);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 			/*if (ObOBJ != NULL)
 				editor->SetMuscle(DCELLA);*/
@@ -2687,7 +2688,7 @@ void CPracticaView::OnMCellesDreta()
 		}
 		else
 		{
-			ChangeMuscleState(DCELLA);
+			ChangeMuscleState(m);
 			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
 			SetRenderMuscle(selectedMuscle);
 		}
@@ -2700,6 +2701,11 @@ void CPracticaView::OnMCellesDreta()
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
+}
+
+void CPracticaView::OnMCellesDreta()
+{
+	SwitchMuscle(DCELLA);
 }
 
 void CPracticaView::OnUpdateMCellesDreta(CCmdUI *pCmdUI)
@@ -2712,43 +2718,7 @@ void CPracticaView::OnUpdateMCellesDreta(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMCellesEsquerra()
 {
-	if (selectedMuscle != ECELLA)
-	{
-		if (ObOBJ != NULL)
-				editor->SetMuscle(ECELLA);
-		SetRenderMuscle(selectedMuscle);
-		if (editExpression)
-		{
-			ChangeMuscleState(ECELLA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			//
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(ECELLA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			
-		}
-		else
-		{
-			ChangeMuscleState(ECELLA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			//SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(ECELLA);
 }
 
 void CPracticaView::OnUpdateMCellesEsquerra(CCmdUI *pCmdUI)
@@ -2761,41 +2731,7 @@ void CPracticaView::OnUpdateMCellesEsquerra(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMBocaDreta()
 {
-	if (selectedMuscle != DBOCA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(DBOCA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(DBOCA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(DBOCA);
-		}
-		else
-		{
-			ChangeMuscleState(DBOCA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(DBOCA);
 }
 
 void CPracticaView::OnUpdateMBocaDreta(CCmdUI *pCmdUI)
@@ -2808,41 +2744,7 @@ void CPracticaView::OnUpdateMBocaDreta(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMBocaEsquerre()
 {
-	if (selectedMuscle != EBOCA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(EBOCA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(EBOCA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(EBOCA);
-		}
-		else
-		{
-			ChangeMuscleState(EBOCA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(EBOCA);
 }
 
 void CPracticaView::OnUpdateMBocaEsquerre(CCmdUI *pCmdUI)
@@ -2855,41 +2757,7 @@ void CPracticaView::OnUpdateMBocaEsquerre(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMBocaInferior()
 {
-	if (selectedMuscle != INFBOCA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(INFBOCA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(INFBOCA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(INFBOCA);
-		}
-		else
-		{
-			ChangeMuscleState(INFBOCA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(INFBOCA);
 }
 
 void CPracticaView::OnUpdateMBocaInferior(CCmdUI *pCmdUI)
@@ -2902,41 +2770,7 @@ void CPracticaView::OnUpdateMBocaInferior(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMParpellesDreta()
 {
-	if (selectedMuscle != DPARPELLA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(DPARPELLA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(DPARPELLA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(DPARPELLA);
-		}
-		else
-		{
-			ChangeMuscleState(DPARPELLA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(DPARPELLA);
 }
 
 void CPracticaView::OnUpdateMParpellesDreta(CCmdUI *pCmdUI)
@@ -2949,41 +2783,7 @@ void CPracticaView::OnUpdateMParpellesDreta(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMParpellesEsquerra()
 {
-	if (selectedMuscle != EPARPELLA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(EPARPELLA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(EPARPELLA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(EPARPELLA);
-		}
-		else
-		{
-			ChangeMuscleState(EPARPELLA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(EPARPELLA);
 }
 
 void CPracticaView::OnUpdateMParpellesEsquerra(CCmdUI *pCmdUI)
@@ -2996,41 +2796,7 @@ void CPracticaView::OnUpdateMParpellesEsquerra(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMGaltesDreta()
 {
-	if (selectedMuscle != DGALTA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(DGALTA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(DGALTA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(DGALTA);
-		}
-		else
-		{
-			ChangeMuscleState(DGALTA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(DGALTA);
 }
 
 void CPracticaView::OnUpdateMGaltesDreta(CCmdUI *pCmdUI)
@@ -3043,41 +2809,7 @@ void CPracticaView::OnUpdateMGaltesDreta(CCmdUI *pCmdUI)
 
 void CPracticaView::OnMGaltesEsquerra()
 {
-	if (selectedMuscle != EGALTA)
-	{
-		if (editExpression)
-		{
-			ChangeMuscleState(EGALTA);
-			//TODO Aquí hi va quan es defineixen els vectors directors
-			SetRenderMuscle(selectedMuscle);
-			if (deform != NULL)
-			{
-				deform->SetExpression(selectedExpression);
-				deform->SetMuscle(selectedMuscle);
-			}
-		}
-		else if (editMuscle)
-		{
-			ChangeMuscleState(EGALTA);
-			//TODO Aquí hi va el codi quan es defineixen els muscles
-			if (ObOBJ != NULL)
-				editor->SetMuscle(EGALTA);
-		}
-		else
-		{
-			ChangeMuscleState(EGALTA);
-			//TODO Aquí hi va el codi quan es visualitza el muscle sense editar
-			SetRenderMuscle(selectedMuscle);
-		}
-	}
-	else
-	{
-		selectedMuscle = NONE_MUSCLE;
-		SetRenderMuscle(selectedMuscle);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchMuscle(EGALTA);
 }
 
 void CPracticaView::OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI)
@@ -3090,68 +2822,8 @@ void CPracticaView::OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI)
 
 void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 {
-	switch(selectedMuscle)
-	{
-	case DCELLA:
-		{
-			this->OnMCellesDreta();
-			selectedMuscle = muscle;
-			break;
-		}
-	case ECELLA:
-		{
-			this->OnMCellesEsquerra();
-			selectedMuscle = muscle;
-			break;
-		}
-	case DBOCA:
-		{
-			this->OnMBocaDreta();
-			selectedMuscle = muscle;
-			break;
-		}
-	case EBOCA:
-		{
-			this->OnMBocaEsquerre();
-			selectedMuscle = muscle;
-			break;
-		}
-	case INFBOCA:
-		{
-			this->OnMBocaInferior();
-			selectedMuscle = muscle;
-			break;
-		}
-	case EPARPELLA:
-		{
-			this->OnMParpellesEsquerra();
-			selectedMuscle = muscle;
-			break;
-		}
-	case DPARPELLA:
-		{
-			this->OnMParpellesDreta();
-			selectedMuscle = muscle;
-			break;
-		}
-	case EGALTA:
-		{
-			this->OnMGaltesEsquerra();
-			selectedMuscle = muscle;
-			break;
-		}
-	case DGALTA:
-		{
-			this->OnMGaltesDreta();
-			selectedMuscle = muscle;
-			break;
-		}
-	case NONE_MUSCLE:
-		{
-			selectedMuscle = muscle;
-			break;
-		}
-	}
+	this->SwitchMuscle(selectedMuscle);
+	selectedMuscle = muscle;
 }
 /* ------------------------------------------------------------------------- */
 /*					11. EXPRESSIONS											 */
@@ -3224,6 +2896,30 @@ void CPracticaView::OnUpdateExpressionEdit(CCmdUI *pCmdUI)
 	else
 		 pCmdUI->SetCheck(0);
 }
+
+void CPracticaView::SwitchExpression(TypeExpression e)
+{
+	this->ObOBJ->resetMoviments();
+	if (selectedExpression != e)
+	{
+		if (editExpression)
+			ChangeExpressionState(e);
+		else
+		{
+			ChangeExpressionState(e);
+			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
+			//Posar el model a estat inicial.
+			//Fer el render de l'expressio
+			EManager->RenderExpression(selectedExpression);
+		}
+	}
+	else
+		selectedExpression = NONE_EXPRESSION;
+
+	// Crida a OnPaint() per redibuixar l'escena
+	Invalidate();
+}
+
 void CPracticaView::OnExpTrist()
 {
 	if (selectedExpression != TRIST)
@@ -3367,42 +3063,6 @@ void CPracticaView::OnUpdateExpSorpres(CCmdUI *pCmdUI)
 
 void CPracticaView::ChangeExpressionState ( TypeExpression expression )
 {
-	switch (selectedExpression)
-	{
-	case TRIST:
-		{
-			this->OnExpTrist();
-			selectedExpression = expression;
-			break;
-		}
-	case ALEGRE:
-		{
-			this->OnExpAlegre();
-			selectedExpression = expression;
-			break;
-		}
-	case ENFADAT:
-		{
-			this->OnExpEnfadat();
-			selectedExpression = expression;
-			break;
-		}
-	case SERIOS:
-		{
-			this->OnExpSerios();
-			selectedExpression = expression;
-			break;
-		}
-	case SORPRES:
-		{
-			this->OnExpSorpres();
-			selectedExpression = expression;
-			break;
-		}
-	case NONE_EXPRESSION:
-		{
-			selectedExpression = expression;
-			break;
-		}
-	}
+	this->SwitchExpression(selectedExpression);
+	selectedExpression = expression;
 }

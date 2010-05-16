@@ -60,8 +60,8 @@ class Objecte3D {
 		void GetFaceCoords ( int nFace, SPoint3D* coords );
 		SPoint3D GetNormalsFace ( int nFace );
 		void Render( void );
-		// A implementar
 		void resetMoviments();
+		SPoint3D returnMoviment(int punt);
 	private:
 		Cara *cares;
 		Punt *punts;

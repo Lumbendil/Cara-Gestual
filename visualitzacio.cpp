@@ -423,8 +423,8 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 			dibuixa(objecte);
 			break;
 	}
-	RenderSelectedMuscle(muscle,MManager,ObOBJ);
-	if (flags)
+	// RenderSelectedMuscle(muscle,MManager,ObOBJ);
+	// if (flags)
 		renderSphereSelection(EdManager);
 
 	drawSelectionBox(wx1,wy1,wx2,wy2);

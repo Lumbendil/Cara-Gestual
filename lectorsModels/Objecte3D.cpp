@@ -99,6 +99,11 @@ SPoint3D Objecte3D::RetornaPunt(int punt)
 	return this->punts[punt].cordenades;
 }
 
+SPoint3D Objecte3D::returnMoviment(int punt)
+{
+	return this->punts[punt].moviment;
+}
+
 int Objecte3D::GetNumVertexs ( void )
 {
 	return nombrePunts;

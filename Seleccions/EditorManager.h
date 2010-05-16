@@ -40,11 +40,6 @@ public:
 
 	// Metodes relacionats amb les expresions
 	void		DefineMovement	( TypeExpression expression, TypeMuscle muscle, SPoint3D desplaçament );
-	
-	// Metodes de renderitzat
-	void		RenderVertexs	( void );
-	void		RenderSelection	( float x1, float y1, float x2, float y2 );
-	
 };
 
 #endif

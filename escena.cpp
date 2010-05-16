@@ -13,30 +13,8 @@
 #include "Muscles/MuscleManager.h"
 #include "SPoint3D.h"
 
-void RenderSelectedMuscle( TypeMuscle muscle, MuscleManager* MManager, Objecte3D* ObOBJ)
-{
-	//MManager->RenderMuscle(muscle);
-	if (MManager != NULL && ObOBJ != NULL && muscle != NONE_MUSCLE)
-	{
-		SPoint3D vertex;
-		unsigned int* vIndex = MManager->getMuscleList()[muscle]->getVertexIndex();
-		int size = MManager->getMuscleList()[muscle]->getNumVertexs();
-
-		for (int i=0; i < size; ++i)
-		{
-			vertex = ObOBJ->RetornaPunt( vIndex[i] );
-			glColor3f(1.0,1.0,1.0);	
-			glPushMatrix();
-				glTranslatef(vertex.x, vertex.y, vertex.z);
-				glutSolidSphere(0.1,5,5);
-			glPopMatrix();
-		}
-	}
-}
-
 void renderSphereSelection (EditorManager* EdManager)
 {
-	// TODO: Implementar amb EditorManager
 	int tamany,dominant;
 	SPoint3D *llista;
 	if (EdManager != NULL) {
@@ -54,39 +32,6 @@ void renderSphereSelection (EditorManager* EdManager)
 		}
 		delete [] llista;
 	}
-	/*
-	SPoint3D coords[3];
-
-	if (select != NULL && ObOBJ != NULL)
-	{
-		int nTri = ObOBJ->GetNumTriangles();
-		for (int i=0; i<nTri; ++i)
-		{
-			if ( select->IsTriangleSelected(i) )
-			{
-				ObOBJ->GetTriangle(i, coords);
-
-				glColor3f(1.0,1.0,1.0);	
-				glPushMatrix();
-					glTranslatef(coords[0].x, coords[0].y, coords[0].z);
-					glutSolidSphere(0.1,5,5);
-				glPopMatrix();
-
-				glColor3f(1.0,1.0,1.0);	
-				glPushMatrix();
-					glTranslatef(coords[1].x, coords[1].y, coords[1].z);
-					glutSolidSphere(0.1,5,5);
-				glPopMatrix();
-
-				glColor3f(1.0,1.0,1.0);	
-				glPushMatrix();
-					glTranslatef(coords[2].x, coords[2].y, coords[2].z);
-					glutSolidSphere(0.1,5,5);
-				glPopMatrix();
-			}
-		}
-	}
-	*/
 }
 
 // dibuixa: Funció que dibuixa els objectes segons obj
