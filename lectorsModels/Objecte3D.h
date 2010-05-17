@@ -75,7 +75,8 @@ class Objecte3D {
 		void Objecte3DDeOBJ(char* filename);
 		void Objecte3DDe3DS(char* filename);
 		void UseMaterial(O3DMaterial pMaterial);
-		SPoint3D Objecte3D::GetFaceNormal(const Cara*);
+		SPoint3D GetFaceNormal(const Cara*);
+		void CalcularNormalsVertex();
 };
 
 #endif

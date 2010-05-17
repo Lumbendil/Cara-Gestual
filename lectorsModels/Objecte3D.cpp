@@ -166,7 +166,7 @@ void Objecte3D::Render ( void )
 {
 	int iPreviousMaterial = -1,i,j;
 	glPushAttrib(GL_TEXTURE_BIT);
-
+	this->CalcularNormalsVertex();
 	for (i=0; i < this->nombreCares; i++)
 	{
 		if (iPreviousMaterial != (int) this->cares[i].materialTextura)
@@ -178,17 +178,18 @@ void Objecte3D::Render ( void )
 		// Calculate and set face normal if no vertex normals are specified
 		//if (!this->teNormals) {
 			SPoint3D fNormal = GetFaceNormal(&this->cares[i]);
-			glNormal3fv(fNormal);
+			//glNormal3fv(fNormal);
 		//}
 		// Process all vertices
 		for (j=0; j < 3; j++)
 		{
 			//if (this->teNormals) {
 			//	glNormal3fv(this->cares[i].normals[j]);
+			glNormal3fv(this->cares[i].normals[j]);
 			//}
 			// Set texture coordinates (if any specified)
 			//if (this->cares[i].punts[j]->cordTex)
-				glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);
+			glTexCoord2f(this->cares[i].cordTex[j].x,this->cares[i].cordTex[j].y);
 			// Set vertex
 			glVertex3fv(this->cares[i].punts[j]->cordenades + this->cares[i].punts[j]->moviment);
 		}
@@ -201,5 +202,23 @@ void Objecte3D::resetMoviments()
 {
 	for (int i = 0; i < this->nombrePunts; i++) {
 		this->punts[i].moviment = SPoint3D(0,0,0);
+	}
+}
+
+void Objecte3D::CalcularNormalsVertex()
+{
+	int i,j;
+	SPoint3D p;
+	for (i = 0; i < this->nombrePunts; i++) {
+		this->punts[i].normal = SPoint3D(0.0, 0.0, 0.0);
+	}
+	for (i = 0; i < this->nombreCares; i++) {
+		p = this->GetNormalsFace(i);
+		for (j = 0; j < 3; j++) {
+			this->cares[i].punts[j]->normal += p;
+		}
+	}
+	for (i = 0; i < this->nombrePunts; i++) {
+		this->punts[i].normal.normalizeVector();
 	}
 }
