@@ -169,6 +169,18 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_COMMAND(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnExpSorpres)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnUpdateExpSorpres)
 
+	//Vinculació de menú amb les opcions d'animació
+	ON_COMMAND(ID_ANIMACIO, &CPracticaView::OnAnimacio)
+	ON_UPDATE_COMMAND_UI(ID_ANIMACIO, &CPracticaView::OnUpdateAnimacio)
+	ON_COMMAND(ID_0_05, &CPracticaView::On005)
+	ON_UPDATE_COMMAND_UI(ID_0_05, &CPracticaView::OnUpdate005)
+	ON_COMMAND(ID_01, &CPracticaView::On01)
+	ON_UPDATE_COMMAND_UI(ID_01, &CPracticaView::OnUpdate01)
+	ON_COMMAND(ID_02, &CPracticaView::On02)
+	ON_UPDATE_COMMAND_UI(ID_02, &CPracticaView::OnUpdate02)
+	ON_COMMAND(ID_03, &CPracticaView::On03)
+	ON_UPDATE_COMMAND_UI(ID_03, &CPracticaView::OnUpdate03)
+
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -255,12 +267,19 @@ CPracticaView::CPracticaView()
 	iluInit();					// Inicialitzar llibreria ILU
 	ilutRenderer(ILUT_OPENGL);	// Inicialitzar llibreria ILUT per a OpenGL
 
+	// Variables d'animació
+	animacio = false;
+	temporitzador = 0.5;
+	acumulativeTime = 0.f;
+
 	select = NULL;
 	deform = NULL;
 
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
+	animate = new Animation(EManager, MManager);
 	editor = NULL;
+
 
 }
 
@@ -277,6 +296,8 @@ CPracticaView::~CPracticaView()
 		delete editor;
 	if (deform != NULL)
 		delete deform;
+	if (animate != NULL)
+		delete animate;
 }
 
 BOOL CPracticaView::PreCreateWindow(CREATESTRUCT& cs)
@@ -1658,6 +1679,7 @@ GLfloat vdir[3]={0,0,0};
 /*					9. TIMER (ANIMACIÓ)									     */
 /*					10. MUSCLES												 */
 /*					11. EXPRESSIONS											 */
+/*					12. ANIMACIÓ											 */
 /* ------------------------------------------------------------------------- */
 
 /* ------------------------------------------------------------------------- */
@@ -2561,12 +2583,24 @@ void CPracticaView::OnUpdateSuau(CCmdUI* pCmdUI)
 void CPracticaView::OnTimer(UINT nIDEvent) 
 {
 // TODO: Add your message handler code here and/or call default
-	if (anima)	{
-// Codi de tractament de l'animació quan transcorren els ms. del crono.
+	if (this->animacio && !editExpression)	
+	{
+		if (acumulativeTime < temporitzador)
+		{
+			animate->NextStepAnimation();
+			animate->Render();
+			acumulativeTime += 0.004;
+		}
+		else
+		{
+			animate->FinalizeAnimation();
+			KillTimer(WM_TIMER);
+			acumulativeTime = 0.f;
+		}
 
-// Crida a OnPaint() per redibuixar l'escena
-					Invalidate();
-				}
+		// Crida a OnPaint() per redibuixar l'escena
+		Invalidate();
+	}
 	CView::OnTimer(nIDEvent);
 }
 
@@ -2919,8 +2953,10 @@ void CPracticaView::SwitchExpression(TypeExpression e)
 		else
 		{
 			ChangeExpressionState(e);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -2939,10 +2975,10 @@ void CPracticaView::OnExpTrist()
 		else
 		{
 			ChangeExpressionState(TRIST);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			//Posar el model a estat inicial.
-			//Fer el render de l'expressio
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -2971,7 +3007,10 @@ void CPracticaView::OnExpAlegre()
 		{
 			ChangeExpressionState(ALEGRE);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -2998,8 +3037,10 @@ void CPracticaView::OnExpEnfadat()
 		else
 		{
 			ChangeExpressionState(ENFADAT);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -3026,8 +3067,10 @@ void CPracticaView::OnExpSerios()
 		else
 		{
 			ChangeExpressionState(SERIOS);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -3054,8 +3097,10 @@ void CPracticaView::OnExpSorpres()
 		else
 		{
 			ChangeExpressionState(SORPRES);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			EManager->RenderExpression(selectedExpression);
+			if (!this->animacio)
+				EManager->RenderExpression(selectedExpression);
+			else
+				SetAndStartAnimation(selectedExpression);
 		}
 	}
 	else
@@ -3079,4 +3124,79 @@ void CPracticaView::ChangeExpressionState ( TypeExpression expression )
 {
 	this->SwitchExpression(selectedExpression);
 	selectedExpression = expression;
+}
+
+void CPracticaView::SetAndStartAnimation( TypeExpression expression )
+{
+	animate->SetTime(15, temporitzador);
+	animate->StartAnimation(expression);
+	SetTimer(WM_TIMER,15,NULL);	
+}
+
+/* ------------------------------------------------------------------------- */
+/*					12. ANIMACIÓ											 */
+/* ------------------------------------------------------------------------- */
+void CPracticaView::OnAnimacio()
+{
+	animacio = !animacio;
+}
+
+void CPracticaView::OnUpdateAnimacio(CCmdUI *pCmdUI)
+{
+	if (animacio)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::On005()
+{
+	temporitzador = 0.5f;
+}
+
+void CPracticaView::OnUpdate005(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 0.5f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::On01()
+{
+	temporitzador = 1.f;
+}
+
+void CPracticaView::OnUpdate01(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 1.f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::On02()
+{
+	temporitzador = 2.f;
+}
+
+void CPracticaView::OnUpdate02(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 2.f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::On03()
+{
+	temporitzador = 3.f;
+}
+
+void CPracticaView::OnUpdate03(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 3.f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
 }

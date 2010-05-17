@@ -99,6 +99,20 @@
 #define ID_MGALTES_ESQUERRE             32897
 #define ID_MPARPELLES_ESQUERRA          32898
 #define ID_MGALTES_ESQUERRA             32899
+#define ID_TEMPORITZADOR                32900
+#define ID_TEMPORITZADOR_ANIMACI32901   32901
+#define ID_TEMPORITZADOR_TRANSICI32902  32902
+#define ID_TRANSICI32903                32903
+#define ID_TRANSICI32904                32904
+#define ID_TRANSICI32905                32905
+#define ID_TRANSICI32906                32906
+#define ID_ANIMACIO                     32907
+#define ID_05                           32908
+#define ID_01                           32909
+#define ID_TEMPORITZADOR_0              32910
+#define ID_0_05                         32911
+#define ID_02                           32912
+#define ID_03                           32913
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -115,7 +129,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32900
+#define _APS_NEXT_COMMAND_VALUE         32914
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

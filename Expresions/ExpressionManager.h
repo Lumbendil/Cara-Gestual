@@ -33,6 +33,7 @@ public:
 	
 	// Mou els muscles de l'expressió desitjada
 	void			RenderExpression		( TypeExpression nameExpression );
+	void			ExternalRender			( TypeExpression nameExpression, SPoint3D* newMovements);
 
 	Expression**	getExpressionList		( void );
 	int				getNumExpressions		( void );

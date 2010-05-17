@@ -41,3 +41,11 @@ void Expression::RenderExpression( void )
 		MManager->moveAMuscle((TypeMuscle)i, movements[i]);
 	}
 }
+
+void Expression::ExternalRender(SPoint3D* newNovements)
+{
+	for (int i=0; i<MManager->getNumMuscles(); ++i)
+	{
+		MManager->moveAMuscle((TypeMuscle)i, newNovements[i]);
+	}
+}

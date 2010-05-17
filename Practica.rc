@@ -145,6 +145,18 @@ BEGIN
         MENUITEM "Seriós",                      ID_EXPRESSIONS_SERIOS, CHECKED
         MENUITEM "Sorprès",                     ID_EXPRESSIONS_SORPRES, CHECKED
     END
+    POPUP "Animació"
+    BEGIN
+        MENUITEM "Animació",                    ID_ANIMACIO, CHECKED
+        MENUITEM SEPARATOR
+        POPUP "Temporitzador"
+        BEGIN
+            MENUITEM "0.5 seg.",                    ID_0_05, CHECKED
+            MENUITEM "1 seg.",                      ID_01
+            MENUITEM "2 seg.",                      ID_02
+            MENUITEM "3 seg.",                      ID_03
+        END
+    END
     POPUP "V&eure"
     BEGIN
         MENUITEM "Barra d'&eines",              ID_VIEW_TOOLBAR
@@ -186,7 +198,6 @@ BEGIN
     BEGIN
         MENUITEM "&Sobre l'Entorn...",          ID_APP_ABOUT
     END
-    MENUITEM "Temporitzador",               65535
 END
 
 

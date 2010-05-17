@@ -34,6 +34,7 @@
 #include "tractarXML/XMLReader.h"
 #include "tractarXML/XMLWriter.h"
 #include "Seleccions/Deformation.h"
+#include "Animacio/Animation.h"
 
 
 
@@ -46,17 +47,21 @@ protected: // create from serialization only
 
 	void ChangeMuscleState ( TypeMuscle muscle );
 	void ChangeExpressionState ( TypeExpression expression );
+	void SetAndStartAnimation	( TypeExpression expression );
 
 private:
 	bool TeclaControl;
 	bool TeclaTab;
 	bool zBuffer;
 
+	float acumulativeTime;
+
 	Selection* select;
 	EditorManager* editor;
 	MuscleManager* MManager;
 	ExpressionManager* EManager;
 	Deformation* deform;
+	Animation*	animate;
 
 // Attributes
 public:
@@ -168,6 +173,10 @@ public:
 // GC2: Variables de control d'Expressions
 	bool editExpression;	// Booleana que indica si s'està editant les expressions.
 	TypeExpression selectedExpression;
+
+// Variables d'animació
+	bool animacio;
+	float temporitzador;
 
 	//XMLReader* lector;
 	//XMLWriter* escritor;
@@ -305,6 +314,19 @@ protected:
 	afx_msg void OnUpdateExpSerios(CCmdUI *pCmdUI);
 	afx_msg void OnExpSorpres();
 	afx_msg void OnUpdateExpSorpres(CCmdUI *pCmdUI);
+
+	//Funcions d'animació
+	afx_msg void OnAnimacio();
+	afx_msg void OnUpdateAnimacio(CCmdUI *pCmdUI);
+	afx_msg void On005();
+	afx_msg void OnUpdate005(CCmdUI *pCmdUI);
+	afx_msg void On01();
+	afx_msg void OnUpdate01(CCmdUI *pCmdUI);
+	afx_msg void On02();
+	afx_msg void OnUpdate02(CCmdUI *pCmdUI);
+	afx_msg void On03();
+	afx_msg void OnUpdate03(CCmdUI *pCmdUI);
+
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:

@@ -22,6 +22,7 @@ public:
 
 	// Mou tots els muscles per a generar l'expressió
 	void		RenderExpression	( void );
+	void		ExternalRender		( SPoint3D* newMovements );
 
 };
 

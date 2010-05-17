@@ -45,3 +45,9 @@ int ExpressionManager::getNumExpressions ()
 {
 	return NEXPRESSIONS;
 }
+
+void ExpressionManager::ExternalRender(TypeExpression nameExpression, SPoint3D *newMovements)
+{
+	if (nameExpression != NONE_EXPRESSION)
+		Expressions[nameExpression]->ExternalRender(newMovements);
+}
