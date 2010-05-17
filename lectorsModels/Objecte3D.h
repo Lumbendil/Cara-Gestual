@@ -62,6 +62,7 @@ class Objecte3D {
 		void Render( void );
 		void resetMoviments();
 		SPoint3D returnMoviment(int punt);
+
 	private:
 		Cara *cares;
 		Punt *punts;
@@ -70,6 +71,7 @@ class Objecte3D {
 		bool teNormals;
 		int  nombrePunts,nombreMaterials;
 		int nombreCares;
+		
 		void Objecte3DDeOBJ(char* filename);
 		void Objecte3DDe3DS(char* filename);
 		void UseMaterial(O3DMaterial pMaterial);

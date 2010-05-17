@@ -13,11 +13,11 @@
 #include "Muscles/MuscleManager.h"
 #include "SPoint3D.h"
 
-void renderSphereSelection (EditorManager* EdManager)
+void renderSphereSelection (EditorManager* EdManager, TypeMuscle muscle)
 {
 	int tamany,dominant;
 	SPoint3D *llista;
-	if (EdManager != NULL) {
+	if (EdManager != NULL && muscle != NONE_MUSCLE) {
 		llista = EdManager->GetPointList(&tamany,&dominant);
 		for (int i = 0; i < tamany; i++) {
 			if (i == dominant) {

@@ -186,6 +186,7 @@ BEGIN
     BEGIN
         MENUITEM "&Sobre l'Entorn...",          ID_APP_ABOUT
     END
+    MENUITEM "Temporitzador",               65535
 END
 
 

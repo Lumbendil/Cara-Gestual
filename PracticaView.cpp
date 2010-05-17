@@ -261,6 +261,7 @@ CPracticaView::CPracticaView()
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
 	editor = NULL;
+
 }
 
 CPracticaView::~CPracticaView()
@@ -2650,6 +2651,7 @@ void CPracticaView::OnMuscleEdit()
 	if (!editMuscle)
 	{
 		ChangeMuscleState(NONE_MUSCLE);
+		SetRenderMuscle(selectedMuscle);
 		//TODO Cridar funció de EditorManager per tal de guardar les dades a Muscles
 		editor->SaveMuscle();
 	}
@@ -2672,6 +2674,7 @@ void CPracticaView::SwitchMuscle(TypeMuscle m)
 	{
 		if (ObOBJ != NULL)
 			editor->SetMuscle(m);
+
 		if (editExpression)
 		{
 			ChangeMuscleState(m);
@@ -2686,6 +2689,7 @@ void CPracticaView::SwitchMuscle(TypeMuscle m)
 		else if (editMuscle)
 		{
 			ChangeMuscleState(m);
+			SetRenderMuscle(selectedMuscle);
 			//TODO Aquí hi va el codi quan es defineixen els muscles
 			/*if (ObOBJ != NULL)
 				editor->SetMuscle(DCELLA);*/
@@ -2827,7 +2831,7 @@ void CPracticaView::OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI)
 
 void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 {
-	this->SwitchMuscle(selectedMuscle);
+	//this->SwitchMuscle(selectedMuscle);
 	selectedMuscle = muscle;
 }
 /* ------------------------------------------------------------------------- */
@@ -2905,7 +2909,9 @@ void CPracticaView::OnUpdateExpressionEdit(CCmdUI *pCmdUI)
 
 void CPracticaView::SwitchExpression(TypeExpression e)
 {
-	this->ObOBJ->resetMoviments();
+	if (ObOBJ != NULL)
+		this->ObOBJ->resetMoviments();
+
 	if (selectedExpression != e)
 	{
 		if (editExpression)
@@ -2914,8 +2920,6 @@ void CPracticaView::SwitchExpression(TypeExpression e)
 		{
 			ChangeExpressionState(e);
 			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			//Posar el model a estat inicial.
-			//Fer el render de l'expressio
 			EManager->RenderExpression(selectedExpression);
 		}
 	}
@@ -2942,7 +2946,9 @@ void CPracticaView::OnExpTrist()
 		}
 	}
 	else
-		selectedExpression = NONE_EXPRESSION;
+	{
+		ChangeExpressionState(NONE_EXPRESSION);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2969,7 +2975,7 @@ void CPracticaView::OnExpAlegre()
 		}
 	}
 	else
-		selectedExpression = NONE_EXPRESSION;
+		ChangeExpressionState(NONE_EXPRESSION);
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2997,7 +3003,7 @@ void CPracticaView::OnExpEnfadat()
 		}
 	}
 	else
-		selectedExpression = NONE_EXPRESSION;
+		ChangeExpressionState(NONE_EXPRESSION);
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -3025,7 +3031,7 @@ void CPracticaView::OnExpSerios()
 		}
 	}
 	else
-		selectedExpression = NONE_EXPRESSION;
+		ChangeExpressionState(NONE_EXPRESSION);
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -3053,7 +3059,9 @@ void CPracticaView::OnExpSorpres()
 		}
 	}
 	else
-		selectedExpression = NONE_EXPRESSION;
+	{
+		ChangeExpressionState(NONE_EXPRESSION);
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
