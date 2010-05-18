@@ -1,9 +1,13 @@
 #include "../stdafx.h"
 #include "Objecte3D.h"
 #include "objLoader.h"
+#include "Obj3DS.h"
 #include "../Seleccions/intersection.h"
 
 Objecte3D::Objecte3D(char* filename, int tipus) {
+	this->materials = NULL;
+	this->cares = NULL;
+	this->punts = NULL;
 	switch (tipus) {
 		case 1: this->Objecte3DDeOBJ(filename);
 			break;
@@ -29,13 +33,6 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->resetMoviments();
 	for (i = 0; i < numpunts; i++) {
 		this->punts[i].cordenades = SPoint3D(ob.pVertices[i].fX,ob.pVertices[i].fY,ob.pVertices[i].fZ);
-		if (ob.pNormals) {
-			this->punts[i].normal = SPoint3D(ob.pNormals[i].fX,ob.pNormals[i].fY,ob.pNormals[i].fZ);
-			this->teNormals = true;
-		} else {
-			this->teNormals = false;
-		}
-
 		this->punts[i].cordTex.x = ob.pTexCoords[i].fX;
 		this->punts[i].cordTex.y = ob.pTexCoords[i].fY;
 	}
@@ -65,6 +62,53 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 // TODO: Fer funció
 void Objecte3D::Objecte3DDe3DS(char* filename)
 {
+	Obj_3DS *o = new Obj_3DS();
+	t3DObject *objecte;
+	int i,j,objectes;
+	int offsetPunts, offsetCares,npunts,ncares;
+
+
+	o->Carregar3DS(filename);
+	this->nombreCares = 0;
+	this->nombrePunts = 0;
+
+	for (objectes = 0; objectes < o->g_3DModel.numOfObjects; objectes++) {
+		objecte = &(o->g_3DModel.pObject[objectes]);
+		offsetPunts = this->nombrePunts;
+		offsetCares = this->nombreCares;
+
+		npunts = objecte->numOfVerts;
+		this->nombrePunts += objecte->numOfVerts;
+		this->punts = (Punt*) realloc(this->punts,this->nombrePunts*sizeof(Punt));
+		for (i = 0; i < npunts; i++) {
+			this->punts[i + offsetPunts].cordenades = SPoint3D(objecte->pVerts[i].x,objecte->pVerts[i].y,objecte->pVerts[i].z);
+		}
+
+		ncares = objecte->numOfFaces;
+		this->nombreCares += objecte->numOfFaces;
+		this->cares = (Cara*) realloc(this->cares,this->nombreCares*sizeof(Cara));
+		for (i = 0; i < ncares; i++) {
+			for (j = 0; j < 3; j++) {
+				this->cares[i + offsetCares].punts[j] = &(this->punts[objecte->pFaces[i].vertIndex[j] + offsetPunts]);
+				this->cares[i + offsetCares].cordTex[j].x = objecte->pTexVerts[objecte->pFaces[i].vertIndex[j]].x;
+				this->cares[i + offsetCares].cordTex[j].y = objecte->pTexVerts[objecte->pFaces[i].vertIndex[j]].y;
+				this->cares[i + offsetCares].materialTextura = objecte->materialID;
+			}
+		}
+	}
+
+	this->nombreMaterials = o->g_3DModel.numOfMaterials;
+	this->materials = new O3DMaterial[this->nombreMaterials];
+	for (i = 0; i < this->nombreMaterials; i++) {
+		strcpy(this->materials[i].szTexture,o->g_3DModel.pMaterials[i].strFile);
+		strcpy(this->materials[i].szName,o->g_3DModel.pMaterials[i].strName);
+		this->materials[i].iTextureID = o->g_Texture[o->g_3DModel.pMaterials[i].texureId];
+	}
+
+	this->resetMoviments();
+
+	o->EliminarMemoria();
+	delete o;
 }
 
 int Objecte3D::buscarPunt(SPoint3D p) {
@@ -119,8 +163,7 @@ void Objecte3D::mourePunt(int n, SPoint3D vectorMoviment)
 void Objecte3D::UseMaterial(const O3DMaterial pMaterial)
 {
 	glColor3f(1.0,1.0,1.0);
-	if (pMaterial.iTextureID)
-	{
+	if (pMaterial.iTextureID) {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, pMaterial.iTextureID);
 	}
@@ -177,7 +220,7 @@ void Objecte3D::Render ( void )
 		glBegin(GL_TRIANGLES);
 		// Calculate and set face normal if no vertex normals are specified
 		//if (!this->teNormals) {
-			SPoint3D fNormal = GetFaceNormal(&this->cares[i]);
+			//SPoint3D fNormal = GetFaceNormal(&this->cares[i]);
 			//glNormal3fv(fNormal);
 		//}
 		// Process all vertices

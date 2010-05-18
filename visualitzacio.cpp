@@ -406,10 +406,6 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 			break;
 
 		case OBJ3DS:
-// Objecte 3DS: Dibuix de l'objecte 3DS
-			glCallList(OBJECTE3DS);
-			break;
-
 		case OBJOBJ:
 // Objecte OBJ: Dibuix de l'objecte OBJ
 			//glCallList(OBJECTEOBJ);

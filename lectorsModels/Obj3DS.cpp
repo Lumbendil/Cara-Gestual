@@ -29,7 +29,6 @@ Obj_3DS::Obj_3DS()
 		g_Texture[i]=-1;
 
 	fet3DS=false;
-
 }
 
 //
@@ -52,8 +51,8 @@ void Obj_3DS::Inicialitzar()
 
 void Obj_3DS::EliminarMemoria()
 {
-	g_3DModel.pMaterials.clear();
-	fitxerstextures.clear();
+	//g_3DModel.pMaterials.clear();
+	//fitxerstextures.clear();
 	for(int i = 0; i < g_3DModel.numOfObjects; i++)
 	{
 // Alliberem les cares, normals, vertex i coordenades de textures
@@ -66,14 +65,14 @@ void Obj_3DS::EliminarMemoria()
 	g_3DModel.numOfObjects=0;
 	g_3DModel.numOfMaterials=0;
 
-	for (int i=0;i<MAX_TEXTURES;i++){
+	/*for (int i=0;i<MAX_TEXTURES;i++){
 		if (g_Texture[i]!=-1){
 			const unsigned int *a=&g_Texture[i];
 			glDeleteTextures(1,a);
 		}
 	}
 	for (int i=0;i<MAX_TEXTURES;i++)
-		g_Texture[i]=-1;
+		g_Texture[i]=-1;*/
 	fet3DS=false;
 
 }

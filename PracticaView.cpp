@@ -237,8 +237,6 @@ CPracticaView::CPracticaView()
 	fonsR=true;		fonsG=true;		fonsB=true;
 	c_fons.r=0.0;	c_fons.g=0.0;	c_fons.b=0.0;
 
-// GC2: Objecte 3DS:
-	Ob3DS = NULL;
 
 // GC2: Objecte OBJ:
 	ObOBJ = NULL;
@@ -1709,31 +1707,26 @@ GLfloat vdir[3]={0,0,0};
 // Obrir fitxer en format gràfic 3DS
 void CPracticaView::OnFileOpen3ds()
 {
-// TODO: Agregue aquí su código de controlador de comandos
-	if(Ob3DS!=NULL) delete Ob3DS;
+// TODO: Add your command handler code here
+	if(ObOBJ!=NULL) delete ObOBJ;
 
-	objecte=OBJ3DS;
+	objecte=OBJOBJ;
 
 // Obrir diàleg de lectura de fitxer
-		CFileDialog open3DS (TRUE, NULL, NULL,
+		CFileDialog openOBJ (TRUE, NULL, NULL,
 			OFN_FILEMUSTEXIST | OFN_HIDEREADONLY ,
-			_T("3DS Files(*.3ds)|*.3ds|All Files (*.*)|*.*||"));;
+			_T("3DS Files(*.3ds)|*.3ds|Error Files (*.err)|*err|All Files (*.*)|*.*||"));;
 
-			if (open3DS.DoModal() != IDOK)	return;  // stay with old data file
-			else nom=open3DS.GetPathName();
+			if (openOBJ.DoModal() != IDOK)	return;  // stay with old data file
+			else nom=openOBJ.GetPathName();
 	
 // Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
 	/* i carreguem */	
 	wglMakeCurrent(m_hDC,m_hRC);	// Activem contexte OpenGL
-	Ob3DS = new Obj_3DS;
-	Ob3DS->EliminarMemoria();
-	Ob3DS->Inicialitzar();
-	Ob3DS->Carregar3DS(nomfitx);
-
-// objecte nou;index DisplayList nº2; amb textures
-	Ob3DS->Dibuixa3DS(false,OBJECTE3DS);
+	ObOBJ = new Objecte3D(nomfitx,TIPUS_3DS);
+	editor = new EditorManager(MManager,EManager,ObOBJ);
 	wglMakeCurrent(m_hDC,NULL);	// Desactivem contexte OpenGL
 
 	MManager->SetModel(ObOBJ);
@@ -1743,7 +1736,6 @@ void CPracticaView::OnFileOpen3ds()
 
 // Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
-
 }
 
 
