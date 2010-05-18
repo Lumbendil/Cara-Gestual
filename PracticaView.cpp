@@ -277,8 +277,6 @@ CPracticaView::CPracticaView()
 	EManager = new ExpressionManager(MManager);
 	animate = new Animation(EManager, MManager);
 	editor = NULL;
-
-
 }
 
 CPracticaView::~CPracticaView()
@@ -2579,6 +2577,7 @@ void CPracticaView::OnTimer(UINT nIDEvent)
 	{
 		if (acumulativeTime < temporitzador)
 		{
+			this->anima = true;
 			animate->NextStepAnimation();
 			animate->Render();
 			acumulativeTime += 0.004;
@@ -2588,6 +2587,7 @@ void CPracticaView::OnTimer(UINT nIDEvent)
 			animate->FinalizeAnimation();
 			KillTimer(WM_TIMER);
 			acumulativeTime = 0.f;
+			this->anima = false;
 		}
 
 		// Crida a OnPaint() per redibuixar l'escena
@@ -2935,24 +2935,27 @@ void CPracticaView::OnUpdateExpressionEdit(CCmdUI *pCmdUI)
 
 void CPracticaView::SwitchExpression(TypeExpression e)
 {
-	if (ObOBJ != NULL)
+	if (ObOBJ != NULL && !animacio)
 		this->ObOBJ->resetMoviments();
 
-	if (selectedExpression != e)
+	if (!this->anima)
 	{
-		if (editExpression)
-			ChangeExpressionState(e);
-		else
+		if (selectedExpression != e)
 		{
-			ChangeExpressionState(e);
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
+			if (editExpression)
+				ChangeExpressionState(e);
 			else
-				SetAndStartAnimation(selectedExpression);
+			{
+				ChangeExpressionState(e);
+				if (!this->animacio)
+					EManager->RenderExpression(selectedExpression);
+				else
+					SetAndStartAnimation(selectedExpression);
+			}
 		}
+		else
+			selectedExpression = NONE_EXPRESSION;
 	}
-	else
-		selectedExpression = NONE_EXPRESSION;
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2960,26 +2963,7 @@ void CPracticaView::SwitchExpression(TypeExpression e)
 
 void CPracticaView::OnExpTrist()
 {
-	if (selectedExpression != TRIST)
-	{
-		if (editExpression)
-			ChangeExpressionState(TRIST);
-		else
-		{
-			ChangeExpressionState(TRIST);
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
-			else
-				SetAndStartAnimation(selectedExpression);
-		}
-	}
-	else
-	{
-		ChangeExpressionState(NONE_EXPRESSION);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchExpression(TRIST);
 }
 void CPracticaView::OnUpdateExpTrist(CCmdUI *pCmdUI)
 {
@@ -2991,25 +2975,7 @@ void CPracticaView::OnUpdateExpTrist(CCmdUI *pCmdUI)
 
 void CPracticaView::OnExpAlegre()
 {
-	if (selectedExpression != ALEGRE)
-	{
-		if (editExpression)
-			ChangeExpressionState(ALEGRE);
-		else
-		{
-			ChangeExpressionState(ALEGRE);
-			//TODO Aquí hi va el codi quan es visualitza L'EXPRESSIÓ
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
-			else
-				SetAndStartAnimation(selectedExpression);
-		}
-	}
-	else
-		ChangeExpressionState(NONE_EXPRESSION);
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchExpression(ALEGRE);
 }
 
 void CPracticaView::OnUpdateExpAlegre(CCmdUI *pCmdUI)
@@ -3022,24 +2988,7 @@ void CPracticaView::OnUpdateExpAlegre(CCmdUI *pCmdUI)
 
 void CPracticaView::OnExpEnfadat()
 {
-	if (selectedExpression != ENFADAT)
-	{
-		if (editExpression)
-			ChangeExpressionState(ENFADAT);
-		else
-		{
-			ChangeExpressionState(ENFADAT);
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
-			else
-				SetAndStartAnimation(selectedExpression);
-		}
-	}
-	else
-		ChangeExpressionState(NONE_EXPRESSION);
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchExpression(ENFADAT);
 }
 
 void CPracticaView::OnUpdateExpEnfadat(CCmdUI *pCmdUI)
@@ -3052,24 +3001,7 @@ void CPracticaView::OnUpdateExpEnfadat(CCmdUI *pCmdUI)
 
 void CPracticaView::OnExpSerios()
 {
-	if (selectedExpression != SERIOS)
-	{
-		if (editExpression)
-			ChangeExpressionState(SERIOS);
-		else
-		{
-			ChangeExpressionState(SERIOS);
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
-			else
-				SetAndStartAnimation(selectedExpression);
-		}
-	}
-	else
-		ChangeExpressionState(NONE_EXPRESSION);
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchExpression(SERIOS);
 }
 
 void CPracticaView::OnUpdateExpSerios(CCmdUI *pCmdUI)
@@ -3082,26 +3014,7 @@ void CPracticaView::OnUpdateExpSerios(CCmdUI *pCmdUI)
 
 void CPracticaView::OnExpSorpres()
 {
-	if (selectedExpression != SORPRES)
-	{
-		if (editExpression)
-			ChangeExpressionState(SORPRES);
-		else
-		{
-			ChangeExpressionState(SORPRES);
-			if (!this->animacio)
-				EManager->RenderExpression(selectedExpression);
-			else
-				SetAndStartAnimation(selectedExpression);
-		}
-	}
-	else
-	{
-		ChangeExpressionState(NONE_EXPRESSION);
-	}
-
-	// Crida a OnPaint() per redibuixar l'escena
-	Invalidate();
+	SwitchExpression(SORPRES);
 }
 
 void CPracticaView::OnUpdateExpSorpres(CCmdUI *pCmdUI)
@@ -3114,15 +3027,15 @@ void CPracticaView::OnUpdateExpSorpres(CCmdUI *pCmdUI)
 
 void CPracticaView::ChangeExpressionState ( TypeExpression expression )
 {
-	this->SwitchExpression(selectedExpression);
+	//this->SwitchExpression(selectedExpression);
 	selectedExpression = expression;
 }
 
 void CPracticaView::SetAndStartAnimation( TypeExpression expression )
 {
-	animate->SetTime(15, temporitzador);
+	animate->SetTime(4, temporitzador);
 	animate->StartAnimation(expression);
-	SetTimer(WM_TIMER,15,NULL);	
+	SetTimer(WM_TIMER,4,NULL);	
 }
 
 /* ------------------------------------------------------------------------- */

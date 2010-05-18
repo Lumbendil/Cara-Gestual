@@ -20,6 +20,8 @@ private:
 
 	SPoint3D* totalMovement;
 	SPoint3D* partialMovement;
+	SPoint3D* portionMovement;
+	SPoint3D* backMovement;
 
 	ExpressionManager* EManager;
 	MuscleManager* MManager;

@@ -109,6 +109,17 @@ bool SPoint3D::operator !=( const SPoint3D& v ) const
 {
 	return (x != v.x) || (y != v.y) || (z != v.z);
 }
+
+bool SPoint3D::operator > (const SPoint3D& v ) const
+{
+	return (x > v.x) && (y > v.y) && (z > v.z);
+}
+
+bool SPoint3D::operator < (const SPoint3D& v ) const
+{
+	return (x < v.x) && (y < v.y) && (z < v.z);
+}
+
 void SPoint3D::normalizeVector(void)
 {
 	float modul = sqrt(pow(x,2) + pow(y,2) + pow(z,2));

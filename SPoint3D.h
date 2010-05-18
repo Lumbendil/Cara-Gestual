@@ -42,6 +42,8 @@ public:
 	//Bool Operators
 	bool operator == (const SPoint3D& ) const;
 	bool operator != (const SPoint3D& ) const;
+	bool operator > (const SPoint3D& ) const;
+	bool operator < (const SPoint3D& ) const;
 
 	//Functions
 	void		SPoint3D::normalizeVector	( void );
