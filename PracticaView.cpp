@@ -892,7 +892,24 @@ void CPracticaView::OnLButtonDown(UINT nFlags, CPoint point)
 		deform->SetExpression(selectedExpression);
 		deform->SetMuscle(selectedMuscle);
 		deform->SetObjecte(ObOBJ);
-		deform->ButtonDown(point.x, point.y, SPoint3D(opv.x, opv.y, opv.z));
+		// Pas de coordenades esferiques a mon
+		float x,y,z;
+		if (this->Vis_Polar==POLARZ) {
+			x=R*cos(anglev)*cos(angleh);
+			y=R*sin(anglev)*cos(angleh);
+			z=R*sin(angleh);
+		}
+		else if (this->Vis_Polar==POLARY) {
+			x=R*sin(anglev)*cos(angleh);
+			y=R*sin(angleh);
+			z=R*cos(anglev)*cos(angleh);
+		}
+		else {
+			x=R*sin(angleh);
+			y=R*cos(anglev)*cos(angleh);
+			z=R*sin(anglev)*cos(angleh);
+		}
+		deform->ButtonDown(point.x, point.y, SPoint3D(x, y, z));
 
 	}
 	else if (editMuscle && ObOBJ != NULL)
