@@ -172,14 +172,16 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	//Vinculació de menú amb les opcions d'animació
 	ON_COMMAND(ID_ANIMACIO, &CPracticaView::OnAnimacio)
 	ON_UPDATE_COMMAND_UI(ID_ANIMACIO, &CPracticaView::OnUpdateAnimacio)
-	ON_COMMAND(ID_0_05, &CPracticaView::On005)
-	ON_UPDATE_COMMAND_UI(ID_0_05, &CPracticaView::OnUpdate005)
-	ON_COMMAND(ID_01, &CPracticaView::On01)
-	ON_UPDATE_COMMAND_UI(ID_01, &CPracticaView::OnUpdate01)
-	ON_COMMAND(ID_02, &CPracticaView::On02)
-	ON_UPDATE_COMMAND_UI(ID_02, &CPracticaView::OnUpdate02)
-	ON_COMMAND(ID_03, &CPracticaView::On03)
-	ON_UPDATE_COMMAND_UI(ID_03, &CPracticaView::OnUpdate03)
+	ON_COMMAND(ID_FASTV, &CPracticaView::OnVFast)
+	ON_UPDATE_COMMAND_UI(ID_FASTV, &CPracticaView::OnUpdateVFast)
+	ON_COMMAND(ID_FAST, &CPracticaView::OnFast)
+	ON_UPDATE_COMMAND_UI(ID_FAST, &CPracticaView::OnUpdateFast)
+	ON_COMMAND(ID_NORMAL, &CPracticaView::OnNormal)
+	ON_UPDATE_COMMAND_UI(ID_NORMAL, &CPracticaView::OnUpdateNormal)
+	ON_COMMAND(ID_SLOW, &CPracticaView::OnSlow)
+	ON_UPDATE_COMMAND_UI(ID_SLOW, &CPracticaView::OnUpdateSlow)
+	ON_COMMAND(ID_VSLOW, &CPracticaView::OnVSlow)
+	ON_UPDATE_COMMAND_UI(ID_VSLOW, &CPracticaView::OnUpdateVSlow)
 
 END_MESSAGE_MAP()
 
@@ -2654,9 +2656,12 @@ void CPracticaView::OnImportMuscles()
 	// Conversió de la variable CString nom a la variable char *nomfitx, compatible amb la funció carregar3DS
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
-	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
-	lector->Read();
-	delete lector;
+	if (ObOBJ != NULL)
+	{
+		XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
+		lector->Read();
+		delete lector;
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2679,9 +2684,12 @@ void CPracticaView::OnExportMuscles()
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
 	// La variable nomfitx conté tot el path del fitxer.
-	XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,1);
-	escriptura->Guardar();
-	delete escriptura;
+	if(ObOBJ != NULL)
+	{
+		XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,1);
+		escriptura->Guardar();
+		delete escriptura;
+	}
 
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2697,6 +2705,8 @@ void CPracticaView::OnMuscleEdit()
 		SetRenderMuscle(selectedMuscle);
 		//TODO Cridar funció de EditorManager per tal de guardar les dades a Muscles
 		editor->SaveMuscle();
+		TeclaControl = false;
+		TeclaTab = false;
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2895,9 +2905,12 @@ void CPracticaView::OnImportExpressions()
 
 	//Cridar al parsejador de fitxers XML per carregar les expressions.
 	// La variable nomfitx conté tot el path del fitxer.
-	XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
-	lector->Read();
-	delete lector;
+	if (ObOBJ != NULL)
+	{
+		XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
+		lector->Read();
+		delete lector;
+	}
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2920,9 +2933,12 @@ void CPracticaView::OnExportExpressions()
 	char * nomfitx = (char *)(LPCTSTR)nom;
 
 	// La variable nomfitx conté tot el path del fitxer.
-	XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,0);
-	escriptura->Guardar();
-	delete escriptura;
+	if (ObOBJ != NULL)
+	{
+		XMLWriter* escriptura = new XMLWriter(nomfitx, EManager, MManager,0);
+		escriptura->Guardar();
+		delete escriptura;
+	}
 
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2935,8 +2951,7 @@ void CPracticaView::OnExpressionEdit()
 		editor->SaveMuscle();
 
 	editExpression = !editExpression;
-	if (!editExpression)
-		ChangeExpressionState(NONE_EXPRESSION);
+
 
 	// Crida a OnPaint() per redibuixar l'escena
 	Invalidate();
@@ -2971,7 +2986,10 @@ void CPracticaView::SwitchExpression(TypeExpression e)
 			}
 		}
 		else
-			selectedExpression = NONE_EXPRESSION;
+		{
+			if (!this->animacio)
+				selectedExpression = NONE_EXPRESSION;
+		}
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -3071,12 +3089,38 @@ void CPracticaView::OnUpdateAnimacio(CCmdUI *pCmdUI)
 		pCmdUI->SetCheck(0);
 }
 
-void CPracticaView::On005()
+void CPracticaView::OnVFast()
+{
+	temporitzador = 0.05f;
+}
+
+void CPracticaView::OnUpdateVFast(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 0.05f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnFast()
+{
+	temporitzador = 0.1f;
+}
+
+void CPracticaView::OnUpdateFast(CCmdUI *pCmdUI)
+{
+	if (temporitzador == 0.1f)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnNormal()
 {
 	temporitzador = 0.5f;
 }
 
-void CPracticaView::OnUpdate005(CCmdUI *pCmdUI)
+void CPracticaView::OnUpdateNormal(CCmdUI *pCmdUI)
 {
 	if (temporitzador == 0.5f)
 		pCmdUI->SetCheck(1);
@@ -3084,12 +3128,12 @@ void CPracticaView::OnUpdate005(CCmdUI *pCmdUI)
 		pCmdUI->SetCheck(0);
 }
 
-void CPracticaView::On01()
+void CPracticaView::OnSlow()
 {
 	temporitzador = 1.f;
 }
 
-void CPracticaView::OnUpdate01(CCmdUI *pCmdUI)
+void CPracticaView::OnUpdateSlow(CCmdUI *pCmdUI)
 {
 	if (temporitzador == 1.f)
 		pCmdUI->SetCheck(1);
@@ -3097,25 +3141,12 @@ void CPracticaView::OnUpdate01(CCmdUI *pCmdUI)
 		pCmdUI->SetCheck(0);
 }
 
-void CPracticaView::On02()
-{
-	temporitzador = 2.f;
-}
-
-void CPracticaView::OnUpdate02(CCmdUI *pCmdUI)
-{
-	if (temporitzador == 2.f)
-		pCmdUI->SetCheck(1);
-	else
-		pCmdUI->SetCheck(0);
-}
-
-void CPracticaView::On03()
+void CPracticaView::OnVSlow()
 {
 	temporitzador = 3.f;
 }
 
-void CPracticaView::OnUpdate03(CCmdUI *pCmdUI)
+void CPracticaView::OnUpdateVSlow(CCmdUI *pCmdUI)
 {
 	if (temporitzador == 3.f)
 		pCmdUI->SetCheck(1);

@@ -4,16 +4,16 @@
 XMLReader::XMLReader(char* path, ExpressionManager* EManager, MuscleManager* MManager) {
 	errno_t err;
 
-   if( (err  = fopen_s(&fitxer,path,"r")) !=0 )
-      printf( "The file %s was not opened\n",path );
-   else
-      printf( "The file %s was opened\n",path );
-   this->EManager = EManager;
-   this->MManager = MManager;
+	if( (err  = fopen_s(&fitxer,path,"r")) !=0 )
+	  printf( "The file %s was not opened\n",path );
+	else
+	  printf( "The file %s was opened\n",path );
+	this->EManager = EManager;
+	this->MManager = MManager;
 }
 
 XMLReader::~XMLReader() {
-	fclose (fitxer);
+	fclose(fitxer);
 }
 
 void XMLReader::ReadWord() {
@@ -89,7 +89,7 @@ void XMLReader::GuardarNums() {
 		i++;
 	}
 
-	punt = new SPoint3D(convertit[0], convertit[1], convertit[2]);
+	punt = SPoint3D(convertit[0], convertit[1], convertit[2]);
 }
 
 void XMLReader::ReadChar() {
@@ -146,7 +146,7 @@ void XMLReader::ReadExpressions() {
 				ReadAtribut(); //Llegim el vector
 				GuardarNums(); //Guardem els punts en la variable punt
 
-				EManager->modifyMuscleExpression(numExpressio, numMuscle, *punt);
+				EManager->modifyMuscleExpression(numExpressio, numMuscle, punt);
 
 				ReadWord(); //Llegim final del tag (/>)
 

@@ -113,6 +113,14 @@
 #define ID_0_05                         32911
 #define ID_02                           32912
 #define ID_03                           32913
+#define ID_TEMPORITZADOR_MOLTLENT       32914
+#define ID_vfast                        32915
+#define ID_FAST                         32916
+#define ID_NORMAL                       32917
+#define ID_SLOW                         32918
+#define ID_VSLOW                        32919
+#define asfas                           32920
+#define ID_FASTV                        32921
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -129,7 +137,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32914
+#define _APS_NEXT_COMMAND_VALUE         32922
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

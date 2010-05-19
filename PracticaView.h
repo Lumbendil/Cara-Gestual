@@ -318,14 +318,16 @@ protected:
 	//Funcions d'animació
 	afx_msg void OnAnimacio();
 	afx_msg void OnUpdateAnimacio(CCmdUI *pCmdUI);
-	afx_msg void On005();
-	afx_msg void OnUpdate005(CCmdUI *pCmdUI);
-	afx_msg void On01();
-	afx_msg void OnUpdate01(CCmdUI *pCmdUI);
-	afx_msg void On02();
-	afx_msg void OnUpdate02(CCmdUI *pCmdUI);
-	afx_msg void On03();
-	afx_msg void OnUpdate03(CCmdUI *pCmdUI);
+	afx_msg void OnVFast();
+	afx_msg void OnUpdateVFast(CCmdUI *pCmdUI);
+	afx_msg void OnFast();
+	afx_msg void OnUpdateFast(CCmdUI *pCmdUI);
+	afx_msg void OnNormal();
+	afx_msg void OnUpdateNormal(CCmdUI *pCmdUI);
+	afx_msg void OnSlow();
+	afx_msg void OnUpdateSlow(CCmdUI *pCmdUI);
+	afx_msg void OnVSlow();
+	afx_msg void OnUpdateVSlow(CCmdUI *pCmdUI);
 
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

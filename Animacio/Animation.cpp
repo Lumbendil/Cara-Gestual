@@ -56,7 +56,7 @@ void Animation::StartAnimation(TypeExpression expression)
 			partialMovement[i] = EManager->getExpressionList()[expression]->getMovement( (TypeMuscle)i ) - totalMovement[i];
 			totalMovement[i] = EManager->getExpressionList()[expression]->getMovement( (TypeMuscle)i );
 
-			partialMovement[i]/=divisionTime;
+			partialMovement[i] /= divisionTime;
 			portionMovement[i] = partialMovement[i];
 		}
 		Render();
@@ -78,7 +78,9 @@ void Animation::NextStepAnimation()
 void Animation::FinalizeAnimation()
 {
 	for (int i=0; i<sizeExpression; ++i)
+	{
 		backMovement[i] = totalMovement[i];
+	}
 
 	animationActive = false;
 	step = 0;

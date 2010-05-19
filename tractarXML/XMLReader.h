@@ -15,7 +15,7 @@ public:
 	void	Read();
 
 private:
-	SPoint3D*			punt;
+	SPoint3D			punt;
 	ExpressionManager*	EManager;
 	MuscleManager*		MManager;
 	FILE				*fitxer;
