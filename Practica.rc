@@ -151,15 +151,16 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Temporitzador"
         BEGIN
-            MENUITEM "0.5 seg.",                    ID_0_05, CHECKED
-            MENUITEM "1 seg.",                      ID_01
-            MENUITEM "2 seg.",                      ID_02
-            MENUITEM "3 seg.",                      ID_03
+            MENUITEM "Molt ràpid",                  ID_FASTV
+            MENUITEM "Ràpid",                       ID_FAST
+            MENUITEM "Normal",                      ID_NORMAL, CHECKED
+            MENUITEM "Lent",                        ID_SLOW
+            MENUITEM "Molt Lent",                   ID_VSLOW
         END
     END
     POPUP "V&eure"
     BEGIN
-        MENUITEM "Barra d'&eines",              ID_VIEW_TOOLBAR
+        MENUITEM "Barra d'&eines",              ID_VISTA_POLARSEIXX
         MENUITEM "Barra d'e&stat",              ID_VIEW_STATUS_BAR
     END
     POPUP "&Vista"
