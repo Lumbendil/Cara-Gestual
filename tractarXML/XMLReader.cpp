@@ -13,7 +13,7 @@ XMLReader::XMLReader(char* path, ExpressionManager* EManager, MuscleManager* MMa
 }
 
 XMLReader::~XMLReader() {
-	fclose(fitxer);
+	//fclose(fitxer);
 }
 
 void XMLReader::ReadWord() {
@@ -38,13 +38,11 @@ void XMLReader::Read() {
 	{
 		ReadExpressions();
 	}
-	else 
-	{ 
-		if(strncmp(paraula,"<muscles>",9)==0)
-		{
-			ReadMuscles();
-		}
+	else if(strncmp(paraula,"<muscles>",9)==0)
+	{
+		ReadMuscles();
 	}
+	fclose(fitxer);
 }
 TypeExpression XMLReader::ConvertirNomExpressions() {
 	//{TRIST, ALEGRE, ENFADAT, SERIOS, SORPRES, NONE_EXPRESSION}

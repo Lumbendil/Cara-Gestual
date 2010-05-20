@@ -32,7 +32,7 @@ void XMLWriter::GuardarMuscles()	{
 	char* nomMuscle;
 
 	fprintf_s(fitxer,"<muscles>\n");
-	for (int i = 0; i < MManager->getNumMuscles() - 1; i++)
+	for (int i = 0; i < MManager->getNumMuscles(); i++)
 	{
 		nomMuscle = ConvertirMuscle(i);
 		fprintf_s(fitxer,"\t<muscle nom = \"%s\">\n", nomMuscle);		//no se com kullons printar el nom, suposo k printa un int
@@ -52,11 +52,11 @@ void XMLWriter::GuardarExpresions()	{
 	TypeMuscle t;
 	
 	fprintf_s(fitxer, "<expressions>\n");
-	for ( int i=0; i < EManager->getNumExpressions() - 1; i++ )
+	for ( int i=0; i < EManager->getNumExpressions(); i++ )
 	{
 		nomExpresio = ConvertirExpression(i);
 		fprintf_s(fitxer, "\t<expressio nom = \"%s\">\n", nomExpresio);
-		for ( int j=0; j < MManager->getNumMuscles() - 1; j++ )			//PROBLEMA EN EL CAS QUE NO HI HAGI UN VECTOR PER TOTS???
+		for ( int j=0; j < MManager->getNumMuscles(); j++ )			//PROBLEMA EN EL CAS QUE NO HI HAGI UN VECTOR PER TOTS???
 		{
 			nomMuscle = ConvertirMuscle(j);
 			t = ConvertirTypeMuscle(j);
