@@ -160,7 +160,6 @@ BEGIN
     END
     POPUP "V&eure"
     BEGIN
-        MENUITEM "Barra d'&eines",              ID_VISTA_POLARSEIXX
         MENUITEM "Barra d'e&stat",              ID_VIEW_STATUS_BAR
     END
     POPUP "&Vista"
@@ -231,16 +230,16 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 271, 63
+IDD_ABOUTBOX DIALOGEX 0, 0, 271, 79
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "&Acerca de Practica..."
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
     LTEXT           "GRÀFICS PER COMPUTADOR 2 (E. Enginyeria - UAB)",IDC_STATIC,40,10,175,8,SS_NOPREFIX
     LTEXT           "Entorn Gràfic de pràctiques, curs 2009-10 (Febrer 2010)",IDC_STATIC,39,22,185,8
     DEFPUSHBUTTON   "Aceptar",IDOK,232,7,32,14,WS_GROUP
-    LTEXT           "Ferran Poveda, Marc Vivet, Carme Julià, Débora Gil, Enric Martí",IDC_STATIC,39,48,214,8
+    LTEXT           "Ferran Poveda, Marc Vivet, Carme Julià, Débora Gil, Enric Martí, Marc Cuscullola, Roger Llopart, Jordi Andújar, Sergi Font",IDC_STATIC,39,55,214,17
     LTEXT           "Versió per a VS2005 amb MFC i MonoFinestra",IDC_STATIC,39,35,150,8
 END
 
@@ -299,7 +298,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 264
         TOPMARGIN, 7
-        BOTTOMMARGIN, 56
+        BOTTOMMARGIN, 72
     END
 END
 #endif    // APSTUDIO_INVOKED
