@@ -1,6 +1,9 @@
 #include "../stdafx.h"
 #include "XMLReader.h"
 
+char paraula [20];
+char atribut [20];
+
 XMLReader::XMLReader(char* path, ExpressionManager* EManager, MuscleManager* MManager) {
 	errno_t err;
 
@@ -20,15 +23,24 @@ void XMLReader::ReadWord() {
 	char c;
 	int i=0;
 	
-	fscanf_s(fitxer, "%c", &c);
+	fscanf(fitxer, "%c", &c);
 	while(((int) c <47)||((int) c > 122))
-		fscanf_s(fitxer, "%c", &c);
+	{
+		fscanf(fitxer, "%c", &c);
+	}
+
 	while((c!='\n')&&(c!=' ')&&(i<=19)&&(c!='\0'))
 	{
 		memcpy(&paraula[i],&c,1);
 		i++;
 		fscanf_s(fitxer, "%c", &c);
 	}
+	//char caracter1 = paraula[0];
+	//if (strcmp(&caracter1,"/")==0)
+	//{
+	//	strcpy(paraula,"/>");
+	//	++i;
+	//}
 	paraula[i] = '\0';
 }
 

@@ -2660,6 +2660,7 @@ void CPracticaView::OnImportMuscles()
 	{
 		XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
 		lector->Read();
+		delete lector;
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -2908,6 +2909,7 @@ void CPracticaView::OnImportExpressions()
 	{
 		XMLReader* lector = new XMLReader(nomfitx, EManager, MManager);
 		lector->Read();
+		delete lector;
 	}
 
 	// Crida a OnPaint() per redibuixar l'escena

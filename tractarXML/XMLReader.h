@@ -19,8 +19,7 @@ private:
 	ExpressionManager*	EManager;
 	MuscleManager*		MManager;
 	FILE				*fitxer;
-	char				paraula [20];
-	char				atribut [20];
+	
 	char				num		[4];
 	char				c1;
 
