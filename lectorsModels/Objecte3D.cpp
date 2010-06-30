@@ -33,8 +33,11 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	this->resetMoviments();
 	for (i = 0; i < numpunts; i++) {
 		this->punts[i].cordenades = SPoint3D(ob.pVertices[i].fX,ob.pVertices[i].fY,ob.pVertices[i].fZ);
-		this->punts[i].cordTex.x = ob.pTexCoords[i].fX;
-		this->punts[i].cordTex.y = ob.pTexCoords[i].fY;
+		if (ob.pTexCoords != NULL)
+		{
+			this->punts[i].cordTex.x = ob.pTexCoords[i].fX;
+			this->punts[i].cordTex.y = ob.pTexCoords[i].fY;
+		}
 	}
 
 	numcares = o->GetNumFaces();
@@ -45,21 +48,35 @@ void Objecte3D::Objecte3DDeOBJ(char* filename) {
 	for (i = 0; i < numcares; ++i) {
 		for (j = 0; j < 3; ++j) {
 			this->cares[i].punts[j] = &(this->punts[this->buscarPunt(SPoint3D(ob.pFaces[i].pVertices[j].fX,ob.pFaces[i].pVertices[j].fY,ob.pFaces[i].pVertices[j].fZ))]);
-			this->cares[i].normals[j] = SPoint3D(ob.pFaces[i].pNormals[j].fX,ob.pFaces[i].pNormals[j].fY,ob.pFaces[i].pNormals[j].fZ);
+			if (ob.pNormals != NULL)
+			{
+				this->cares[i].normals[j] = SPoint3D(ob.pFaces[i].pNormals[j].fX,ob.pFaces[i].pNormals[j].fY,ob.pFaces[i].pNormals[j].fZ);
+			}
 			// TODO: Controlar que tenen textures
-			this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
-			this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
-			this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
+			if (ob.pTexCoords != NULL)
+			{
+				this->cares[i].materialTextura = ob.pFaces[i].iMaterialIndex;
+				this->cares[i].cordTex[j].x = ob.pFaces[i].pTexCoords[j].fX;
+				this->cares[i].cordTex[j].y = ob.pFaces[i].pTexCoords[j].fY;
+			}
 		}
 	}
-	this->nombreMaterials = o->GetNumMaterials();
-	this->materials = new O3DMaterial[this->nombreMaterials];
-	// Copiar guarro
+	if (ob.pMaterials != NULL)
+	{
+		this->nombreMaterials = o->GetNumMaterials();
+		this->materials = new O3DMaterial[this->nombreMaterials];
+	}
+	else
+	{
+		this->nombreMaterials = 0;
+		this->materials = NULL;
+	}
+
 	memcpy(this->materials,ob.pMaterials,sizeof(O3DMaterial) * this->nombreMaterials);
 
+	delete o;
 }
 
-// TODO: Fer funciÃ³
 void Objecte3D::Objecte3DDe3DS(char* filename)
 {
 	Obj_3DS *o = new Obj_3DS();
@@ -111,9 +128,9 @@ void Objecte3D::Objecte3DDe3DS(char* filename)
 	delete o;
 }
 
-int Objecte3D::buscarPunt(SPoint3D p) {
+int Objecte3D::buscarPunt(SPoint3D punt) {
 	int i;
-	for (i = 0;this->punts[i].cordenades != p; i++);
+	for (i = 0;this->punts[i].cordenades != punt; i++);
 	return i;
 }
 
@@ -138,12 +155,12 @@ int Objecte3D::PuntMesProxim(SPoint3D p)
 	return millorPunt;
 }
 
-SPoint3D Objecte3D::RetornaPunt(int punt)
+SPoint3D Objecte3D::GetPoint(int punt)
 {
 	return this->punts[punt].cordenades;
 }
 
-SPoint3D Objecte3D::returnMoviment(int punt)
+SPoint3D Objecte3D::GetMovement(int punt)
 {
 	return this->punts[punt].moviment;
 }
@@ -154,16 +171,16 @@ int Objecte3D::GetNumVertexs ( void )
 }
 
 // TODO: Recalcular les normals
-void Objecte3D::mourePunt(int n, SPoint3D vectorMoviment)
+void Objecte3D::mourePunt(int punt, SPoint3D vectorMoviment)
 {
-	this->punts[n].moviment = vectorMoviment;
+	this->punts[punt].moviment = vectorMoviment;
 }
 
 // Funcions Privades
 void Objecte3D::UseMaterial(const O3DMaterial pMaterial)
 {
 	glColor3f(1.0,1.0,1.0);
-	if (pMaterial.iTextureID) {
+	if (pMaterial.iTextureID > -1) {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, pMaterial.iTextureID);
 	}
@@ -212,7 +229,14 @@ void Objecte3D::Render ( void )
 	this->CalcularNormalsVertex();
 	for (i=0; i < this->nombreCares; i++)
 	{
-		if (iPreviousMaterial != (int) this->cares[i].materialTextura)
+		if (this->nombreMaterials == 0)
+		{
+			// Posa una textura nul·la
+			O3DMaterial material;
+			material.iTextureID = -1;
+			UseMaterial(material);
+		}
+		else if (iPreviousMaterial != (int) this->cares[i].materialTextura)
 		{
 			iPreviousMaterial = this->cares[i].materialTextura;
 			UseMaterial(this->materials[iPreviousMaterial]);

@@ -2699,7 +2699,7 @@ void CPracticaView::OnExportMuscles()
 void CPracticaView::OnMuscleEdit()
 {
 	editMuscle = !editMuscle;
-	if (!editMuscle && editor)
+	if (!editMuscle)
 	{
 		ChangeMuscleState(NONE_MUSCLE);
 		SetRenderMuscle(selectedMuscle);
@@ -2947,7 +2947,7 @@ void CPracticaView::OnExportExpressions()
 
 void CPracticaView::OnExpressionEdit()
 {
-	if (editMuscle && editor)
+	if (editMuscle)
 		editor->SaveMuscle();
 
 	editExpression = !editExpression;

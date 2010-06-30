@@ -50,7 +50,7 @@ SPoint3D* EditorManager::GetPointList(int* tamany, int* dominant)
 			if (i == this->DominantVertex) {
 				*dominant = *tamany - nVertex;
 			}
-			llista[*tamany - nVertex] = objecte->RetornaPunt(i) + objecte->returnMoviment(i);
+			llista[*tamany - nVertex] = objecte->GetPoint(i) + objecte->GetMovement(i);
 			--nVertex;
 		}
 	}
@@ -64,7 +64,7 @@ void EditorManager::CalculateDelta()
 	numVertex = objecte->GetNumVertexs();
 	for (int i = 0; i < numVertex; i++) {
 		if (this->VertexList[i]) {
-			this->DeltaList[i] = (float) 1/(1 + objecte->RetornaPunt(i).calcularDistancia(objecte->RetornaPunt(DominantVertex)));
+			this->DeltaList[i] = (float) 1/(1 + objecte->GetPoint(i).calcularDistancia(objecte->GetPoint(DominantVertex)));
 		}
 	}
 }
@@ -184,5 +184,5 @@ void EditorManager::SetDominantVertex( SPoint3D colisio, SPoint3D* triangle )
 }
 SPoint3D EditorManager::GetDominantVertex( void )
 {
-	return objecte->RetornaPunt(DominantVertex);
+	return objecte->GetPoint(DominantVertex);
 }

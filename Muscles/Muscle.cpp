@@ -115,7 +115,7 @@ void Muscle::RenderMuscle( Objecte3D* obj3D )
 
 	for (int i=0; i < size; ++i)
 	{
-		vertex = obj3D->RetornaPunt( (int)vertexIndex[i] );
+		vertex = obj3D->GetPoint( (int)vertexIndex[i] );
 		glColor3f(1.0,1.0,1.0);	
 		glPushMatrix();
 			glTranslatef(vertex.x, vertex.y, vertex.z);

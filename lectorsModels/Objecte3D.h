@@ -49,34 +49,41 @@ class Objecte3D {
 	public:
 		Objecte3D(char* file,int tipus);
 		~Objecte3D();
-		int PuntMesProxim(SPoint3D);
-		SPoint3D RetornaPunt ( int );
-		int GetNumVertexs ( void );
-		// No guarda el moviment a dins del vertex!!!
-		void mourePunt(int, SPoint3D);
-		int buscarPunt(SPoint3D);
-		void GetTriangle ( int index, SPoint3D* triangle );
-		int GetNumTriangles ( void );
-		void GetFaceCoords ( int nFace, SPoint3D* coords );
-		SPoint3D GetNormalsFace ( int nFace );
-		void Render( void );
-		void resetMoviments();
-		SPoint3D returnMoviment(int punt);
+
+		void		mourePunt			( int punt , SPoint3D vectorMoviment );
+		int			buscarPunt			( SPoint3D punt );
+		void		Render				( void );
+		void		resetMoviments		( void );
+
+		// Mètodes GET
+		int			PuntMesProxim		( SPoint3D );
+		SPoint3D	GetPoint			( int punt );
+		SPoint3D	GetMovement			( int punt );
+		SPoint3D	GetNormalsFace		( int nFace );
+		int			GetNumVertexs		( void );
+		int			GetNumTriangles		( void );
+		void		GetTriangle			( int index, SPoint3D* triangle );
+		void		GetFaceCoords		( int nFace, SPoint3D* coords );
+		
+		
+		
 
 	private:
-		Cara *cares;
-		Punt *punts;
-		SPoint3D *moviment;
+		Cara		*cares;
+		Punt		*punts;
+		SPoint3D	*moviment;
 		O3DMaterial *materials;
+
 		bool teNormals;
-		int  nombrePunts,nombreMaterials;
+		int nombrePunts, nombreMaterials;
 		int nombreCares;
 		
-		void Objecte3DDeOBJ(char* filename);
-		void Objecte3DDe3DS(char* filename);
-		void UseMaterial(O3DMaterial pMaterial);
-		SPoint3D GetFaceNormal(const Cara*);
-		void CalcularNormalsVertex();
+		void		Objecte3DDeOBJ			( char* filename );
+		void		Objecte3DDe3DS			( char* filename );
+		void		UseMaterial				( O3DMaterial pMaterial );
+		void		CalcularNormalsVertex	( void );
+
+		SPoint3D	GetFaceNormal			( const Cara* );
 };
 
 #endif
