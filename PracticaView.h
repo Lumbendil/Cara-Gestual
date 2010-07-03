@@ -177,6 +177,7 @@ public:
 // Variables d'animació
 	bool animacio;
 	float temporitzador;
+	bool subtitles;
 
 	//XMLReader* lector;
 	//XMLWriter* escritor;
@@ -315,6 +316,22 @@ protected:
 	afx_msg void OnExpSorpres();
 	afx_msg void OnUpdateExpSorpres(CCmdUI *pCmdUI);
 
+	// Lletres per a la parla
+	afx_msg void OnLletresA();
+	afx_msg void OnUpdateLletresA(CCmdUI *pCmdUI);
+	afx_msg void OnLletresE();
+	afx_msg void OnUpdateLletresE(CCmdUI *pCmdUI);
+	afx_msg void OnLletresI();
+	afx_msg void OnUpdateLletresI(CCmdUI *pCmdUI);
+	afx_msg void OnLletresO();
+	afx_msg void OnUpdateLletresO(CCmdUI *pCmdUI);
+	afx_msg void OnLletresU();
+	afx_msg void OnUpdateLletresU(CCmdUI *pCmdUI);
+	afx_msg void OnLletresBilabial();
+	afx_msg void OnUpdateLletresBilabial(CCmdUI *pCmdUI);
+	afx_msg void OnLletresNeutre();
+	afx_msg void OnUpdateLletresNeutre(CCmdUI *pCmdUI);
+
 	//Funcions d'animació
 	afx_msg void OnAnimacio();
 	afx_msg void OnUpdateAnimacio(CCmdUI *pCmdUI);
@@ -328,6 +345,9 @@ protected:
 	afx_msg void OnUpdateSlow(CCmdUI *pCmdUI);
 	afx_msg void OnVSlow();
 	afx_msg void OnUpdateVSlow(CCmdUI *pCmdUI);
+	afx_msg void OnParla(); // Activa la parla del personatge
+	afx_msg void OnUpdateParla(CCmdUI *pCmdUI);
+
 
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

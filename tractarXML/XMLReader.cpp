@@ -63,7 +63,14 @@ TypeExpression XMLReader::ConvertirNomExpressions() {
 	else if (strncmp(atribut,"ENFADAT",7)==0) return TypeExpression(2);
 	else if (strncmp(atribut,"SERIOS",6)==0) return TypeExpression(3);
 	else if (strncmp(atribut,"SORPRES",7)==0) return TypeExpression(4);
-	else return TypeExpression(5);
+	else if (strncmp(atribut,"A",1)==0) return TypeExpression(5);
+	else if (strncmp(atribut,"E",1)==0) return TypeExpression(6);
+	else if (strncmp(atribut,"I",1)==0) return TypeExpression(7);
+	else if (strncmp(atribut,"O",1)==0) return TypeExpression(8);
+	else if (strncmp(atribut,"U",1)==0) return TypeExpression(9);
+	else if (strncmp(atribut,"BILABIAL",8)==0) return TypeExpression(10);
+	else if (strncmp(atribut,"NEUTRE",6)==0) return TypeExpression(11);
+	else return TypeExpression(12);
 }
 
 TypeMuscle XMLReader::ConvertirNomMuscles() {

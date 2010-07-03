@@ -169,6 +169,21 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_COMMAND(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnExpSorpres)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_SORPRES, &CPracticaView::OnUpdateExpSorpres)
 
+	ON_COMMAND(ID_LLETRES_A, &CPracticaView::OnLletresA)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_A, &CPracticaView::OnUpdateLletresA)
+	ON_COMMAND(ID_LLETRES_E, &CPracticaView::OnLletresE)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_E, &CPracticaView::OnUpdateLletresE)
+	ON_COMMAND(ID_LLETRES_I, &CPracticaView::OnLletresI)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_I, &CPracticaView::OnUpdateLletresI)
+	ON_COMMAND(ID_LLETRES_O, &CPracticaView::OnLletresO)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_O, &CPracticaView::OnUpdateLletresO)
+	ON_COMMAND(ID_LLETRES_U, &CPracticaView::OnLletresU)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_U, &CPracticaView::OnUpdateLletresU)
+	ON_COMMAND(ID_LLETRES_BILABIAL, &CPracticaView::OnLletresBilabial)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_BILABIAL, &CPracticaView::OnUpdateLletresBilabial)
+	ON_COMMAND(ID_LLETRES_NEUTRE, &CPracticaView::OnLletresNeutre)
+	ON_UPDATE_COMMAND_UI(ID_LLETRES_NEUTRE, &CPracticaView::OnUpdateLletresNeutre)
+
 	//Vinculació de menú amb les opcions d'animació
 	ON_COMMAND(ID_ANIMACIO, &CPracticaView::OnAnimacio)
 	ON_UPDATE_COMMAND_UI(ID_ANIMACIO, &CPracticaView::OnUpdateAnimacio)
@@ -182,6 +197,8 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_SLOW, &CPracticaView::OnUpdateSlow)
 	ON_COMMAND(ID_VSLOW, &CPracticaView::OnVSlow)
 	ON_UPDATE_COMMAND_UI(ID_VSLOW, &CPracticaView::OnUpdateVSlow)
+	ON_COMMAND(ID_PARLA,&CPracticaView::OnParla)
+	ON_UPDATE_COMMAND_UI(ID_PARLA, &CPracticaView::OnUpdateParla)
 
 END_MESSAGE_MAP()
 
@@ -271,6 +288,7 @@ CPracticaView::CPracticaView()
 	animacio = false;
 	temporitzador = 0.5;
 	acumulativeTime = 0.f;
+	subtitles = false;
 
 	select = NULL;
 	deform = NULL;
@@ -497,7 +515,7 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle, subtitles);
 			}
 
 // Intercanvia l'escena al front de la pantalla
@@ -3060,6 +3078,98 @@ void CPracticaView::OnUpdateExpSorpres(CCmdUI *pCmdUI)
 		 pCmdUI->SetCheck(0);
 }
 
+void CPracticaView::OnLletresA()
+{
+	SwitchExpression(A);
+}
+
+void CPracticaView::OnUpdateLletresA(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == A)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresE()
+{
+	SwitchExpression(E);
+}
+
+void CPracticaView::OnUpdateLletresE(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == E)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresI()
+{
+	SwitchExpression(I);
+}
+
+void CPracticaView::OnUpdateLletresI(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == I)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresO()
+{
+	SwitchExpression(O);
+}
+
+void CPracticaView::OnUpdateLletresO(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == O)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresU()
+{
+	SwitchExpression(U);
+}
+
+void CPracticaView::OnUpdateLletresU(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == U)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresBilabial()
+{
+	SwitchExpression(BILABIAL);
+}
+
+void CPracticaView::OnUpdateLletresBilabial(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == BILABIAL)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnLletresNeutre()
+{
+	SwitchExpression(NEUTRE);
+}
+
+void CPracticaView::OnUpdateLletresNeutre(CCmdUI *pCmdUI)
+{
+	if(selectedExpression == NEUTRE)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+
 void CPracticaView::ChangeExpressionState ( TypeExpression expression )
 {
 	//this->SwitchExpression(selectedExpression);
@@ -3152,4 +3262,21 @@ void CPracticaView::OnUpdateVSlow(CCmdUI *pCmdUI)
 		pCmdUI->SetCheck(1);
 	else
 		pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnParla()
+{
+	subtitles = !subtitles;
+	
+	// Crida el OnPaint() per a redibuixar l'escena
+	Invalidate();
+}
+
+void CPracticaView::OnUpdateParla(CCmdUI *pCmdUI)
+{
+	if (subtitles)
+		pCmdUI->SetCheck(1);
+	else
+		pCmdUI->SetCheck(0);
+
 }

@@ -144,10 +144,23 @@ BEGIN
         MENUITEM "Enfadat",                     ID_EXPRESSIONS_ENFADAT, CHECKED
         MENUITEM "Seriós",                      ID_EXPRESSIONS_SERIOS, CHECKED
         MENUITEM "Sorprès",                     ID_EXPRESSIONS_SORPRES, CHECKED
+        MENUITEM SEPARATOR
+        POPUP "Lletres"
+        BEGIN
+            MENUITEM "A",                           ID_LLETRES_A, CHECKED
+            MENUITEM "E",                           ID_LLETRES_E, CHECKED
+            MENUITEM "I",                           ID_LLETRES_I, CHECKED
+            MENUITEM "O",                           ID_LLETRES_O, CHECKED
+            MENUITEM "U",                           ID_LLETRES_U, CHECKED
+            MENUITEM "Bilabial",                    ID_LLETRES_BILABIAL, CHECKED
+            MENUITEM "Neutre",                      ID_LLETRES_NEUTRE, CHECKED
+        END
     END
     POPUP "Animació"
     BEGIN
         MENUITEM "Animació",                    ID_ANIMACIO, CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Parla",                       ID_PARLA, CHECKED
         MENUITEM SEPARATOR
         POPUP "Temporitzador"
         BEGIN

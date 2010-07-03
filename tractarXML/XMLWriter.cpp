@@ -96,22 +96,137 @@ TypeMuscle XMLWriter::ConvertirTypeMuscle(int i)	{		// TypeMuscle(0) retorna 0 i
 
 }
 
-char* XMLWriter::ConvertirExpression(int i)	{		
-
-	if (i==0)		return "TRIST";
-	else if (i==1)	return "ALEGRE";
-	else if (i==2)	return "ENFADAT";
-	else if (i==3)	return "SERIOS";
-	else			return "SORPRES";
-
+char* XMLWriter::ConvertirExpression(int i)	
+{		
+	switch (i)
+	{
+	case 0:
+		{
+			return "TRIST";
+			break;
+		}
+	case 1:
+		{
+			return "ALEGRE";
+			break;
+		}
+	case 2:
+		{
+			return "ENFADAT";
+			break;
+		}
+	case 3:
+		{
+			return "SERIOS";
+			break;
+		}
+	case 4:
+		{
+			return "SORPRES";
+			break;
+		}
+	case 5:
+		{
+			return "A";
+			break;
+		}
+	case 6:
+		{
+			return "E";
+			break;
+		}
+	case 7:
+		{
+			return "I";
+			break;
+		}
+	case 8:
+		{
+			return "O";
+			break;
+		}
+	case 9:
+		{
+			return "U";
+			break;
+		}
+	case 10:
+		{
+			return "BILABIAL";
+			break;
+		}
+	case 11:
+		{
+			return "NEUTRE";
+			break;
+		}
+	}
 }
 
 TypeExpression XMLWriter::ConvertirTypeExpression(int i)	{		
 
-	if (i==0)		return TRIST;
-	else if (i==1)	return ALEGRE;
-	else if (i==2)	return ENFADAT;
-	else if (i==3)	return SERIOS;
-	else			return SORPRES;
+	switch (i)
+	{
+	case 0:
+		{
+			return TRIST;
+			break;
+		}
+	case 1:
+		{
+			return ALEGRE;
+			break;
+		}
+	case 2:
+		{
+			return ENFADAT;
+			break;
+		}
+	case 3:
+		{
+			return SERIOS;
+			break;
+		}
+	case 4:
+		{
+			return SORPRES;
+			break;
+		}
+	case 5:
+		{
+			return A;
+			break;
+		}
+	case 6:
+		{
+			return E;
+			break;
+		}
+	case 7:
+		{
+			return I;
+			break;
+		}
+	case 8:
+		{
+			return O;
+			break;
+		}
+	case 9:
+		{
+			return U;
+			break;
+		}
+	case 10:
+		{
+			return BILABIAL;
+			break;
+		}
+	case 11:
+		{
+			return NEUTRE;
+			break;
+		}
+	}
 
 }

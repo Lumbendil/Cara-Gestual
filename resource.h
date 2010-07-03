@@ -121,6 +121,18 @@
 #define ID_VSLOW                        32919
 #define asfas                           32920
 #define ID_FASTV                        32921
+#define ID_EXPRESSIONS_LLETRES          32922
+#define ID_LLETRES_A                    32923
+#define ID_LLETRES_E                    32924
+#define ID_LLETRES_I                    32925
+#define ID_LLETRES_O                    32926
+#define ID_LLETRES_U                    32927
+#define ID_LLETRES_BILABIAL             32928
+#define ID_LLETRES_NEUTRE0              32929
+#define ID_LLETRES_NEUTRE1              32930
+#define ID_LLETRES_NEUTRE               32931
+#define ID_ANIMACI32932                 32932
+#define ID_PARLA                        32933
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -137,7 +149,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32922
+#define _APS_NEXT_COMMAND_VALUE         32934
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
