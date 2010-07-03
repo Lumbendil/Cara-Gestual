@@ -296,6 +296,7 @@ CPracticaView::CPracticaView()
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
 	animate = new Animation(EManager, MManager);
+	MSubtitles = new CSubtitles();
 	editor = NULL;
 }
 
@@ -515,7 +516,8 @@ void CPracticaView::OnPaint()
 			}
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
-				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle, subtitles);
+				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle, 
+				MSubtitles, subtitles);
 			}
 
 // Intercanvia l'escena al front de la pantalla

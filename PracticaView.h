@@ -30,13 +30,11 @@
 #include "Seleccions/Selection.h"
 #include "SPoint3D.h"
 #include "Seleccions/EditorManager.h"
-#include "Muscles/MuscleManager.h"
 #include "tractarXML/XMLReader.h"
 #include "tractarXML/XMLWriter.h"
 #include "Seleccions/Deformation.h"
 #include "Animacio/Animation.h"
-
-
+#include "Subtitols/Subtitles.h"
 
 
 class CPracticaView : public CView
@@ -62,6 +60,7 @@ private:
 	ExpressionManager* EManager;
 	Deformation* deform;
 	Animation*	animate;
+	CSubtitles* MSubtitles;
 
 // Attributes
 public:

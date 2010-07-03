@@ -11,6 +11,7 @@
 #include "Seleccions/Selection.h"
 #include "Muscles/MuscleManager.h"
 #include "Seleccions/EditorManager.h"
+#include "Subtitols/Subtitles.h"
 
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */
@@ -34,7 +35,8 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 				 CColor col_fons,char objecte,bool TR,
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
 				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
-				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager, bool flags, bool subtitles);
+				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager, bool flags,
+				 CSubtitles* MSubtitles, bool subtitles);
 
 void PerspectivaN(CPunt3D pv,bool pvb,GLfloat n[3],GLfloat v[3],
 				 bool pant,GLfloat tr[3],CColor col_fons,char objecte,bool color,

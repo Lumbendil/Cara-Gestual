@@ -34,25 +34,6 @@ void renderSphereSelection (EditorManager* EdManager, TypeMuscle muscle)
 	}
 }
 
-void DrawSubtitles ()
-{
-	char* frase = "HOLA MON!";
-	bool blending = false;
-
-	SetProjection2D();
-	if(glIsEnabled(GL_BLEND)) blending = true;
-    glEnable(GL_BLEND);
-    glColor4f(1.f,0.f,0.f,1.f); 
-	glRasterPos2f(100.f,100.f);
-	while (*frase)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *frase); 
-		++frase;
-	}
-	if(!blending) glDisable(GL_BLEND); 
-	SetProjection3D();
-}
-
 // dibuixa: Funció que dibuixa els objectes segons obj
 void dibuixa(char obj)
 {

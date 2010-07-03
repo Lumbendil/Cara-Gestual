@@ -318,7 +318,8 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 				 CColor col_fons,char objecte,bool TR, 
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
 				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
-				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager, bool flags, bool subtitles)
+				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager, bool flags,
+				 CSubtitles* MSubtitles, bool subtitles)
 {    
 	GLfloat cam[3],up[3];
 
@@ -426,9 +427,12 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 
 	// Dibuixar els subtítols
 	if (subtitles)
-		DrawSubtitles();
+	{
+		Iluminacio(FILFERROS,textur,objecte,bck_ln);
+		MSubtitles->RenderSubtitles();
+		Iluminacio(iluminacio,textur,objecte,bck_ln);
+	}
 
-	
 	glPopMatrix();
 	
 	glGetDoublev (GL_MODELVIEW_MATRIX, ModelViewMatrix);
