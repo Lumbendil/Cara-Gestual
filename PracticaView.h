@@ -34,7 +34,8 @@
 #include "tractarXML/XMLWriter.h"
 #include "Seleccions/Deformation.h"
 #include "Animacio/Animation.h"
-#include "Subtitols/Subtitles.h"
+#include "Parla/Subtitles.h"
+#include "Parla/Parla.h"
 
 
 class CPracticaView : public CView
@@ -60,6 +61,7 @@ private:
 	ExpressionManager* EManager;
 	Deformation* deform;
 	Animation*	animate;
+	CParla*		parla;
 	CSubtitles* MSubtitles;
 
 // Attributes
@@ -79,6 +81,7 @@ public:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+
 	//}}AFX_VIRTUAL
 
 //-------------- GC2: Variables globals de CPractivaView
@@ -161,6 +164,7 @@ public:
 	float t;		// Paràmetre t pel Timer.
 	bool anima;		// Booleana que controla si l'animació és activa (TRUE) o no (FALSE)
 					//    dins la funció de control del rellotge OnTimer.
+	
 
 // GC2: Altres variables
 	CString nom;	// Nom de fitxer.
@@ -182,6 +186,7 @@ public:
 	//XMLWriter* escritor;
 
 	virtual ~CPracticaView();
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -303,6 +308,13 @@ protected:
 	afx_msg void OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI);
 	afx_msg void OnMGaltesDreta();
 	afx_msg void OnUpdateMGaltesDreta(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaSuperior();
+	afx_msg void OnUpdateMBocaSuperior(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaLateralE();
+	afx_msg void OnUpdateMBocaLateralE(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaLateralD();
+	afx_msg void OnUpdateMBocaLateralD(CCmdUI *pCmdUI);
+
 
 	afx_msg void OnExpTrist();
 	afx_msg void OnUpdateExpTrist(CCmdUI *pCmdUI);
@@ -345,7 +357,6 @@ protected:
 	afx_msg void OnVSlow();
 	afx_msg void OnUpdateVSlow(CCmdUI *pCmdUI);
 	afx_msg void OnParla(); // Activa la parla del personatge
-	afx_msg void OnUpdateParla(CCmdUI *pCmdUI);
 
 
 	//}}AFX_MSG

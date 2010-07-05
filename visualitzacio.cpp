@@ -319,7 +319,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 				 CPunt3D VScl,CPunt3D VTr, CPunt3D VRot,bool oculta,bool testv,
 				 bool bck_ln,char iluminacio,bool textur,bool ifix,bool eix,
 				 EditorManager* EdManager, Objecte3D* ObOBJ, MuscleManager* MManager, bool flags,
-				 CSubtitles* MSubtitles, bool subtitles)
+				 CSubtitles* MSubtitles, bool subtitles, CParla* parla)
 {    
 	GLfloat cam[3],up[3];
 
@@ -426,7 +426,7 @@ void Perspectiva(float anglex,float angley,float R,char VPol,bool pant,GLfloat t
 	drawSelectionBox(wx1,wy1,wx2,wy2);
 
 	// Dibuixar els subtítols
-	if (subtitles)
+	if (subtitles && parla->IsTalking())
 	{
 		Iluminacio(FILFERROS,textur,objecte,bck_ln);
 		MSubtitles->RenderSubtitles();

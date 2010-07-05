@@ -157,6 +157,12 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_MGALTES_DRETA, &CPracticaView::OnUpdateMGaltesDreta)
 	ON_COMMAND(ID_MGALTES_ESQUERRA, &CPracticaView::OnMGaltesEsquerra)
 	ON_UPDATE_COMMAND_UI(ID_MGALTES_ESQUERRA, &CPracticaView::OnUpdateMGaltesEsquerra)
+	ON_COMMAND(ID_MBOCA_SUPERIOR, &CPracticaView::OnMBocaSuperior)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_SUPERIOR, &CPracticaView::OnUpdateMBocaSuperior)
+	ON_COMMAND(ID_MBOCA_LATERALESQUERRE, &CPracticaView::OnMBocaLateralE)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_LATERALESQUERRE, &CPracticaView::OnUpdateMBocaLateralE)
+	ON_COMMAND(ID_MBOCA_LATERALDRET, &CPracticaView::OnMBocaLateralD)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_LATERALDRET, &CPracticaView::OnUpdateMBocaLateralD)
 
 	ON_COMMAND(ID_EXPRESSIONS_TRIST, &CPracticaView::OnExpTrist)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_TRIST, &CPracticaView::OnUpdateExpTrist)
@@ -198,7 +204,6 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_COMMAND(ID_VSLOW, &CPracticaView::OnVSlow)
 	ON_UPDATE_COMMAND_UI(ID_VSLOW, &CPracticaView::OnUpdateVSlow)
 	ON_COMMAND(ID_PARLA,&CPracticaView::OnParla)
-	ON_UPDATE_COMMAND_UI(ID_PARLA, &CPracticaView::OnUpdateParla)
 
 END_MESSAGE_MAP()
 
@@ -296,6 +301,7 @@ CPracticaView::CPracticaView()
 	MManager = new MuscleManager();
 	EManager = new ExpressionManager(MManager);
 	animate = new Animation(EManager, MManager);
+	parla = new CParla(animate);
 	MSubtitles = new CSubtitles();
 	editor = NULL;
 }
@@ -517,7 +523,7 @@ void CPracticaView::OnPaint()
 		else {	n[0]=0;		n[1]=0;		n[2]=0;
 			Perspectiva(anglev,angleh,R,Vis_Polar,pan,tr_cpv,c_fons,objecte,transf,
 				VScal,VTras,VRota,oculta,test_vis,back_line,ilumina,textura,ifixe,eixos, editor, ObOBJ, MManager, editMuscle, 
-				MSubtitles, subtitles);
+				MSubtitles, subtitles, parla);
 			}
 
 // Intercanvia l'escena al front de la pantalla
@@ -2612,26 +2618,57 @@ void CPracticaView::OnUpdateSuau(CCmdUI* pCmdUI)
 void CPracticaView::OnTimer(UINT nIDEvent) 
 {
 // TODO: Add your message handler code here and/or call default
-	if (this->animacio && !editExpression)	
+	if (!subtitles)
 	{
-		if (acumulativeTime < temporitzador)
+		if (this->animacio && !editExpression)	
 		{
-			this->anima = true;
-			animate->NextStepAnimation();
-			animate->Render();
-			acumulativeTime += 0.004;
+			if (acumulativeTime < temporitzador)
+			{
+				anima = true;
+				animate->NextStepAnimation();
+				animate->Render();
+				acumulativeTime += 0.004;
+			}
+			else
+			{
+				animate->FinalizeAnimation();
+				KillTimer(WM_TIMER);
+				acumulativeTime = 0.f;
+				anima = false;
+				subtitles = false;
+			}
+			// Crida a OnPaint() per redibuixar l'escena
+			Invalidate();
+		}
+	}
+	else
+	{
+		if (parla->IsTalking())
+		{
+			if (acumulativeTime < 0.1f)
+			{
+				anima = true;
+				animate->NextStepAnimation();
+				animate->Render();
+				acumulativeTime += 0.004;
+			}
+			else
+			{
+				animate->FinalizeAnimation();
+				acumulativeTime = 0.f;
+				parla->NextTalk();
+			}
 		}
 		else
 		{
-			animate->FinalizeAnimation();
-			KillTimer(WM_TIMER);
-			acumulativeTime = 0.f;
-			this->anima = false;
+				KillTimer(WM_TIMER);
+				acumulativeTime = 0.f;
+				animate->FinalizeAnimation();
+				anima = false;
 		}
-
-		// Crida a OnPaint() per redibuixar l'escena
 		Invalidate();
 	}
+
 	CView::OnTimer(nIDEvent);
 }
 
@@ -2902,6 +2939,45 @@ void CPracticaView::OnUpdateMGaltesEsquerra(CCmdUI *pCmdUI)
 		 pCmdUI->SetCheck(0);
 }
 
+void CPracticaView::OnMBocaSuperior()
+{
+	SwitchMuscle(SUPBOCA);
+}
+
+void CPracticaView::OnUpdateMBocaSuperior(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == SUPBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaLateralE()
+{
+	SwitchMuscle(LATEBOCA);
+}
+
+void CPracticaView::OnUpdateMBocaLateralE(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == LATEBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaLateralD()
+{
+	SwitchMuscle(LATDBOCA);
+}
+
+void CPracticaView::OnUpdateMBocaLateralD(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == LATDBOCA)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
 void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 {
 	//this->SwitchMuscle(selectedMuscle);
@@ -2990,7 +3066,7 @@ void CPracticaView::SwitchExpression(TypeExpression e)
 	if (ObOBJ != NULL && !animacio)
 		this->ObOBJ->resetMoviments();
 
-	if (!this->anima)
+	if (!anima)
 	{
 		if (selectedExpression != e)
 		{
@@ -3268,17 +3344,10 @@ void CPracticaView::OnUpdateVSlow(CCmdUI *pCmdUI)
 
 void CPracticaView::OnParla()
 {
-	subtitles = !subtitles;
-	
+	subtitles = true;
+	SetTimer(WM_TIMER,4,NULL);
+	parla->StartTalk();
 	// Crida el OnPaint() per a redibuixar l'escena
 	Invalidate();
 }
 
-void CPracticaView::OnUpdateParla(CCmdUI *pCmdUI)
-{
-	if (subtitles)
-		pCmdUI->SetCheck(1);
-	else
-		pCmdUI->SetCheck(0);
-
-}

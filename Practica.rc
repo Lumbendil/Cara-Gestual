@@ -123,6 +123,9 @@ BEGIN
             MENUITEM "Dreta",                       ID_MBOCA_DRETA, CHECKED
             MENUITEM "Esquerre",                    ID_MBOCA_ESQUERRE, CHECKED
             MENUITEM "Inferior",                    ID_MBOCA_INFERIOR, CHECKED
+            MENUITEM "Lateral Esquerre",            ID_MBOCA_LATERALESQUERRE, CHECKED
+            MENUITEM "Lateral Dret",                ID_MBOCA_LATERALDRET, CHECKED
+            MENUITEM "Superior",                    ID_MBOCA_SUPERIOR, CHECKED
         END
         POPUP "Parpelles"
         BEGIN
@@ -160,7 +163,7 @@ BEGIN
     BEGIN
         MENUITEM "Animació",                    ID_ANIMACIO, CHECKED
         MENUITEM SEPARATOR
-        MENUITEM "Parla",                       ID_PARLA, CHECKED
+        MENUITEM "Parla",                       ID_PARLA
         MENUITEM SEPARATOR
         POPUP "Temporitzador"
         BEGIN

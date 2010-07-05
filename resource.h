@@ -133,6 +133,12 @@
 #define ID_LLETRES_NEUTRE               32931
 #define ID_ANIMACI32932                 32932
 #define ID_PARLA                        32933
+#define ID_BOCA_LATERALESQUERRE         32934
+#define ID_BOCA_LATERALDRET             32935
+#define ID_BOCA_SUPERIOR                32936
+#define ID_MBOCA_LATERALESQUERRE        32937
+#define ID_MBOCA_LATERALDRET            32938
+#define ID_MBOCA_SUPERIOR               32939
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -149,7 +155,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32934
+#define _APS_NEXT_COMMAND_VALUE         32940
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

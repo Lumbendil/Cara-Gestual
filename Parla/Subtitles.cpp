@@ -15,6 +15,7 @@ CSubtitles::CSubtitles()
 
 CSubtitles::~CSubtitles()
 {
+	delete [] subtitle;
 }
 
 void CSubtitles::SetColor(float r, float g, float b, float a)

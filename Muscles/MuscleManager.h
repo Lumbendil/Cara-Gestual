@@ -5,10 +5,10 @@
 #include "../lectorsModels/Objecte3D.h"
 #include "Muscle.h"
 
-#define NMUSCLES 9
+#define NMUSCLES 12
 //NONE és l'últim element ja que l'array arriba a l'element N-1.
 //NONE és per definir un muscle quan no hi ha cap muscle seleccionada.
-enum TypeMuscle {ECELLA, DCELLA, INFBOCA, EBOCA, DBOCA, EPARPELLA, DPARPELLA, EGALTA, DGALTA, NONE_MUSCLE};
+enum TypeMuscle {ECELLA, DCELLA, INFBOCA, EBOCA, DBOCA, EPARPELLA, DPARPELLA, EGALTA, DGALTA, SUPBOCA, LATEBOCA, LATDBOCA, NONE_MUSCLE};
 
 class MuscleManager
 {

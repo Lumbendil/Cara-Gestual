@@ -84,7 +84,10 @@ TypeMuscle XMLReader::ConvertirNomMuscles() {
 	else if (strncmp(atribut,"DPARPELLA",9)==0) return TypeMuscle(6);
 	else if (strncmp(atribut,"EGALTA",6)==0) return TypeMuscle(7);
 	else if (strncmp(atribut,"DGALTA",6)==0) return TypeMuscle(8);
-	else return TypeMuscle(9);
+	else if (strncmp(atribut,"SUPBOCA",6)==0) return TypeMuscle(9);
+	else if (strncmp(atribut,"LATEBOCA",8)==0) return TypeMuscle(10);
+	else if (strncmp(atribut,"LATDBOCA",8)==0) return TypeMuscle(11);
+	else return TypeMuscle(12);
 }
 
 void XMLReader::GuardarNums() {	
