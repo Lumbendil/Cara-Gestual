@@ -294,6 +294,7 @@ CPracticaView::CPracticaView()
 	temporitzador = 0.5;
 	acumulativeTime = 0.f;
 	subtitles = false;
+	tempsParla = 0.05f; //Temps de temporitzador Normal
 
 	select = NULL;
 	deform = NULL;
@@ -321,6 +322,10 @@ CPracticaView::~CPracticaView()
 		delete deform;
 	if (animate != NULL)
 		delete animate;
+	if (parla != NULL)
+		delete parla;
+	if (MSubtitles != NULL)
+		delete MSubtitles;
 }
 
 BOOL CPracticaView::PreCreateWindow(CREATESTRUCT& cs)
@@ -2645,7 +2650,7 @@ void CPracticaView::OnTimer(UINT nIDEvent)
 	{
 		if (parla->IsTalking())
 		{
-			if (acumulativeTime < 0.1f)
+			if (acumulativeTime < tempsParla)
 			{
 				anima = true;
 				animate->NextStepAnimation();
@@ -3280,6 +3285,8 @@ void CPracticaView::OnUpdateAnimacio(CCmdUI *pCmdUI)
 void CPracticaView::OnVFast()
 {
 	temporitzador = 0.05f;
+	tempsParla = 0.005f;
+	parla->SetVelocity(1.f, 0.005f);
 }
 
 void CPracticaView::OnUpdateVFast(CCmdUI *pCmdUI)
@@ -3293,6 +3300,8 @@ void CPracticaView::OnUpdateVFast(CCmdUI *pCmdUI)
 void CPracticaView::OnFast()
 {
 	temporitzador = 0.1f;
+	tempsParla = 0.01f;
+	parla->SetVelocity(1.f, 0.007f);
 }
 
 void CPracticaView::OnUpdateFast(CCmdUI *pCmdUI)
@@ -3306,6 +3315,8 @@ void CPracticaView::OnUpdateFast(CCmdUI *pCmdUI)
 void CPracticaView::OnNormal()
 {
 	temporitzador = 0.5f;
+	tempsParla = 0.05f;
+	parla->SetVelocity(1.f, 0.02f);
 }
 
 void CPracticaView::OnUpdateNormal(CCmdUI *pCmdUI)
@@ -3319,6 +3330,8 @@ void CPracticaView::OnUpdateNormal(CCmdUI *pCmdUI)
 void CPracticaView::OnSlow()
 {
 	temporitzador = 1.f;
+	tempsParla = 0.1f;
+	parla->SetVelocity(1.f, 0.03f);
 }
 
 void CPracticaView::OnUpdateSlow(CCmdUI *pCmdUI)
@@ -3332,6 +3345,8 @@ void CPracticaView::OnUpdateSlow(CCmdUI *pCmdUI)
 void CPracticaView::OnVSlow()
 {
 	temporitzador = 3.f;
+	tempsParla = 0.3f;
+	parla->SetVelocity(1.f, 0.09f);
 }
 
 void CPracticaView::OnUpdateVSlow(CCmdUI *pCmdUI)
@@ -3347,6 +3362,7 @@ void CPracticaView::OnParla()
 	subtitles = true;
 	SetTimer(WM_TIMER,4,NULL);
 	parla->StartTalk();
+
 	// Crida el OnPaint() per a redibuixar l'escena
 	Invalidate();
 }

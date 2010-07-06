@@ -2,23 +2,21 @@
 #include "Parla.h"
 #include "Subtitles.h"
 #include "../PracticaView.h"
+#include "../Timer/Timer.h"
 
 
 CParla::CParla(Animation* an)
 {
-	subtitols = new CSubtitles();
 	animacio = an;
-	text = "Hola mon!";
-	time = 1.f;
+	text = "Hola a tothom!";
 	parlant = false;
 	index = 0;
 	transitionTime = 1.f;
-	totalTime = 0.04f;
+	totalTime = 0.02f;
 }
 
 CParla::~CParla()
 {
-	delete subtitols;
 }
 
 void CParla::SetTextToTalk(char *text)
@@ -26,9 +24,10 @@ void CParla::SetTextToTalk(char *text)
 	this->text = text;
 }
 
-void CParla::SetVelocity(float time)
+void CParla::SetVelocity(float transitionT, float totalT)
 {
-	this->time = time;
+	transitionTime = transitionT;
+	totalTime = totalT;
 }
 
 void CParla::StartTalk()
@@ -37,6 +36,12 @@ void CParla::StartTalk()
 	index = 0;
 
 	parlant = true;
+
+	//Posa una expressió inicial
+	animacio->SetTime(transitionTime, totalTime);
+	animacio->StartAnimation(NEUTRE);
+	animacio->FinalizeAnimation();
+
 	if (text != NULL)
 	{	
 		do
@@ -73,7 +78,15 @@ void CParla::NextTalk()
 		}
 		else
 		{
-			FinalizeTalk();
+			if (text[index] == NULL && text[index -1] != NULL)
+			{
+				animacio->SetTime(transitionTime, totalTime);
+				animacio->StartAnimation(NEUTRE);
+			}
+			else
+			{
+				FinalizeTalk();
+			}
 		}
 	}
 	else
@@ -116,6 +129,10 @@ TypeExpression CParla::ParseCharacter(const char c)
 	{
 		return BILABIAL;
 	}
+	else if (strncmp(&c,"t",1)==0 || strncmp(&c,"T",1)==0)
+	{
+		return NEUTRE;
+	}
 	else
 	{
 		return NONE_EXPRESSION;
@@ -125,4 +142,45 @@ TypeExpression CParla::ParseCharacter(const char c)
 bool CParla::IsTalking()
 {
 	return parlant;
+}
+
+void CParla::TalkElapsed()
+{
+	TypeExpression expressio;
+	index = 0;
+	float time;
+	float StopTime;
+
+	parlant = true;
+	if (text != NULL)
+	{	
+		do
+		{
+			time = 0.f;
+			StopTime = 0.f;
+			Timer::GetInstance()->ResetTimer();
+			do
+			{
+				expressio = ParseCharacter(text[index]);
+				++index;
+				StopTime += 0.2f;
+			}while (expressio == NONE_EXPRESSION && text[index] != NULL);
+
+			if (text[index] != NULL)
+			{
+				if (StopTime > 0.2f)
+					animacio->SetTime(transitionTime, totalTime*2);
+				else
+					animacio->SetTime(transitionTime, totalTime);
+
+				animacio->StartAnimation(expressio);
+			}
+			while (time < StopTime)
+			{
+				time += Timer::GetInstance()->GetElapsedTime();
+			}
+			
+		}while (text[index] != NULL);
+	}
+	FinalizeTalk();
 }

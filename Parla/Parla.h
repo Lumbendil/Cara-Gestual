@@ -14,7 +14,6 @@ private:
 	Animation*		animacio;
 
 	char*			text;
-	float			time;
 	bool			parlant;
 	int				index;
 
@@ -29,12 +28,13 @@ public:
 	CParla( Animation* an );
 	~CParla();
 
-	void		SetVelocity			( float time );
+	void		SetVelocity			( float transitionT, float totalT );
 	void		SetTextToTalk		( char* text );
 	void		StartTalk			();
 	void		NextTalk			();
 	void		FinalizeTalk		();
 	bool		IsTalking			();
+	void		TalkElapsed			();
 	
 };
 

@@ -10,12 +10,11 @@ CSubtitles::CSubtitles()
 	alpha = 1.f;
 	posX = 300.f;
 	posY = 100.f;
-	subtitle = "Hola mon!";
+	subtitle = "Hola a tothom!";
 }
 
 CSubtitles::~CSubtitles()
 {
-	delete [] subtitle;
 }
 
 void CSubtitles::SetColor(float r, float g, float b, float a)

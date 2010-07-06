@@ -182,6 +182,9 @@ public:
 	float temporitzador;
 	bool subtitles;
 
+// Variables de temps de parla
+	float tempsParla;
+
 	//XMLReader* lector;
 	//XMLWriter* escritor;
 
