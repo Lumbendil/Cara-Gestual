@@ -16,6 +16,7 @@ private:
 	char*			text;
 	bool			parlant;
 	int				index;
+	TypeExpression	lastExpression;
 
 	//Temps d'animació
 	float			transitionTime;

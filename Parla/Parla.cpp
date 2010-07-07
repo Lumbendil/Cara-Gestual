@@ -13,6 +13,7 @@ CParla::CParla(Animation* an)
 	index = 0;
 	transitionTime = 1.f;
 	totalTime = 0.02f;
+	lastExpression = NONE_EXPRESSION;
 }
 
 CParla::~CParla()
@@ -35,6 +36,7 @@ void CParla::StartTalk()
 	TypeExpression expressio;
 	index = 0;
 
+	lastExpression = NONE_EXPRESSION;
 	parlant = true;
 
 	//Posa una expressió inicial
@@ -54,6 +56,7 @@ void CParla::StartTalk()
 		{
 			animacio->SetTime(transitionTime, totalTime);
 			animacio->StartAnimation(expressio);
+			lastExpression = expressio;
 		}
 	}
 }
@@ -73,8 +76,19 @@ void CParla::NextTalk()
 
 		if (text[index] != NULL)
 		{
-			animacio->SetTime(transitionTime, totalTime);
-			animacio->StartAnimation(expressio);
+			if (lastExpression == expressio)
+			{
+				animacio->SetTime(transitionTime, totalTime);
+				animacio->StartAnimation(NEUTRE);	//Si es repeteix una mateix lletra, es posa entremig la neutre.
+				lastExpression = NONE_EXPRESSION;
+				--index;
+			}
+			else
+			{
+				animacio->SetTime(transitionTime, totalTime);
+				animacio->StartAnimation(expressio);
+				lastExpression = expressio;
+			}
 		}
 		else
 		{
