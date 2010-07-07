@@ -10,7 +10,7 @@ CSubtitles::CSubtitles()
 	alpha = 1.f;
 	posX = 300.f;
 	posY = 100.f;
-	subtitle = "Hola a tothom!";
+	subtitle = "Com que no em puc menjar una mandarina, em compro un pressec.";
 }
 
 CSubtitles::~CSubtitles()

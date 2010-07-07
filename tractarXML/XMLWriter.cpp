@@ -69,7 +69,7 @@ void XMLWriter::GuardarExpresions()	{
 
 char* XMLWriter::ConvertirMuscle(int i)	{		// TypeMuscle(0) retorna 0 i no pas ECELLA
 
-	if (i==0)		return "ECELLA";
+	if		(i==0)	return "ECELLA";
 	else if (i==1)	return "DCELLA";
 	else if (i==2)	return "INFBOCA";
 	else if (i==3)	return "EBOCA";
@@ -81,13 +81,15 @@ char* XMLWriter::ConvertirMuscle(int i)	{		// TypeMuscle(0) retorna 0 i no pas E
 	else if (i==9)	return "SUPBOCA";
 	else if (i==10)	return "LATEBOCA";
 	else if (i==11)	return "LATDBOCA";
+	else if (i==12)	return "DENTDALT";
+	else if (i==13)	return "DENTBAIX";
 
 
 }
 
 TypeMuscle XMLWriter::ConvertirTypeMuscle(int i)	{		// TypeMuscle(0) retorna 0 i no pas ECELLA
 
-	if (i==0)		return ECELLA;
+	if		(i==0)	return ECELLA;
 	else if (i==1)	return DCELLA;
 	else if (i==2)	return INFBOCA;
 	else if (i==3)	return EBOCA;
@@ -99,7 +101,8 @@ TypeMuscle XMLWriter::ConvertirTypeMuscle(int i)	{		// TypeMuscle(0) retorna 0 i
 	else if (i==9)	return SUPBOCA;
 	else if (i==10)	return LATEBOCA;
 	else if (i==11)	return LATDBOCA;
-
+	else if (i==12)	return DENTDALT;
+	else if (i==13)	return DENTBAIX;
 }
 
 char* XMLWriter::ConvertirExpression(int i)	

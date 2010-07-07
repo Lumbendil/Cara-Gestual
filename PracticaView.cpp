@@ -163,6 +163,10 @@ BEGIN_MESSAGE_MAP(CPracticaView, CView)
 	ON_UPDATE_COMMAND_UI(ID_MBOCA_LATERALESQUERRE, &CPracticaView::OnUpdateMBocaLateralE)
 	ON_COMMAND(ID_MBOCA_LATERALDRET, &CPracticaView::OnMBocaLateralD)
 	ON_UPDATE_COMMAND_UI(ID_MBOCA_LATERALDRET, &CPracticaView::OnUpdateMBocaLateralD)
+	ON_COMMAND(ID_MBOCA_DENTDALT, &CPracticaView::OnMBocaDentDalt)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_DENTDALT, &CPracticaView::OnUpdateMBocaDentDalt)
+	ON_COMMAND(ID_MBOCA_DENTBAIX, &CPracticaView::OnMBocaDentBaix)
+	ON_UPDATE_COMMAND_UI(ID_MBOCA_DENTBAIX, &CPracticaView::OnUpdateMBocaDentBaix)
 
 	ON_COMMAND(ID_EXPRESSIONS_TRIST, &CPracticaView::OnExpTrist)
 	ON_UPDATE_COMMAND_UI(ID_EXPRESSIONS_TRIST, &CPracticaView::OnUpdateExpTrist)
@@ -294,7 +298,7 @@ CPracticaView::CPracticaView()
 	temporitzador = 0.5;
 	acumulativeTime = 0.f;
 	subtitles = false;
-	tempsParla = 0.05f; //Temps de temporitzador Normal
+	tempsParla = 0.02f; //Temps de temporitzador Normal
 
 	select = NULL;
 	deform = NULL;
@@ -2983,6 +2987,32 @@ void CPracticaView::OnUpdateMBocaLateralD(CCmdUI *pCmdUI)
 		 pCmdUI->SetCheck(0);
 }
 
+void CPracticaView::OnMBocaDentDalt()
+{
+	SwitchMuscle(DENTDALT);
+}
+
+void CPracticaView::OnUpdateMBocaDentDalt(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DENTDALT)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
+void CPracticaView::OnMBocaDentBaix()
+{
+	SwitchMuscle(DENTBAIX);
+}
+
+void CPracticaView::OnUpdateMBocaDentBaix(CCmdUI *pCmdUI)
+{
+	if(selectedMuscle == DENTBAIX)
+		 pCmdUI->SetCheck(1);
+	else
+		 pCmdUI->SetCheck(0);
+}
+
 void CPracticaView::ChangeMuscleState ( TypeMuscle muscle )
 {
 	//this->SwitchMuscle(selectedMuscle);
@@ -3315,8 +3345,8 @@ void CPracticaView::OnUpdateFast(CCmdUI *pCmdUI)
 void CPracticaView::OnNormal()
 {
 	temporitzador = 0.5f;
-	tempsParla = 0.05f;
-	parla->SetVelocity(1.f, 0.02f);
+	tempsParla = 0.02f;
+	parla->SetVelocity(1.f, 0.01f);
 }
 
 void CPracticaView::OnUpdateNormal(CCmdUI *pCmdUI)

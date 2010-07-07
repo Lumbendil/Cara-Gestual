@@ -8,11 +8,11 @@
 CParla::CParla(Animation* an)
 {
 	animacio = an;
-	text = "Hola a tothom!";
+	text = "Com que no em puc menjar una mandarina, em compro un pressec.";
 	parlant = false;
 	index = 0;
 	transitionTime = 1.f;
-	totalTime = 0.02f;
+	totalTime = 0.01f;
 	lastExpression = NONE_EXPRESSION;
 }
 
@@ -139,7 +139,8 @@ TypeExpression CParla::ParseCharacter(const char c)
 	}
 	else if (strncmp(&c,"m",1)==0 || strncmp(&c,"M",1)==0 || 
 			 strncmp(&c,"b",1)==0 || strncmp(&c,"B",1)==0 ||
-			 strncmp(&c,"p",1)==0 || strncmp(&c,"P",1)==0 )
+			 strncmp(&c,"p",1)==0 || strncmp(&c,"P",1)==0 ||
+			 strncmp(&c,"v",1)==0 || strncmp(&c,"V",1)==0 )
 	{
 		return BILABIAL;
 	}

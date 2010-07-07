@@ -139,6 +139,13 @@
 #define ID_MBOCA_LATERALESQUERRE        32937
 #define ID_MBOCA_LATERALDRET            32938
 #define ID_MBOCA_SUPERIOR               32939
+#define ID_BOCA_DENTSSUPERIORS          32940
+#define ID_BOCA_DENTSINFERIORS          32941
+#define ID_BOCA_DENTSDALT               32942
+#define ID_BOCA_DENTDALT                32943
+#define ID_BOCA_DENTBAIX                32944
+#define ID_MBOCA_DENTDALT               32945
+#define ID_MBOCA_DENTBAIX               32946
 #define ID_INDICATOR_R                  59142
 #define ID_INDICATOR_ALFA               59143
 #define ID_INDICATOR_BETA               59144
@@ -155,7 +162,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32940
+#define _APS_NEXT_COMMAND_VALUE         32947
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

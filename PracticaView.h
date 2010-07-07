@@ -317,6 +317,10 @@ protected:
 	afx_msg void OnUpdateMBocaLateralE(CCmdUI *pCmdUI);
 	afx_msg void OnMBocaLateralD();
 	afx_msg void OnUpdateMBocaLateralD(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaDentDalt();
+	afx_msg void OnUpdateMBocaDentDalt(CCmdUI *pCmdUI);
+	afx_msg void OnMBocaDentBaix();
+	afx_msg void OnUpdateMBocaDentBaix(CCmdUI *pCmdUI);
 
 
 	afx_msg void OnExpTrist();

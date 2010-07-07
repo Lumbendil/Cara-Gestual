@@ -123,9 +123,11 @@ BEGIN
             MENUITEM "Dreta",                       ID_MBOCA_DRETA, CHECKED
             MENUITEM "Esquerre",                    ID_MBOCA_ESQUERRE, CHECKED
             MENUITEM "Inferior",                    ID_MBOCA_INFERIOR, CHECKED
-            MENUITEM "Lateral Esquerre",            ID_MBOCA_LATERALESQUERRE, CHECKED
-            MENUITEM "Lateral Dret",                ID_MBOCA_LATERALDRET, CHECKED
+            MENUITEM "Mandíbula Esquerra",          ID_MBOCA_LATERALESQUERRE, CHECKED
+            MENUITEM "Mandíbula Dreta",             ID_MBOCA_LATERALDRET, CHECKED
             MENUITEM "Superior",                    ID_MBOCA_SUPERIOR, CHECKED
+            MENUITEM "Dents Superiors",             ID_MBOCA_DENTDALT, CHECKED
+            MENUITEM "Dents Inferiors",             ID_MBOCA_DENTBAIX, CHECKED
         END
         POPUP "Parpelles"
         BEGIN

@@ -48,10 +48,23 @@ void XMLReader::Read() {
 	ReadWord();
 	if(strncmp(paraula,"<expressions>",11)==0)
 	{
+		// Elimina les expressions antigues i carrega el nou XML
+		int expressions = EManager->getNumExpressions();
+		for (int i=0; i<expressions; ++i)
+		{
+			EManager->resetExpression((TypeExpression) i);
+		}
 		ReadExpressions();
 	}
 	else if(strncmp(paraula,"<muscles>",9)==0)
 	{
+		// Elimina els muscles antics i carrega el nou XML
+		int muscles = MManager->getNumMuscles();
+		for (int i=0; i<muscles;++i)
+		{
+			MManager->deleteMuscle((TypeMuscle) i);
+		}
+		
 		ReadMuscles();
 	}
 	fclose(fitxer);
@@ -87,7 +100,9 @@ TypeMuscle XMLReader::ConvertirNomMuscles() {
 	else if (strncmp(atribut,"SUPBOCA",6)==0) return TypeMuscle(9);
 	else if (strncmp(atribut,"LATEBOCA",8)==0) return TypeMuscle(10);
 	else if (strncmp(atribut,"LATDBOCA",8)==0) return TypeMuscle(11);
-	else return TypeMuscle(12);
+	else if (strncmp(atribut,"DENTDALT",8)==0) return TypeMuscle(12);
+	else if (strncmp(atribut,"DENTBAIX",8)==0) return TypeMuscle(13);
+	else return TypeMuscle(14);
 }
 
 void XMLReader::GuardarNums() {	
